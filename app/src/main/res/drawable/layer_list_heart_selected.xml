@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/otherDays"/>
+        </shape>
+    </item>
+    <item
+        android:left="19dp">
+        <bitmap
+            android:gravity="start|center_vertical"
+            android:src="@drawable/ic_favorite"
+            android:tint="@color/colorAccentDark"/>
+    </item>
+
+    <item
+        android:right="16dp">
+        <bitmap
+            android:gravity="end|center_vertical"
+            android:src="@drawable/ic_done"
+            android:tint="@color/colorAccentDark"/>
+    </item>
+
+</layer-list>

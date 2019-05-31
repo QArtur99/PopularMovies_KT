@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="init_scroll_distance">600dp</dimen>
+    <dimen name="item_title">21sp</dimen>
+    <dimen name="movieTitleDetail">32sp</dimen>
+    <dimen name="detailText">21sp</dimen>
+    <dimen name="buttonTextSize">24sp</dimen>
+    <dimen name="buttonPadding">32dp</dimen>
+    //Dialog
+    <dimen name="dialogTitle">32sp</dimen>
+    <dimen name="dialogAuthor">24sp</dimen>
+    <dimen name="dialogDetailContent">22sp</dimen>
+</resources>

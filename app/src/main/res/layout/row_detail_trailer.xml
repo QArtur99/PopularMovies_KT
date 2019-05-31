@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+                name="video"
+                type="com.artf.popularmovies.domain.Video"/>
+
+        <variable
+                name="clickListener"
+                type="com.artf.popularmovies.movieDetail.VideoAdapter.OnClickListener"/>
+
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/ripple_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onClick(video)}"
+    >
+
+        <TextView
+                android:id="@+id/detailAuthor"
+                android:text="@{video.name}"
+                android:textStyle="bold"
+                android:textSize="@dimen/dialogAuthor"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>

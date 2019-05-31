@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="movieDetailViewModel"
+                type="com.artf.popularmovies.movieDetail.MovieDetailViewModel"/>
+    </data>
+    <RelativeLayout
+                    android:id="@+id/test2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+        <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include
+                    layout="@layout/include_movie_detail"
+                    app:movieDetailViewModel="@{movieDetailViewModel}"
+            />
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+</layout>

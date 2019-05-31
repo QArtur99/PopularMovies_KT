@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_favorite"
+        android:paddingBottom="16dp"
+        android:paddingEnd="64dp"
+        android:paddingStart="64dp"
+        android:paddingTop="16dp"
+        android:text="@string/favorite"
+        android:textColor="@drawable/selector_text"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/mostPopular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_most_popular"
+        android:paddingBottom="16dp"
+        android:paddingEnd="64dp"
+        android:paddingStart="64dp"
+        android:paddingTop="16dp"
+        android:text="@string/most_popular"
+        android:textColor="@drawable/selector_text"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/highestRated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_highest_rated_chart"
+        android:paddingBottom="16dp"
+        android:paddingEnd="64dp"
+        android:paddingStart="64dp"
+        android:paddingTop="16dp"
+        android:text="@string/highest_rated"
+        android:textColor="@drawable/selector_text"
+        android:textSize="16sp"/>
+
+</LinearLayout>
