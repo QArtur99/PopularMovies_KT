@@ -57,6 +57,9 @@ dependencies {
     // ViewModel, LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
+    //Paging
+    implementation "androidx.paging:paging-runtime:$version_paging"
+
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
