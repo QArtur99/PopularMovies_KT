@@ -26,7 +26,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:listData="@{gridViewViewModel.properties}"
+                    app:listData="@{gridViewViewModel.posts}"
+                    app:networkState="@{gridViewViewModel.networkState}"
             />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -68,17 +69,5 @@
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="#A2AAB0"/>
         </RelativeLayout>
-
-        <ProgressBar
-                android:id="@+id/loading_indicator"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="128dp"
-                android:background="@drawable/shape_progress_bar"
-                android:elevation="8dp"/>
-
     </RelativeLayout>
 </layout>

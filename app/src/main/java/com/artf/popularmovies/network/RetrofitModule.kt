@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.Executors
 
 object RetrofitModule {
 
@@ -19,6 +20,7 @@ object RetrofitModule {
     }
 
     val devbytes = provideRetrofit(BASE_URL).create(TheMovieDbAPI::class.java)
+    val NETWORK_IO = Executors.newFixedThreadPool(5)
 }
 
 private val moshi = Moshi.Builder()

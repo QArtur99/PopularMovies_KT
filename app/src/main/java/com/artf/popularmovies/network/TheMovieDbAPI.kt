@@ -5,11 +5,18 @@ import com.artf.popularmovies.domain.ReviewContainer
 import com.artf.popularmovies.domain.VideoContainer
 import com.artf.popularmovies.utility.Constants.Companion.THE_MOVIE_DB_BASE_URL
 import kotlinx.coroutines.Deferred
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 interface TheMovieDbAPI {
+
+    @GET("$THE_MOVIE_DB_BASE_URL{sortBy}")
+    fun getMovies(
+        @Path(value = "sortBy", encoded = true) sortBy: String,
+        @QueryMap args: Map<String, String>
+    ): Call<MovieContainer>
 
     @GET("$THE_MOVIE_DB_BASE_URL{sortBy}")
     fun getMoviesAsync(

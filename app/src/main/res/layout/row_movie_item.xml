@@ -9,7 +9,7 @@
 
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.gridView.GridViewAdapter.OnClickListener"/>
+                type="com.artf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

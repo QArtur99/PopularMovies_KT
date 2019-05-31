@@ -7,16 +7,17 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
 import com.artf.popularmovies.R
 import com.artf.popularmovies.domain.Movie
-import com.artf.popularmovies.domain.MovieContainer
 import com.artf.popularmovies.domain.ReviewContainer
 import com.artf.popularmovies.domain.VideoContainer
-import com.artf.popularmovies.gridView.GridViewAdapter
+import com.artf.popularmovies.gridView.GridViewPagingAdapter
 import com.artf.popularmovies.movieDetail.MovieDetailViewModel
 import com.artf.popularmovies.movieDetail.ReviewAdapter
 import com.artf.popularmovies.movieDetail.VideoAdapter
+import com.artf.popularmovies.repository.NetworkState
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -28,23 +29,32 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 
 @BindingAdapter("listData")
 fun bindMoviesRecyclerView(recyclerView: RecyclerView, data: Any?) {
-    when(data){
-        is MovieContainer ->{
-            val adapter = recyclerView.adapter as GridViewAdapter
-            adapter.submitList(data.movies)
-            adapter.notifyDataSetChanged()
+    when (data) {
+        is PagedList<*> -> {
+            val adapter = recyclerView.adapter as GridViewPagingAdapter
+            if(data.getOrNull(0) is Movie) {
+                val pagedList: PagedList<Movie> = data as PagedList<Movie>
+                adapter.submitList(pagedList)
+                adapter.notifyDataSetChanged()
+            }
         }
-        is ReviewContainer ->{
+        is ReviewContainer -> {
             val adapter = recyclerView.adapter as ReviewAdapter
             adapter.submitList(data.reviews)
             adapter.notifyDataSetChanged()
         }
-        is VideoContainer ->{
+        is VideoContainer -> {
             val adapter = recyclerView.adapter as VideoAdapter
             adapter.submitList(data.videos)
             adapter.notifyDataSetChanged()
         }
     }
+}
+
+@BindingAdapter("networkState")
+fun setNetworkState(recyclerView: RecyclerView, data: NetworkState?) {
+    val adapter = recyclerView.adapter as GridViewPagingAdapter
+    adapter.setNetworkState(data)
 }
 
 @BindingAdapter("imageUrl")

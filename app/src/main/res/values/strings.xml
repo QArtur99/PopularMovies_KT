@@ -29,7 +29,7 @@
 
     <string name="pref_number_of_columns_key" translatable="false">show_x_columns</string>
     <string name="pref_sort_by_key" translatable="false">sort_by</string>
-    <string name="pref_sort_by_most_popular_default" translatable="false">popular</string>
+    <string name="pref_sort_by_most_popular" translatable="false">popular</string>
     <string name="pref_sort_by_highest_rated" translatable="false">top_rated</string>
     <string name="pref_sort_by_favorite" translatable="false">favorite</string>
 
@@ -62,5 +62,6 @@
 
     //Test
     <string name="middle">This is the middle!</string>
+    <string name="retry">Retry</string>
 
 </resources>

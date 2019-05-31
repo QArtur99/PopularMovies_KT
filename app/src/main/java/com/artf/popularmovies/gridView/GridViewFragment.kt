@@ -1,9 +1,11 @@
 package com.artf.popularmovies.gridView
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
@@ -13,9 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.artf.popularmovies.MovieDetailActivity
+import com.artf.popularmovies.R
 import com.artf.popularmovies.databinding.FragmentGridViewBinding
 import com.artf.popularmovies.domain.Movie
-import com.artf.popularmovies.utility.Constants.ApiStatus
+import com.artf.popularmovies.repository.NetworkState
+import com.artf.popularmovies.repository.Status
 import com.artf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM
 import com.artf.popularmovies.utility.Constants.Result
 import com.squareup.moshi.Moshi
@@ -34,7 +38,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     ): View? {
 
         binding = DataBindingUtil.inflate(
-            inflater, com.artf.popularmovies.R.layout.fragment_grid_view, container, false
+            inflater, R.layout.fragment_grid_view, container, false
         )
 
         application = requireNotNull(this.activity).application
@@ -54,9 +58,9 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
-        gridViewViewModel.status.observe(viewLifecycleOwner, Observer {
+        gridViewViewModel.networkState.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
-                bindStatus(properties)
+                bindNetworkState(properties)
             }
         })
 
@@ -71,21 +75,31 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
-        binding.recyclerView.adapter = GridViewAdapter(GridViewAdapter.OnClickListener { product ->
-            gridViewViewModel.onRecyclerItemClick(product)
-        })
 
-//        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-//            fun onRefresh(){
-//                var ddd:Int = 0
-//            }
-//        })
+        binding.recyclerView.adapter = GridViewPagingAdapter(
+            GridViewPagingAdapter.OnClickListener { product -> gridViewViewModel.onRecyclerItemClick(product) },
+            GridViewPagingAdapter.OnNetworkStateClickListener { gridViewViewModel.retry() }
+        )
 
+        initSwipeToRefresh()
         setLayoutManager(columns)
 
         setHasOptionsMenu(true)
         return binding.root
     }
+
+    private fun initSwipeToRefresh() {
+        gridViewViewModel.refreshState.observe(viewLifecycleOwner, Observer {
+            it?.let { properties ->
+                binding.swipeRefresh.isRefreshing = properties == NetworkState.LOADING
+            }
+        })
+
+        binding.swipeRefresh.setOnRefreshListener {
+            gridViewViewModel.refresh()
+        }
+    }
+
 
     fun setLayoutManager(columns: Int) {
         val manager = GridLayoutManager(application, columns)
@@ -98,8 +112,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
-        inflater.inflate(com.artf.popularmovies.R.menu.menu, menu)
-        menu.findItem(com.artf.popularmovies.R.id.action_favorite).isVisible =
+        inflater.inflate(R.menu.menu, menu)
+        menu.findItem(R.id.action_favorite).isVisible =
             resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -107,48 +121,46 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 //            R.id.action_favorite -> (activity as MainActivity).addFavorite(null)
-//            R.id.action_refresh -> restartLoader(loaderId)
-//            R.id.action_sortBy -> openBottomDialog()
-            com.artf.popularmovies.R.id.one_column -> sharedPreferences.edit().putInt(
-                getString(com.artf.popularmovies.R.string.pref_number_of_columns_key), 1
+            R.id.action_refresh -> gridViewViewModel.refresh()
+            R.id.action_sortBy -> openBottomDialog()
+            R.id.one_column -> sharedPreferences.edit().putInt(
+                getString(R.string.pref_number_of_columns_key), 1
             ).apply()
-            com.artf.popularmovies.R.id.two_columns -> sharedPreferences.edit().putInt(
-                getString(com.artf.popularmovies.R.string.pref_number_of_columns_key), 2
+            R.id.two_columns -> sharedPreferences.edit().putInt(
+                getString(R.string.pref_number_of_columns_key), 2
             ).apply()
-            com.artf.popularmovies.R.id.three_columns -> sharedPreferences.edit().putInt(
-                getString(com.artf.popularmovies.R.string.pref_number_of_columns_key), 3
+            R.id.three_columns -> sharedPreferences.edit().putInt(
+                getString(R.string.pref_number_of_columns_key), 3
             ).apply()
-            com.artf.popularmovies.R.id.four_columns -> sharedPreferences.edit().putInt(
-                getString(com.artf.popularmovies.R.string.pref_number_of_columns_key), 4
+            R.id.four_columns -> sharedPreferences.edit().putInt(
+                getString(R.string.pref_number_of_columns_key), 4
             ).apply()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
+    private fun openBottomDialog() {
+        val dialog = SettingsBottomSheetDialog(activity!!)
+        dialog.create()
+        dialog.show()
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            getString(com.artf.popularmovies.R.string.pref_number_of_columns_key) -> {
+            getString(R.string.pref_number_of_columns_key) -> {
                 gridViewViewModel.onColumnChanged(
-                    sharedPreferences?.getInt(
-                        key,
-                        resources.getInteger(com.artf.popularmovies.R.integer.number_of_columns)
-                    )!!
+                    sharedPreferences?.getInt(key, resources.getInteger(R.integer.number_of_columns))!!
                 )
-                //setAdapter(columns, moviesAdapter.getData())
             }
-//            getString(R.string.pref_sort_by_key) -> {
-//                pageNoInteger = 1
-//                sortBy = sharedPreferences?.getString(key,getString(R.string.pref_sort_by_most_popular_default)
-//                )
-//                if (sortBy == getString(R.string.pref_sort_by_favorite)) {
-//                    swipyRefreshLayout.setOnRefreshListener(null)
-//                    restartLoader(0)
-//                } else {
-//                    swipyRefreshLayout.setOnRefreshListener(this)
-//                    restartLoader(1)
-//                }
-//            }
+            getString(R.string.pref_sort_by_key) -> {
+                val sortBy = sharedPreferences?.getString(key, getString(R.string.pref_sort_by_most_popular))
+                if (sortBy == getString(R.string.pref_sort_by_favorite)) {
+
+                } else {
+                    gridViewViewModel.onSortByChanged(sortBy!!)
+                }
+            }
 
         }
     }
@@ -157,12 +169,10 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         val columns = sharedPreferences.getInt(
-            getString(com.artf.popularmovies.R.string.pref_number_of_columns_key),
-            resources.getInteger(com.artf.popularmovies.R.integer.number_of_columns)
+            getString(R.string.pref_number_of_columns_key), resources.getInteger(R.integer.number_of_columns)
         )
         val sortBy = sharedPreferences.getString(
-            getString(com.artf.popularmovies.R.string.pref_sort_by_key),
-            getString(com.artf.popularmovies.R.string.pref_sort_by_most_popular_default)
+            getString(R.string.pref_sort_by_key), getString(R.string.pref_sort_by_most_popular)
         )
         return Result(columns, sortBy!!)
     }
@@ -173,28 +183,32 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
 
-    private fun bindStatus(status: ApiStatus) {
-        when (status) {
-            ApiStatus.LOADING -> {
+    private fun bindNetworkState(networkState: NetworkState) {
+        when (networkState.status) {
+            Status.RUNNING -> {
                 binding.emptyView.visibility = View.GONE
-                binding.loadingIndicator.visibility = View.VISIBLE
             }
-            ApiStatus.ERROR -> {
-                binding.emptyView.visibility = View.VISIBLE
-                binding.loadingIndicator.visibility = View.GONE
-                binding.emptyTitleText.text = getString(com.artf.popularmovies.R.string.no_favorite)
-                binding.emptySubtitleText.text = getString(com.artf.popularmovies.R.string.no_favorite_sub_text)
+            Status.FAILED -> {
+                if (2 > binding.recyclerView.adapter?.itemCount!!) {
+                    binding.emptyView.visibility = View.VISIBLE
+                    if (checkConnection()) {
+                        binding.emptyTitleText.text = getString(R.string.server_problem)
+                        binding.emptySubtitleText.text = getString(R.string.server_problem_sub_text)
+                    } else {
+                        binding.emptyTitleText.text = getString(R.string.no_connection)
+                        binding.emptySubtitleText.text = getString(R.string.no_connection_sub_text)
+                    }
+                }
             }
-            ApiStatus.DONE -> {
+            Status.SUCCESS -> {
                 binding.emptyView.visibility = View.GONE
-                binding.loadingIndicator.visibility = View.GONE
-            }
-            ApiStatus.CONNECTION_ERROR -> {
-                binding.emptyView.visibility = View.VISIBLE
-                binding.loadingIndicator.visibility = View.GONE
-                binding.emptyTitleText.text = getString(com.artf.popularmovies.R.string.server_problem)
-                binding.emptySubtitleText.text = getString(com.artf.popularmovies.R.string.server_problem_sub_text)
             }
         }
+    }
+
+    private fun checkConnection(): Boolean {
+        val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnected
     }
 }

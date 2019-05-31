@@ -6,27 +6,33 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artf.popularmovies.R
+import com.artf.popularmovies.databinding.NetworkStateItemBinding
 import com.artf.popularmovies.databinding.RowMovieItemBinding
 import com.artf.popularmovies.domain.Movie
 import com.artf.popularmovies.repository.NetworkState
 
-class GridViewPagingAdapter(private val clickListener: OnClickListener,  private val retryCallback: () -> Unit) : PagedListAdapter<Movie,
-        RecyclerView.ViewHolder>(GridViewDiffCallback) {
+class GridViewPagingAdapter(
+    private val clickListener: OnClickListener,
+    private val networkStateClickListener: OnNetworkStateClickListener
+) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(GridViewDiffCallback) {
 
     private var networkState: NetworkState? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val product = getItem(position)
         when (getItemViewType(position)) {
-            R.layout.row_movie_item -> (holder as MovieViewHolder).bind(clickListener, product)
-            R.layout.network_state_item -> (holder as NetworkStateItemViewHolder).bindTo(networkState)
+            R.layout.row_movie_item ->
+                (holder as MovieViewHolder).bind(clickListener, getItem(position))
+            R.layout.network_state_item ->
+                (holder as NetworkStateViewHolder).bind(networkStateClickListener, networkState)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.row_movie_item -> MovieViewHolder(RowMovieItemBinding.inflate(LayoutInflater.from(parent.context)))
-            R.layout.network_state_item -> NetworkStateItemViewHolder.create(parent, retryCallback)
+            R.layout.row_movie_item ->
+                MovieViewHolder(RowMovieItemBinding.inflate(LayoutInflater.from(parent.context)))
+            R.layout.network_state_item ->
+                NetworkStateViewHolder(NetworkStateItemBinding.inflate(LayoutInflater.from(parent.context)))
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
@@ -35,7 +41,6 @@ class GridViewPagingAdapter(private val clickListener: OnClickListener,  private
 
     override fun getItemViewType(position: Int): Int {
         return if (hasExtraRow() && position == itemCount - 1) R.layout.network_state_item else R.layout.row_movie_item
-
     }
 
     override fun getItemCount(): Int {
@@ -63,7 +68,7 @@ class GridViewPagingAdapter(private val clickListener: OnClickListener,  private
 
         fun bind(clickListener: OnClickListener, item: Movie?) {
             binding.movie = item
-            //binding.clickListener = clickListener
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
@@ -80,5 +85,9 @@ class GridViewPagingAdapter(private val clickListener: OnClickListener,  private
 
     class OnClickListener(val clickListener: (productId: Movie) -> Unit) {
         fun onClick(product: Movie) = clickListener(product)
+    }
+
+    class OnNetworkStateClickListener(val clickListener: () -> Unit) {
+        fun onClick() = clickListener()
     }
 }

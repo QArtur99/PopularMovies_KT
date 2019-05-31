@@ -2,29 +2,19 @@ package com.artf.popularmovies.gridView
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.artf.popularmovies.domain.Movie
-import com.artf.popularmovies.domain.MovieContainer
 import com.artf.popularmovies.repository.Repository
-import com.artf.popularmovies.utility.Constants.ApiStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class GridViewViewModel(private val columnNo: Int, private val sortByInit: String, private val pageNo: String) : ViewModel() {
 
     private val repository = Repository()
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val _status = MutableLiveData<ApiStatus>()
-    val status: LiveData<ApiStatus>
-        get() = _status
-
-    private val _properties = MutableLiveData<MovieContainer>()
-    val properties: LiveData<MovieContainer>
-        get() = _properties
 
     private val _columns = MutableLiveData<Int>()
     val columns: LiveData<Int>
@@ -51,26 +41,33 @@ class GridViewViewModel(private val columnNo: Int, private val sortByInit: Strin
 
     init {
         onColumnChanged(columnNo)
-        getMovies(sortByInit, pageNo)
-    }
-
-    private fun getMovies(sortBy: String, pageNo: String) {
-        uiScope.launch {
-            try {
-                _status.value = ApiStatus.LOADING
-                val listResult = repository.getMoviesAsync(sortBy, pageNo)
-                _status.value = ApiStatus.DONE
-                _properties.value = listResult
-            } catch (e: Exception) {
-                _status.value = ApiStatus.ERROR
-                _properties.value = null
-            }
-        }
+        onSortByChanged(sortByInit)
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
+
+
+
+    //Paging
+    private val repoResult = Transformations.map(_sortBy) {
+        repository.getMoviesPaging(it, 20)
+    }
+    val posts = Transformations.switchMap(repoResult) { it.pagedList }!!
+    val networkState = Transformations.switchMap(repoResult) { it.networkState }!!
+    val refreshState = Transformations.switchMap(repoResult) { it.refreshState }!!
+
+    fun refresh() {
+        repoResult.value?.refresh?.invoke()
+    }
+
+    fun retry() {
+        val listing = repoResult?.value
+        listing?.retry?.invoke()
+    }
+
+
 
 }
