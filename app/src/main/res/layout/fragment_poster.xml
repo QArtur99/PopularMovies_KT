@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable
+                name="movieDetailViewModel"
+                type="com.artf.popularmovies.movieDetail.MovieDetailViewModel"/>
+    </data>
+    <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/posterView"
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <ImageView
+                android:id="@+id/posterView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                app:imageUrlDetail="@{movieDetailViewModel}"
+                app:liveData="@{movieDetailViewModel.listItem}"
+        />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -12,5 +12,6 @@
     >
     </fragment>
 
-
+    <include app:graph="@navigation/navigation_poster" />
+    <include app:graph="@navigation/navigation_detail" />
 </navigation>

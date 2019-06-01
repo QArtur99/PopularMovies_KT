@@ -39,7 +39,7 @@ class GridViewViewModel(movieDatabase: MovieDatabaseDao, columnNo: Int, sortByIn
     val listItem: LiveData<Movie>
         get() = _listItem
 
-    fun onRecyclerItemClick(listItem: Movie) {
+    fun onRecyclerItemClick(listItem: Movie?) {
         _listItem.value = listItem
     }
 

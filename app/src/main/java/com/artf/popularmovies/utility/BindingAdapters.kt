@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
-import com.artf.popularmovies.R
 import com.artf.popularmovies.domain.Movie
 import com.artf.popularmovies.domain.ReviewContainer
 import com.artf.popularmovies.domain.VideoContainer
@@ -28,12 +27,14 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
+
+
 @BindingAdapter("listData")
 fun bindMoviesRecyclerView(recyclerView: RecyclerView, data: Any?) {
     when (data) {
         is PagedList<*> -> {
             val adapter = recyclerView.adapter as GridViewPagingAdapter
-            if(data.getOrNull(0) is Movie) {
+            if (data.getOrNull(0) is Movie) {
                 val pagedList: PagedList<Movie> = data as PagedList<Movie>
                 adapter.submitList(pagedList)
                 adapter.notifyDataSetChanged()
@@ -66,22 +67,27 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .load(posterURL)
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image)
+                    .placeholder(com.artf.popularmovies.R.drawable.loading_animation)
+                    .error(com.artf.popularmovies.R.drawable.ic_broken_image)
             )
             .into(imgView)
     }
 }
 
-@BindingAdapter("imageUrlDetail")
-fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewModel?) {
+@BindingAdapter("imageUrlDetail", "liveData")
+fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewModel?, liveData: Movie?) {
     val imgUrl: String? = movieDetailViewModel?.listItem?.value?.poster_path
     imgUrl?.let {
         val posterURL = "http://image.tmdb.org/t/p/w342/$imgUrl"
         Glide.with(imgView.context)
             .load(posterURL)
             .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(p0: GlideException?, p1: Any?, p2: Target<Drawable>?, p3: Boolean): Boolean {
+                override fun onLoadFailed(
+                    p0: GlideException?,
+                    p1: Any?,
+                    p2: Target<Drawable>?,
+                    p3: Boolean
+                ): Boolean {
                     return false
                 }
 
@@ -94,8 +100,8 @@ fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewMod
             })
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image)
+                    .placeholder(com.artf.popularmovies.R.drawable.loading_animation)
+                    .error(com.artf.popularmovies.R.drawable.ic_broken_image)
             )
             .into(imgView)
     }
@@ -106,7 +112,7 @@ fun loadBackground(linearLayout: LinearLayout, drawable: Drawable?) {
     if (drawable != null) {
         val layers = arrayOfNulls<Drawable>(2)
         layers[0] = drawable
-        layers[1] = ContextCompat.getDrawable(linearLayout.context, R.drawable.background_transparent)
+        layers[1] = ContextCompat.getDrawable(linearLayout.context, com.artf.popularmovies.R.drawable.background_transparent)
         val layerDrawable = LayerDrawable(layers)
         linearLayout.background = layerDrawable
     }
@@ -129,8 +135,9 @@ fun onAppBarLayoutOpen(collapsingToolbarLayout: CollapsingToolbarLayout?, appBar
 @BindingAdapter("fabIcon")
 fun setFabIcon(floatingActionButton: FloatingActionButton, isFavorite: Boolean) {
     if (isFavorite) {
-        floatingActionButton.setImageResource(R.drawable.ic_favorite)
+        floatingActionButton.setImageResource(com.artf.popularmovies.R.drawable.ic_favorite)
     } else {
-        floatingActionButton.setImageResource(R.drawable.ic_favorite_border)
+        floatingActionButton.setImageResource(com.artf.popularmovies.R.drawable.ic_favorite_border)
     }
 }
+

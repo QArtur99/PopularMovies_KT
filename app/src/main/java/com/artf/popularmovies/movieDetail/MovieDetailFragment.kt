@@ -18,10 +18,11 @@ import com.artf.popularmovies.R
 import com.artf.popularmovies.database.MovieDatabase
 import com.artf.popularmovies.databinding.DialogReviewBinding
 import com.artf.popularmovies.databinding.DialogVideoBinding
+import com.artf.popularmovies.databinding.FragmentDetailBinding
 
 class MovieDetailFragment : Fragment() {
 
-    private lateinit var binding: com.artf.popularmovies.databinding.FragmentDetailBinding
+    private lateinit var binding: FragmentDetailBinding
     private lateinit var application: Application
 
     override fun onCreateView(

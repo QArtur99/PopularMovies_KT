@@ -79,6 +79,7 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$version_glide"
+    kapt "com.github.bumptech.glide:compiler:$version_glide"
 
     //Test
     testImplementation 'junit:junit:4.12'
