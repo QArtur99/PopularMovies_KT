@@ -6,6 +6,7 @@ class Constants {
 
     companion object {
         const val INTENT_LIST_ITEM = "listItem"
+        const val SORT_BY_FAVORITE = "favorite"
 
         const val API_KEY = "api_key"
         const val PAGE = "page"

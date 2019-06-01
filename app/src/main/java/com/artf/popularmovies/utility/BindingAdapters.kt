@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @BindingAdapter("listData")
@@ -122,5 +123,14 @@ fun onAppBarLayoutOpen(collapsingToolbarLayout: CollapsingToolbarLayout?, appBar
         collapsingToolbarLayout?.title = ""
     } else {
         collapsingToolbarLayout?.title = item?.original_title
+    }
+}
+
+@BindingAdapter("fabIcon")
+fun setFabIcon(floatingActionButton: FloatingActionButton, isFavorite: Boolean) {
+    if (isFavorite) {
+        floatingActionButton.setImageResource(R.drawable.ic_favorite)
+    } else {
+        floatingActionButton.setImageResource(R.drawable.ic_favorite_border)
     }
 }

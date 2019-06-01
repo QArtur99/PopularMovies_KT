@@ -4,15 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.artf.popularmovies.database.MovieDatabaseDao
 import com.artf.popularmovies.domain.Movie
 import com.artf.popularmovies.repository.Repository
+import com.artf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-class GridViewViewModel(private val columnNo: Int, private val sortByInit: String, private val pageNo: String) : ViewModel() {
+class GridViewViewModel(movieDatabase: MovieDatabaseDao, columnNo: Int, sortByInit: String, pageNo: String) :
+    ViewModel() {
 
-    private val repository = Repository()
+    private val repository = Repository(movieDatabase)
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -35,6 +38,7 @@ class GridViewViewModel(private val columnNo: Int, private val sortByInit: Strin
     private val _listItem = MutableLiveData<Movie>()
     val listItem: LiveData<Movie>
         get() = _listItem
+
     fun onRecyclerItemClick(listItem: Movie) {
         _listItem.value = listItem
     }
@@ -50,11 +54,14 @@ class GridViewViewModel(private val columnNo: Int, private val sortByInit: Strin
     }
 
 
-
     //Paging
     private val repoResult = Transformations.map(_sortBy) {
-        repository.getMoviesPaging(it, 20)
+        when (it) {
+            SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it, 20)
+            else -> repository.getMoviesPaging(it, 20)
+        }
     }
+
     val posts = Transformations.switchMap(repoResult) { it.pagedList }!!
     val networkState = Transformations.switchMap(repoResult) { it.networkState }!!
     val refreshState = Transformations.switchMap(repoResult) { it.refreshState }!!
@@ -67,7 +74,6 @@ class GridViewViewModel(private val columnNo: Int, private val sortByInit: Strin
         val listing = repoResult?.value
         listing?.retry?.invoke()
     }
-
 
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.artf.popularmovies.database.MovieDatabase
 import com.artf.popularmovies.databinding.ActivityMovieDetailBinding
 import com.artf.popularmovies.domain.Movie
 import com.artf.popularmovies.movieDetail.MovieDetailViewModel
@@ -18,7 +19,9 @@ import kotlinx.android.synthetic.main.activity_movie_detail.*
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
     private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val viewModelFactory = MovieDetailViewModelFactory()
+        val application = requireNotNull(this).application
+        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
+        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
         ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
     }
 

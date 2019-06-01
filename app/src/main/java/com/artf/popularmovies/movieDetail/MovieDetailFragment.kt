@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.artf.popularmovies.R
+import com.artf.popularmovies.database.MovieDatabase
 import com.artf.popularmovies.databinding.DialogReviewBinding
 import com.artf.popularmovies.databinding.DialogVideoBinding
 
@@ -32,7 +33,8 @@ class MovieDetailFragment : Fragment() {
         )
 
         application = requireNotNull(this.activity).application
-        val viewModelFactory = MovieDetailViewModelFactory()
+        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
+        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
         val movieDetailViewModel: MovieDetailViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
 
@@ -41,10 +43,15 @@ class MovieDetailFragment : Fragment() {
 
         movieDetailViewModel.showReviews.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
-                if(properties){
+                if (properties) {
                     val binding = DialogReviewBinding.inflate(LayoutInflater.from(activity))
                     binding.movieDetailViewModel = movieDetailViewModel
-                    binding.recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+                    binding.recyclerView.addItemDecoration(
+                        DividerItemDecoration(
+                            activity,
+                            DividerItemDecoration.VERTICAL
+                        )
+                    )
                     binding.recyclerView.adapter = ReviewAdapter(ReviewAdapter.OnClickListener { product ->
                         movieDetailViewModel.onReviewListItemClick(product)
                     })
@@ -56,10 +63,15 @@ class MovieDetailFragment : Fragment() {
 
         movieDetailViewModel.showTrailers.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
-                if(properties){
+                if (properties) {
                     val binding = DialogVideoBinding.inflate(LayoutInflater.from(activity))
                     binding.movieDetailViewModel = movieDetailViewModel
-                    binding.recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+                    binding.recyclerView.addItemDecoration(
+                        DividerItemDecoration(
+                            activity,
+                            DividerItemDecoration.VERTICAL
+                        )
+                    )
                     binding.recyclerView.adapter = VideoAdapter(VideoAdapter.OnClickListener { product ->
                         movieDetailViewModel.onVideoListItemClick(product)
                     })
@@ -68,6 +80,15 @@ class MovieDetailFragment : Fragment() {
                 }
             }
         })
+
+        movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                movieDetailViewModel.setFavorite(true)
+            }else{
+                movieDetailViewModel.setFavorite(false)
+            }
+        })
+
 
         movieDetailViewModel.reviewListItem.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
@@ -87,8 +108,6 @@ class MovieDetailFragment : Fragment() {
                 }
             }
         })
-
-
         return binding.root
     }
 

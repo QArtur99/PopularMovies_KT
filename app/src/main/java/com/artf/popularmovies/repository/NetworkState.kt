@@ -19,7 +19,8 @@ package com.artf.popularmovies.repository
 enum class Status {
     RUNNING,
     SUCCESS,
-    FAILED
+    FAILED,
+    DB_EMPTY
 }
 
 @Suppress("DataClassPrivateConstructor")
@@ -29,6 +30,8 @@ data class NetworkState private constructor(
     companion object {
         val LOADED = NetworkState(Status.SUCCESS)
         val LOADING = NetworkState(Status.RUNNING)
+        val FAILED = NetworkState(Status.FAILED)
+        val DATABASE = NetworkState(Status.DB_EMPTY)
         fun error(msg: String?) = NetworkState(Status.FAILED, msg)
     }
 }

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.artf.popularmovies.MovieDetailActivity
 import com.artf.popularmovies.R
+import com.artf.popularmovies.database.MovieDatabase
 import com.artf.popularmovies.databinding.FragmentGridViewBinding
 import com.artf.popularmovies.domain.Movie
 import com.artf.popularmovies.repository.NetworkState
@@ -43,8 +44,9 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
         application = requireNotNull(this.activity).application
         val (columns, sortBy) = setSharedPreferences(application)
+        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
 
-        val viewModelFactory = GridViewViewModelFactory(columns, sortBy, "1")
+        val viewModelFactory = GridViewViewModelFactory(movieDatabase, columns, sortBy, "1")
         gridViewViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(GridViewViewModel::class.java)
 
@@ -155,13 +157,11 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
             getString(R.string.pref_sort_by_key) -> {
                 val sortBy = sharedPreferences?.getString(key, getString(R.string.pref_sort_by_most_popular))
-                if (sortBy == getString(R.string.pref_sort_by_favorite)) {
-
-                } else {
-                    gridViewViewModel.onSortByChanged(sortBy!!)
+                when (sortBy) {
+                    getString(R.string.pref_sort_by_favorite) -> gridViewViewModel.onSortByChanged(sortBy)
+                    else -> gridViewViewModel.onSortByChanged(sortBy!!)
                 }
             }
-
         }
     }
 
@@ -202,6 +202,13 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
             Status.SUCCESS -> {
                 binding.emptyView.visibility = View.GONE
+            }
+            Status.DB_EMPTY -> {
+                if (2 > binding.recyclerView.adapter?.itemCount!!) {
+                    binding.emptyView.visibility = View.VISIBLE
+                    binding.emptyTitleText.text = getString(R.string.no_favorite)
+                    binding.emptySubtitleText.text = getString(R.string.no_favorite_sub_text)
+                }
             }
         }
     }

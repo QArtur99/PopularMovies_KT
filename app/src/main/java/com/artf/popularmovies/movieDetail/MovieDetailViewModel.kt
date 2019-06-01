@@ -4,17 +4,20 @@ import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.artf.popularmovies.database.MovieDatabaseDao
+import com.artf.popularmovies.database.MovieItem
 import com.artf.popularmovies.domain.*
 import com.artf.popularmovies.repository.Repository
+import com.artf.popularmovies.repository.asDatabaseModel
 import com.artf.popularmovies.utility.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel : ViewModel() {
+class MovieDetailViewModel(movieDatabase: MovieDatabaseDao) : ViewModel() {
 
-    private val repository = Repository()
+    private val repository = Repository(movieDatabase)
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -60,17 +63,10 @@ class MovieDetailViewModel : ViewModel() {
         _showTrailers.value = show
     }
 
-    private val _fabButton = MutableLiveData<Boolean>()
-    val fabButton: LiveData<Boolean>
-        get() = _fabButton
-
-    fun onFabButtonClick(show: Boolean) {
-        _fabButton.value = show
-    }
-
     private val _reviewListItem = MutableLiveData<Review>()
     val reviewListItem: LiveData<Review>
         get() = _reviewListItem
+
     fun onReviewListItemClick(listItem: Review) {
         _reviewListItem.value = listItem
     }
@@ -78,6 +74,7 @@ class MovieDetailViewModel : ViewModel() {
     private val _videoListItem = MutableLiveData<Video>()
     val videoListItem: LiveData<Video>
         get() = _videoListItem
+
     fun onVideoListItemClick(listItem: Video) {
         _videoListItem.value = listItem
     }
@@ -93,6 +90,7 @@ class MovieDetailViewModel : ViewModel() {
     private val _videos = MutableLiveData<VideoContainer>()
     val videos: LiveData<VideoContainer>
         get() = _videos
+
 
     private fun getMovieReviewsAsync() {
         uiScope.launch {
@@ -118,6 +116,42 @@ class MovieDetailViewModel : ViewModel() {
             } catch (e: Exception) {
                 _status.value = Constants.ApiStatus.ERROR
                 _videos.value = null
+            }
+        }
+    }
+
+
+    val isFavorite: LiveData<MovieItem?>
+        get() = listItem.value.let {repository.getMovieWithId(it?.id ?: "")}
+
+    private val _fabButton = MutableLiveData<Boolean>()
+    val fabButton: LiveData<Boolean>
+        get() = _fabButton
+
+    fun onFabButtonClick(show: Boolean) {
+        if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
+    }
+
+    private val _favorite = MutableLiveData<Boolean>()
+    val favorite: LiveData<Boolean>
+        get() = _favorite
+
+    fun setFavorite(open: Boolean) {
+        _favorite.value = open
+    }
+
+    fun onAddFavorite() {
+        uiScope.launch {
+            listItem.value?.let {
+                repository.insert(it.asDatabaseModel())
+            }
+        }
+    }
+
+    fun onDeleteFavorite() {
+        uiScope.launch {
+            listItem.value?.let {
+                repository.delete(it.asDatabaseModel().id)
             }
         }
     }
