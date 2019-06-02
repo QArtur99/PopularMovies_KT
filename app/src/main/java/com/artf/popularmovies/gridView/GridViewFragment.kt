@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -23,7 +24,9 @@ import com.artf.popularmovies.movieDetail.MovieDetailViewModel
 import com.artf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.artf.popularmovies.repository.NetworkState
 import com.artf.popularmovies.repository.Status
+import com.artf.popularmovies.utility.Constants
 import com.artf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM
+import com.artf.popularmovies.utility.Constants.Companion.RECYCLER_VIEW_STATE_ID
 import com.artf.popularmovies.utility.Constants.Result
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -36,11 +39,14 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private lateinit var application: Application
     private lateinit var binding: FragmentGridViewBinding
+    private var sortBy: String = ""
+    private var adapterItemCount: Int = 0
+    private var savedInstanceState: Bundle? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        this.savedInstanceState = savedInstanceState
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_grid_view, container, false
         )
@@ -66,6 +72,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
+        gridViewViewModel.sortBy.observe(viewLifecycleOwner, Observer {
+            it?.let { value ->
+                this.sortBy = value
+            }
+        })
+
         gridViewViewModel.networkState.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
                 bindNetworkState(properties)
@@ -74,9 +86,9 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
         gridViewViewModel.listItem.observe(viewLifecycleOwner, Observer {
             it?.let { listItem ->
-                if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     movieDetailViewModel.setListItem(listItem)
-                }else {
+                } else {
                     val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
                     val jsonAdapter = moshi.adapter<Movie>(Movie::class.java)
                     val listItemString: String = jsonAdapter.toJson(listItem)
@@ -88,15 +100,28 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
+        gridViewViewModel.posts.observe(viewLifecycleOwner, Observer {
+            it?.let { listItem ->
+                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    if (listItem.isNotEmpty()) {
+                        movieDetailViewModel.setFirstListItem(listItem.first())
+                    }
+                }
+                adapterItemCount = listItem.size
+                if (this.sortBy == Constants.SORT_BY_FAVORITE && adapterItemCount > 0) {
+                    gridViewViewModel.refresh()
+                }
+            }
+        })
 
         binding.recyclerView.adapter = GridViewPagingAdapter(
             GridViewPagingAdapter.OnClickListener { product -> gridViewViewModel.onRecyclerItemClick(product) },
+            GridViewPagingAdapter.OnSizeListener { adapterItemCount > 0 },
             GridViewPagingAdapter.OnNetworkStateClickListener { gridViewViewModel.retry() }
         )
 
         initSwipeToRefresh()
         setLayoutManager(columns)
-
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -200,14 +225,16 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 binding.emptyView.visibility = View.GONE
             }
             Status.FAILED -> {
-                if (2 > binding.recyclerView.adapter?.itemCount!!) {
+                if (1 > adapterItemCount) {
                     binding.emptyView.visibility = View.VISIBLE
                     if (checkConnection()) {
                         binding.emptyTitleText.text = getString(R.string.server_problem)
-                        binding.emptySubtitleText.text = getString(R.string.server_problem_sub_text)
+                        binding.emptySubtitleText.text =
+                            getString(R.string.server_problem_sub_text)
                     } else {
                         binding.emptyTitleText.text = getString(R.string.no_connection)
-                        binding.emptySubtitleText.text = getString(R.string.no_connection_sub_text)
+                        binding.emptySubtitleText.text =
+                            getString(R.string.no_connection_sub_text)
                     }
                 }
             }
@@ -215,10 +242,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 binding.emptyView.visibility = View.GONE
             }
             Status.DB_EMPTY -> {
-                if (1 > binding.recyclerView.adapter?.itemCount!!) {
+                if (1 > adapterItemCount) {
                     binding.emptyView.visibility = View.VISIBLE
                     binding.emptyTitleText.text = getString(R.string.no_favorite)
                     binding.emptySubtitleText.text = getString(R.string.no_favorite_sub_text)
+                } else {
+                    binding.emptyView.visibility = View.GONE
                 }
             }
         }
@@ -230,4 +259,18 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         return activeNetwork != null && activeNetwork.isConnected
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (savedInstanceState != null) {
+            val listState: Parcelable? = savedInstanceState!!.getParcelable(RECYCLER_VIEW_STATE_ID)
+            binding.recyclerView.layoutManager?.onRestoreInstanceState(listState)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        val listState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+        outState.putParcelable(RECYCLER_VIEW_STATE_ID, listState)
+        super.onSaveInstanceState(outState)
+    }
 }

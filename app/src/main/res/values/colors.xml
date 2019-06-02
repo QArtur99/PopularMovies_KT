@@ -14,5 +14,6 @@
     <color name="fab">#F2E676</color>
     <color name="redFavorite">#e57373</color>
     <color name="lightGrey">#e0e0e0</color>
+    <color name="disable">#CCCCCC</color>
 
 </resources>

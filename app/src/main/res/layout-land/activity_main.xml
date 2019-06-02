@@ -25,15 +25,16 @@
         </FrameLayout>
 
         <View
-                android:layout_width="1dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="0.01"
                 android:background="@android:color/darker_gray"/>
 
         <FrameLayout
                 android:id="@+id/posterViewFrame"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.98"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorPrimary"
                 android:scaleType="centerInside">
@@ -46,8 +47,9 @@
         </FrameLayout>
 
         <View
-                android:layout_width="1dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="0.01"
                 android:background="@android:color/darker_gray"/>
 
         <FrameLayout

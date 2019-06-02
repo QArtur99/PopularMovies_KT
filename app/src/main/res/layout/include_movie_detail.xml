@@ -118,11 +118,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/ripple_button"
+                    android:background="@drawable/selector_detail_button"
                     android:text="@string/reviews"
                     android:textAllCaps="false"
                     android:textColor="@color/shapeColor"
-                    android:textSize="@dimen/buttonTextSize"/>
+                    android:textSize="@dimen/buttonTextSize"
+                    app:enableReview="@{movieDetailViewModel.reviews}"
+            />
 
             <Button
                     android:id="@+id/trailersButton"
@@ -131,11 +133,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/reviewsButton"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/ripple_button"
+                    android:background="@drawable/selector_detail_button"
                     android:text="@string/trailers"
                     android:textAllCaps="false"
                     android:textColor="@color/shapeColor"
-                    android:textSize="@dimen/buttonTextSize"/>
+                    android:textSize="@dimen/buttonTextSize"
+                    app:enableVideo="@{movieDetailViewModel.videos}"
+            />
         </RelativeLayout>
 
 

@@ -5,6 +5,8 @@ import com.artf.popularmovies.BuildConfig
 class Constants {
 
     companion object {
+        const val RECYCLER_VIEW_STATE_ID = "recyclerViewStateId"
+
         const val INTENT_LIST_ITEM = "listItem"
         const val SORT_BY_FAVORITE = "favorite"
 

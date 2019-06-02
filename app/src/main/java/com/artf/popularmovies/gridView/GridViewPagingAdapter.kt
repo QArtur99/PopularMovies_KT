@@ -13,6 +13,7 @@ import com.artf.popularmovies.repository.NetworkState
 
 class GridViewPagingAdapter(
     private val clickListener: OnClickListener,
+    private val sizeListener: OnSizeListener,
     private val networkStateClickListener: OnNetworkStateClickListener
 ) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(GridViewDiffCallback) {
 
@@ -37,7 +38,8 @@ class GridViewPagingAdapter(
         }
     }
 
-    private fun hasExtraRow() = networkState != null && networkState != NetworkState.LOADED
+    private fun hasExtraRow() =
+        networkState != null && networkState != NetworkState.LOADED && sizeListener.onClick()
 
     override fun getItemViewType(position: Int): Int {
         return if (hasExtraRow() && position == itemCount - 1) R.layout.network_state_item else R.layout.row_movie_item
@@ -85,6 +87,10 @@ class GridViewPagingAdapter(
 
     class OnClickListener(val clickListener: (productId: Movie) -> Unit) {
         fun onClick(product: Movie) = clickListener(product)
+    }
+
+    class OnSizeListener(val clickListener: () -> Boolean) {
+        fun onClick() : Boolean = clickListener()
     }
 
     class OnNetworkStateClickListener(val clickListener: () -> Unit) {

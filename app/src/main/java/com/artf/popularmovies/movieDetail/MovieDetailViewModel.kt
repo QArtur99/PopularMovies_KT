@@ -3,9 +3,9 @@ package com.artf.popularmovies.movieDetail
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.artf.popularmovies.database.MovieDatabaseDao
-import com.artf.popularmovies.database.MovieItem
 import com.artf.popularmovies.domain.*
 import com.artf.popularmovies.repository.Repository
 import com.artf.popularmovies.repository.asDatabaseModel
@@ -30,6 +30,15 @@ class MovieDetailViewModel(movieDatabase: MovieDatabaseDao) : ViewModel() {
         getMovieReviewsAsync()
         getMovieTrailersAsync()
     }
+
+    fun setFirstListItem(listItem: Movie) {
+        if(_listItem.value == null) {
+            _listItem.value = listItem
+            getMovieReviewsAsync()
+            getMovieTrailersAsync()
+        }
+    }
+
 
     private val _appBarLayout = MutableLiveData<Boolean>()
     val appBarLayoutOpen: LiveData<Boolean>
@@ -121,15 +130,22 @@ class MovieDetailViewModel(movieDatabase: MovieDatabaseDao) : ViewModel() {
     }
 
 
-    val isFavorite: LiveData<MovieItem?>
-        get() = listItem.value.let {repository.getMovieWithId(it?.id ?: "")}
+    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "")}
+
 
     private val _fabButton = MutableLiveData<Boolean>()
     val fabButton: LiveData<Boolean>
         get() = _fabButton
 
+    fun setFabButton(show: Boolean?) {
+        _fabButton.value = show
+    }
+
     fun onFabButtonClick(show: Boolean) {
-        if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
+        if(favorite.value!= null) {
+            if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
+            setFabButton(true)
+        }
     }
 
     private val _favorite = MutableLiveData<Boolean>()

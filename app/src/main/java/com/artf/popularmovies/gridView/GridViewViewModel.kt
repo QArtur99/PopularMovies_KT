@@ -55,7 +55,7 @@ class GridViewViewModel(movieDatabase: MovieDatabaseDao, columnNo: Int, sortByIn
 
 
     //Paging
-    private val repoResult = Transformations.map(_sortBy) {
+    private val repoResult = Transformations.map(sortBy) {
         when (it) {
             SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it, 20)
             else -> repository.getMoviesPaging(it, 20)

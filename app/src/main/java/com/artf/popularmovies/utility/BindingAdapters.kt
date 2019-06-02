@@ -3,6 +3,7 @@ package com.artf.popularmovies.utility
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -27,18 +28,14 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-
-
 @BindingAdapter("listData")
 fun bindMoviesRecyclerView(recyclerView: RecyclerView, data: Any?) {
     when (data) {
         is PagedList<*> -> {
             val adapter = recyclerView.adapter as GridViewPagingAdapter
-            if (data.getOrNull(0) is Movie) {
-                val pagedList: PagedList<Movie> = data as PagedList<Movie>
-                adapter.submitList(pagedList)
-                adapter.notifyDataSetChanged()
-            }
+            val pagedList: PagedList<Movie> = data as PagedList<Movie>
+            adapter.submitList(pagedList)
+            adapter.notifyDataSetChanged()
         }
         is ReviewContainer -> {
             val adapter = recyclerView.adapter as ReviewAdapter
@@ -112,7 +109,8 @@ fun loadBackground(linearLayout: LinearLayout, drawable: Drawable?) {
     if (drawable != null) {
         val layers = arrayOfNulls<Drawable>(2)
         layers[0] = drawable
-        layers[1] = ContextCompat.getDrawable(linearLayout.context, com.artf.popularmovies.R.drawable.background_transparent)
+        layers[1] =
+            ContextCompat.getDrawable(linearLayout.context, com.artf.popularmovies.R.drawable.background_transparent)
         val layerDrawable = LayerDrawable(layers)
         linearLayout.background = layerDrawable
     }
@@ -140,4 +138,15 @@ fun setFabIcon(floatingActionButton: FloatingActionButton, isFavorite: Boolean) 
         floatingActionButton.setImageResource(com.artf.popularmovies.R.drawable.ic_favorite_border)
     }
 }
+
+@BindingAdapter("enableReview")
+fun enableReview(button: Button, reviewContainer: ReviewContainer?) {
+    button.isEnabled = reviewContainer?.reviews?.isNotEmpty() ?: false
+}
+
+@BindingAdapter("enableVideo")
+fun enableVideo(button: Button, reviewContainer: VideoContainer?) {
+    button.isEnabled = reviewContainer?.videos?.isNotEmpty() ?: false
+}
+
 

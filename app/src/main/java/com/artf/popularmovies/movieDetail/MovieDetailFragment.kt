@@ -19,11 +19,13 @@ import com.artf.popularmovies.database.MovieDatabase
 import com.artf.popularmovies.databinding.DialogReviewBinding
 import com.artf.popularmovies.databinding.DialogVideoBinding
 import com.artf.popularmovies.databinding.FragmentDetailBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MovieDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
     private lateinit var application: Application
+    private var onFabClickCounter: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -83,13 +85,27 @@ class MovieDetailFragment : Fragment() {
         })
 
         movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer {
-            if (it != null){
+            if (it != null) {
                 movieDetailViewModel.setFavorite(true)
-            }else{
+                if (onFabClickCounter > 0) showSnackBar(1)
+            } else {
                 movieDetailViewModel.setFavorite(false)
+                if (onFabClickCounter > 0) showSnackBar(2)
             }
         })
 
+        movieDetailViewModel.listItem.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                onFabClickCounter = 0
+            }
+        })
+
+        movieDetailViewModel.fabButton.observe(viewLifecycleOwner, Observer {
+            it?.let { value ->
+                if (value) onFabClickCounter++
+                movieDetailViewModel.setFabButton(null)
+            }
+        })
 
         movieDetailViewModel.reviewListItem.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
@@ -110,6 +126,18 @@ class MovieDetailFragment : Fragment() {
             }
         })
         return binding.root
+    }
+
+    private fun showSnackBar(snackBarId: Int) {
+        Snackbar.make(
+            activity!!.findViewById(android.R.id.content),
+            when (snackBarId) {
+                1 -> getString(R.string.editor_insert_movie_successful)
+                2 -> getString(R.string.editor_delete_product_successful)
+                else -> getString(R.string.editor_delete_product_successful)
+            },
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun setDetailDialog(binding: ViewDataBinding) {
