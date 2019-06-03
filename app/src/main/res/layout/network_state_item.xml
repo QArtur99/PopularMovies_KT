@@ -4,11 +4,11 @@
     <data>
         <variable
                 name="networkState"
-                type="com.artf.popularmovies.repository.NetworkState"/>
+                type="com.qartf.popularmovies.repository.NetworkState"/>
 
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.gridView.GridViewPagingAdapter.OnNetworkStateClickListener"/>
+                type="com.qartf.popularmovies.gridView.GridViewPagingAdapter.OnNetworkStateClickListener"/>
 
     </data>
     <LinearLayout

@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="movieDetailViewModel"
-                type="com.artf.popularmovies.movieDetail.MovieDetailViewModel"/>
+                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
     <LinearLayout
             android:id="@+id/detail"

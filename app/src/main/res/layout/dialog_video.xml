@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="movieDetailViewModel"
-                type="com.artf.popularmovies.movieDetail.MovieDetailViewModel"/>
+                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
     <LinearLayout
             android:layout_width="match_parent"

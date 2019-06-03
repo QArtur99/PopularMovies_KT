@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="movieDetailViewModel"
-                type="com.artf.popularmovies.movieDetail.MovieDetailViewModel"/>
+                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:id="@+id/coordinatorLayout"
             android:fitsSystemWindows="true"
-            tools:context="com.artf.popularmovies.MovieDetailActivity"
+            tools:context="com.qartf.popularmovies.MovieDetailActivity"
             tools:ignore="MergeRootFrame">
 
         <com.google.android.material.appbar.AppBarLayout

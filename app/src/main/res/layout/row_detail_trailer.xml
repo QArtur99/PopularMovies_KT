@@ -4,11 +4,11 @@
     <data>
         <variable
                 name="video"
-                type="com.artf.popularmovies.domain.Video"/>
+                type="com.qartf.popularmovies.domain.Video"/>
 
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.movieDetail.VideoAdapter.OnClickListener"/>
+                type="com.qartf.popularmovies.movieDetail.VideoAdapter.OnClickListener"/>
 
     </data>
     <LinearLayout

@@ -4,11 +4,11 @@
     <data>
         <variable
                 name="review"
-                type="com.artf.popularmovies.domain.Review"/>
+                type="com.qartf.popularmovies.domain.Review"/>
 
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.movieDetail.ReviewAdapter.OnClickListener"/>
+                type="com.qartf.popularmovies.movieDetail.ReviewAdapter.OnClickListener"/>
 
     </data>
     <LinearLayout

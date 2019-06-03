@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.gridView.SettingsBottomSheetDialog"/>
+                type="com.qartf.popularmovies.gridView.SettingsBottomSheetDialog"/>
     </data>
     <LinearLayout
             android:layout_width="match_parent"

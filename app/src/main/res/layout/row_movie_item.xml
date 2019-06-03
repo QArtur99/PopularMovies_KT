@@ -5,11 +5,11 @@
     <data>
         <variable
                 name="movie"
-                type="com.artf.popularmovies.domain.Movie"/>
+                type="com.qartf.popularmovies.domain.Movie"/>
 
         <variable
                 name="clickListener"
-                type="com.artf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
+                type="com.qartf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

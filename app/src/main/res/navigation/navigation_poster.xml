@@ -6,7 +6,7 @@
 
     <fragment
             android:id="@+id/fragment_poster"
-            android:name="com.artf.popularmovies.posterVıew.PosterFragment"
+            android:name="com.qartf.popularmovies.posterVıew.PosterFragment"
             android:label="PosterFragment"
     >
     </fragment>
