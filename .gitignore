@@ -11,3 +11,7 @@
 /build
 /captures
 .externalNativeBuild
+/keystore.properties
+/keystore.jks
+/app/release
+/screenshots

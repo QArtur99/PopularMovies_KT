@@ -9,14 +9,26 @@ def keystorePropertiesFile = file("C:\\Users\\USER\\AndroidStudioProjects\\.grad
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+def keystorePropertiesFileSigning = rootProject.file("keystore.properties")
+def keystorePropertiesSigning = new Properties()
+keystorePropertiesSigning.load(new FileInputStream(keystorePropertiesFileSigning))
+
 android {
+    signingConfigs {
+        config {
+            keyAlias keystorePropertiesSigning['keyAlias']
+            keyPassword keystorePropertiesSigning['keyPassword']
+            storeFile file(keystorePropertiesSigning['storeFile'])
+            storePassword keystorePropertiesSigning['storePassword']
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.artf.popularmovies"
+        applicationId "com.qartf.popularmovies"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.02"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -50,7 +62,7 @@ dependencies {
     // Material design components
     implementation "com.google.android.material:material:$version_material"
 
-    // Room and Lifecycle dependencies
+    // Room
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
 
@@ -83,6 +95,6 @@ dependencies {
 
     //Test
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
