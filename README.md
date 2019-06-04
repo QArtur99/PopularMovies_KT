@@ -6,15 +6,16 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 ### Used Tech
 * [Kotlin](https://kotlinlang.org/)
 * [MVVM](https://developer.android.com/jetpack/docs/guide)
-* [Data Binding](https://developer.android.com/topic/libraries/data-binding/)
-* [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
-* [Navigation](https://developer.android.com/guide/navigation/)
-* [Paging](https://developer.android.com/topic/libraries/architecture/paging/)
-* [Room](https://developer.android.com/topic/libraries/architecture/room)
-* [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-* [Retrofit 2](https://github.com/square/retrofit)
-* [Moshi](https://github.com/square/moshi)
-* [Glide](https://github.com/bumptech/glide)
+* [Data Binding](https://developer.android.com/topic/libraries/data-binding/) - Declaratively bind observable data to UI elements.
+* [Lifecycles](https://developer.android.com/topic/libraries/architecture/lifecycle) - Create a UI that automatically responds to lifecycle events.
+* [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Build data objects that notify views when the underlying database changes.
+* [Navigation](https://developer.android.com/guide/navigation/) - Handle everything needed for in-app navigation.
+* [Paging](https://developer.android.com/topic/libraries/architecture/paging/) - Load and display small chunks of data at a time.
+* [Room](https://developer.android.com/topic/libraries/architecture/room) - Access your app's SQLite database with in-app objects and compile-time checks.
+* [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Store UI-related data that isn't destroyed on app rotations. Easily schedule asynchronous tasks for optimal execution.
+* [Retrofit 2](https://github.com/square/retrofit) - Handle REST api communication
+* [Moshi](https://github.com/square/moshi) - Serialize Kotlin objects and deserialize JSON objects
+* [Glide](https://github.com/bumptech/glide) - Load and cache images by URL.
 
 
 ### Screenshots
