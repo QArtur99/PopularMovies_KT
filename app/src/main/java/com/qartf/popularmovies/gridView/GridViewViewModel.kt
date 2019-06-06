@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.qartf.popularmovies.database.MovieDatabaseDao
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
@@ -12,10 +11,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-class GridViewViewModel(movieDatabase: MovieDatabaseDao, columnNo: Int, sortByInit: String, pageNo: String) :
+class GridViewViewModel(
+    private val repository: Repository,
+    private val columnNo: Int,
+    private val sortByInit: String,
+    private val pageNo: String
+) :
     ViewModel() {
 
-    private val repository = Repository(movieDatabase)
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 

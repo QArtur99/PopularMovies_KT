@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
-interface TheMovieDbAPI {
+interface TheMovieDbApi {
 
     @GET("$THE_MOVIE_DB_BASE_URL{sortBy}")
     fun getMovies(

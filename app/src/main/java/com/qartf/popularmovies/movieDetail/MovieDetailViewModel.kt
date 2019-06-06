@@ -5,19 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.qartf.popularmovies.database.MovieDatabaseDao
 import com.qartf.popularmovies.domain.*
 import com.qartf.popularmovies.repository.Repository
-import com.qartf.popularmovies.repository.asDatabaseModel
+import com.qartf.popularmovies.utility.asDatabaseModel
 import com.qartf.popularmovies.utility.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(movieDatabase: MovieDatabaseDao) : ViewModel() {
+class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
 
-    private val repository = Repository(movieDatabase)
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -130,7 +128,7 @@ class MovieDetailViewModel(movieDatabase: MovieDatabaseDao) : ViewModel() {
     }
 
 
-    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "")}
+    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "")}!!
 
 
     private val _fabButton = MutableLiveData<Boolean>()

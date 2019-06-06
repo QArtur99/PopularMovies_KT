@@ -16,6 +16,7 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 * [Retrofit 2](https://github.com/square/retrofit) - Handle REST api communication
 * [Moshi](https://github.com/square/moshi) - Serialize Kotlin objects and deserialize JSON objects
 * [Glide](https://github.com/bumptech/glide) - Load and cache images by URL.
+* [Test](https://developer.android.com/training/testing/) - An Android testing framework for unit and runtime UI tests.
 
 
 ### Screenshots
@@ -40,3 +41,4 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 ### Google Play
 <a href='https://play.google.com/store/apps/details?id=com.qartf.popularmovies&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
 <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+

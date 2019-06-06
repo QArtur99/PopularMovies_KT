@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [MovieItem::class], version = 5, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
 
-    abstract val movieDatabaseDao: MovieDatabaseDao
+    abstract fun movieDatabaseDao(): MovieDatabaseDao
 
     companion object {
 
@@ -23,13 +23,9 @@ abstract class MovieDatabase : RoomDatabase() {
                         context.applicationContext,
                         MovieDatabase::class.java,
                         "movie_database"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .build()
-
+                    ).fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }
-
                 return instance
             }
         }

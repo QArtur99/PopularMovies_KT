@@ -22,9 +22,6 @@ interface MovieDatabaseDao {
     @Query("SELECT * from movies WHERE id = :key")
     fun getMovieWithId(key: String): LiveData<MovieItem?>
 
-    @Query("SELECT * from movies WHERE id = :key")
-    fun getMovieWithId2(key: String): MovieItem?
-
     @Query("SELECT * FROM movies ORDER BY id DESC")
     fun getAllMovies(): LiveData<List<MovieItem>>
 

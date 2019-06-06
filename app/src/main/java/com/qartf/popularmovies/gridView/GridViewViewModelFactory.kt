@@ -2,10 +2,10 @@ package com.qartf.popularmovies.gridView
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.qartf.popularmovies.database.MovieDatabaseDao
+import com.qartf.popularmovies.repository.Repository
 
 class GridViewViewModelFactory(
-    private val movieDatabase: MovieDatabaseDao,
+    private val repository: Repository,
     private val columnNo: Int,
     private val sortByInit: String,
     private val pageNo: String
@@ -14,7 +14,7 @@ class GridViewViewModelFactory(
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GridViewViewModel::class.java)) {
-            return GridViewViewModel(movieDatabase, columnNo, sortByInit, pageNo) as T
+            return GridViewViewModel(repository, columnNo, sortByInit, pageNo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.database.MovieDatabase
 import com.qartf.popularmovies.databinding.DialogReviewBinding
 import com.qartf.popularmovies.databinding.DialogVideoBinding
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
-import com.google.android.material.snackbar.Snackbar
+import com.qartf.popularmovies.utility.ServiceLocator
 
 class MovieDetailFragment : Fragment() {
 
@@ -36,8 +36,8 @@ class MovieDetailFragment : Fragment() {
         )
 
         application = requireNotNull(this.activity).application
-        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
-        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
+        val repository = ServiceLocator.instance(application).getRepository()
+        val viewModelFactory = MovieDetailViewModelFactory(repository)
         val movieDetailViewModel: MovieDetailViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
 

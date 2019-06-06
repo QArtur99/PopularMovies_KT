@@ -13,14 +13,23 @@ import com.qartf.popularmovies.domain.MovieContainer
 import com.qartf.popularmovies.domain.ReviewContainer
 import com.qartf.popularmovies.domain.VideoContainer
 import com.qartf.popularmovies.network.RetrofitModule
+import com.qartf.popularmovies.network.TheMovieDbApi
 import com.qartf.popularmovies.utility.Constants.Companion.API_KEY
 import com.qartf.popularmovies.utility.Constants.Companion.PAGE
 import com.qartf.popularmovies.utility.Constants.Companion.THE_MOVIE_DB_API_TOKEN
+import com.qartf.popularmovies.utility.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
+import java.util.concurrent.Executor
 
-class Repository(private val productDatabase: MovieDatabaseDao) {
+class Repository(
+    private val productDatabase: MovieDatabaseDao,
+    private val api: TheMovieDbApi? = null,
+    private val diskExecutor: Executor,
+    private val networkExecutor: Executor
+
+) {
     suspend fun getMoviesAsync(sortBy: String, pageNo: String): MovieContainer {
         val args = HashMap<String, String>()
         args[API_KEY] = THE_MOVIE_DB_API_TOKEN
@@ -45,7 +54,7 @@ class Repository(private val productDatabase: MovieDatabaseDao) {
 
     @MainThread
     fun getMoviesPaging(sortBy: String, pageSize: Int): Listing<Movie> {
-        val sourceFactory = MovieDataSourceFactory(RetrofitModule.devbytes, sortBy, RetrofitModule.NETWORK_IO)
+        val sourceFactory = MovieDataSourceFactory(api!!, sortBy, networkExecutor)
 
         val config = PagedList.Config.Builder()
             .setPageSize(20)
@@ -67,7 +76,7 @@ class Repository(private val productDatabase: MovieDatabaseDao) {
 
     @MainThread
     fun getMoviesPagingDB(sortBy: String, pageSize: Int): Listing<Movie> {
-        val ds = productDatabase.getAllMoviesDS().map{it.asDomainModel()}
+        val ds = productDatabase.getAllMoviesDS().map { it.asDomainModel() }
 
         val config = PagedList.Config.Builder()
             .setPageSize(20)
@@ -87,13 +96,6 @@ class Repository(private val productDatabase: MovieDatabaseDao) {
             refresh = { networkState.postValue(NetworkState.DATABASE) },
             refreshState = networkState
         )
-    }
-
-
-    suspend fun getMovieWithId2(movieItemId: String): MovieItem? {
-        return withContext(Dispatchers.IO) {
-            productDatabase.getMovieWithId2(movieItemId)
-        }
     }
 
     fun getMovieWithId(movieItemId: String): LiveData<MovieItem?> {

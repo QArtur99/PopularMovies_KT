@@ -17,9 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qartf.popularmovies.MovieDetailActivity
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.database.MovieDatabase
 import com.qartf.popularmovies.databinding.FragmentGridViewBinding
-import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.repository.NetworkState
@@ -28,8 +26,8 @@ import com.qartf.popularmovies.utility.Constants
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM
 import com.qartf.popularmovies.utility.Constants.Companion.RECYCLER_VIEW_STATE_ID
 import com.qartf.popularmovies.utility.Constants.Result
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.utility.convertToString
 
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -52,15 +50,16 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         )
 
         application = requireNotNull(this.activity).application
+        val repository = ServiceLocator.instance(application).getRepository()
         val (columns, sortBy) = setSharedPreferences(application)
-        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
-        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
-        movieDetailViewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
 
-        val viewModelFactory2 = GridViewViewModelFactory(movieDatabase, columns, sortBy, "1")
+        val movieDetailViewModelFactory = MovieDetailViewModelFactory(repository)
+        movieDetailViewModel =
+            ViewModelProviders.of(activity!!, movieDetailViewModelFactory).get(MovieDetailViewModel::class.java)
+
+        val gridViewViewModelFactory = GridViewViewModelFactory(repository, columns, sortBy, "1")
         gridViewViewModel =
-            ViewModelProviders.of(this, viewModelFactory2).get(GridViewViewModel::class.java)
+            ViewModelProviders.of(this, gridViewViewModelFactory).get(GridViewViewModel::class.java)
 
         binding.gridViewViewModel = gridViewViewModel
         binding.lifecycleOwner = this
@@ -89,11 +88,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     movieDetailViewModel.setListItem(listItem)
                 } else {
-                    val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                    val jsonAdapter = moshi.adapter<Movie>(Movie::class.java)
-                    val listItemString: String = jsonAdapter.toJson(listItem)
                     val intent = Intent(activity, MovieDetailActivity::class.java)
-                    intent.putExtra(INTENT_LIST_ITEM, listItemString)
+                    intent.putExtra(INTENT_LIST_ITEM, convertToString(listItem))
                     application.startActivity(intent)
                 }
                 //gridViewViewModel.onRecyclerItemClick(null)
@@ -113,6 +109,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 }
             }
         })
+
 
         binding.recyclerView.adapter = GridViewPagingAdapter(
             GridViewPagingAdapter.OnClickListener { product -> gridViewViewModel.onRecyclerItemClick(product) },
@@ -217,7 +214,6 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         super.onDestroyView()
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
-
 
     private fun bindNetworkState(networkState: NetworkState) {
         when (networkState.status) {

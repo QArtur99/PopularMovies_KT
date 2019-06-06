@@ -8,10 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.database.MovieDatabase
 import com.qartf.popularmovies.databinding.FragmentPosterBinding
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
+import com.qartf.popularmovies.utility.ServiceLocator
 
 class PosterFragment : Fragment() {
 
@@ -24,8 +24,8 @@ class PosterFragment : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-        val movieDatabase = MovieDatabase.getInstance(application).movieDatabaseDao
-        val viewModelFactory = MovieDetailViewModelFactory(movieDatabase)
+        val repository = ServiceLocator.instance(application).getRepository()
+        val viewModelFactory = MovieDetailViewModelFactory(repository)
         val movieDetailViewModel: MovieDetailViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
 

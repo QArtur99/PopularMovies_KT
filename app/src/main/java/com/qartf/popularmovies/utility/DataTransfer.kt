@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.repository
+package com.qartf.popularmovies.utility
 
 import com.qartf.popularmovies.database.MovieItem
 import com.qartf.popularmovies.domain.Movie

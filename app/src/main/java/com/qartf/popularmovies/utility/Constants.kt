@@ -9,6 +9,8 @@ class Constants {
 
         const val INTENT_LIST_ITEM = "listItem"
         const val SORT_BY_FAVORITE = "favorite"
+        const val SORT_BY_MOST_POPULAR = "popular"
+        const val SORT_BY_TOP_RATED = "top_rated"
 
         const val API_KEY = "api_key"
         const val PAGE = "page"

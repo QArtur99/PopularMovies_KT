@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.domain.MovieContainer
-import com.qartf.popularmovies.network.TheMovieDbAPI
+import com.qartf.popularmovies.network.TheMovieDbApi
 import com.qartf.popularmovies.utility.Constants
 import retrofit2.Call
 import retrofit2.Response
@@ -13,7 +13,7 @@ import java.util.*
 import java.util.concurrent.Executor
 
 class PageKeyedDataSource(
-    private val theMovieDbAPI: TheMovieDbAPI,
+    private val theMovieDbApi: TheMovieDbApi,
     private val sortBy: String,
     private val retryExecutor: Executor
 ) : PageKeyedDataSource<String, Movie>() {
@@ -53,7 +53,7 @@ class PageKeyedDataSource(
         args[Constants.API_KEY] = Constants.THE_MOVIE_DB_API_TOKEN
         args[Constants.PAGE] = params.key
 
-        theMovieDbAPI.getMovies(sortBy, args).enqueue(
+        theMovieDbApi.getMovies(sortBy, args).enqueue(
             object : retrofit2.Callback<MovieContainer> {
                 override fun onFailure(call: Call<MovieContainer>, t: Throwable) {
                     retry = { loadAfter(params, callback) }
@@ -82,7 +82,7 @@ class PageKeyedDataSource(
         args[Constants.API_KEY] = Constants.THE_MOVIE_DB_API_TOKEN
         args[Constants.PAGE] = "1"
 
-        val request = theMovieDbAPI.getMovies(sortBy, args)
+        val request = theMovieDbApi.getMovies(sortBy, args)
 
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
