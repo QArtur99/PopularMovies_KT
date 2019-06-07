@@ -9,7 +9,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.qartf.popularmovies.databinding.ActivityMovieDetailBinding
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
-import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM
+import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertFromString
 import kotlinx.android.synthetic.main.activity_movie_detail.*
@@ -43,7 +43,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         binding.movieDetailViewModel = movieDetailViewModel
         binding.appBar.addOnOffsetChangedListener(this)
 
-        movieDetailViewModel.setListItem(convertFromString(intent.getStringExtra(INTENT_LIST_ITEM)))
+        movieDetailViewModel.setListItem(convertFromString(intent.getStringExtra(INTENT_LIST_ITEM_ID)))
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {

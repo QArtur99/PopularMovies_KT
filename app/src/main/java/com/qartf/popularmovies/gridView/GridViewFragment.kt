@@ -23,7 +23,7 @@ import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.repository.NetworkState
 import com.qartf.popularmovies.repository.Status
 import com.qartf.popularmovies.utility.Constants
-import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM
+import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.RECYCLER_VIEW_STATE_ID
 import com.qartf.popularmovies.utility.Constants.Result
 import com.qartf.popularmovies.utility.ServiceLocator
@@ -89,7 +89,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                     movieDetailViewModel.setListItem(listItem)
                 } else {
                     val intent = Intent(activity, MovieDetailActivity::class.java)
-                    intent.putExtra(INTENT_LIST_ITEM, convertToString(listItem))
+                    intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
                     application.startActivity(intent)
                 }
                 //gridViewViewModel.onRecyclerItemClick(null)
