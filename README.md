@@ -20,8 +20,8 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 
 
 ### Screenshots
-![image](https://user-images.githubusercontent.com/25232443/58781649-ca9b8580-85dc-11e9-8469-7127191becb0.png)
-![image](https://user-images.githubusercontent.com/25232443/58781686-e0a94600-85dc-11e9-8bd4-fb9f5ebd12c9.png)
+![image](https://user-images.githubusercontent.com/25232443/59161517-ec68a100-8ae3-11e9-9414-b02f9bfb864a.png)
+![image](https://user-images.githubusercontent.com/25232443/59161526-fd191700-8ae3-11e9-8b2a-ee4438cfc5e4.png)
 
 
 ### How to run the project in development mode
