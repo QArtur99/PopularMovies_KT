@@ -46,6 +46,7 @@
         <TextView
                 android:id="@+id/overview"
                 android:text="@{movieDetailViewModel.listItem.overview}"
+                android:onClick="@{() -> movieDetailViewModel.onShowOverview(true)}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -55,7 +56,10 @@
                 android:gravity="start"
                 android:maxLines="4"
                 android:textColor="@color/detailMovieText"
-                android:textSize="@dimen/detailText"/>
+                android:textSize="@dimen/detailText"
+                app:showOverview="@{movieDetailViewModel.showOverview}"
+
+        />
 
         <GridLayout
                 android:layout_width="wrap_content"
@@ -69,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:paddingEnd="5dp"
-                    android:text="@string/vote_average"
+                    android:text="@string/vote_average_detail"
                     android:textColor="@color/detailMovieText"
                     android:textSize="@dimen/detailText"
                     android:textStyle="bold"/>
@@ -89,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:paddingEnd="5dp"
-                    android:text="@string/release_date"
+                    android:text="@string/release_date_detail"
                     android:textSize="@dimen/detailText"
                     android:textStyle="bold"/>
 

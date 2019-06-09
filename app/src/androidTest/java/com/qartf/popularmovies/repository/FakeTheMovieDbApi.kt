@@ -15,6 +15,10 @@ import java.io.IOException
  * implements the RedditApi with controllable requests
  */
 class FakeTheMovieDbApi : TheMovieDbApi {
+    override fun getMovies(sortBy: String, args: Map<String, String>): Call<MovieContainer> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getMovieTrailersAsync(movieId: String, args: Map<String, String>): Deferred<VideoContainer> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -29,6 +33,7 @@ class FakeTheMovieDbApi : TheMovieDbApi {
 
     private val model = mutableMapOf<String, SortBy>()
     var failureMsg: String? = null
+    var sortByTest: String = ""
 
     fun addPost(sortBy: String, post: Movie) {
         val movie = model.getOrPut(sortBy) {
@@ -54,12 +59,13 @@ class FakeTheMovieDbApi : TheMovieDbApi {
         return posts.map { it.copy() }
     }
 
-    override fun getMovies(sortBy: String, args: Map<String, String>): Call<MovieContainer> {
+    override fun getDiscoverMovie(args: Map<String, String>): Call<MovieContainer> {
         failureMsg?.let {
             return Calls.failure(IOException(it))
         }
+        val sortBy = args[Constants.SORT_BY]
         val after = args[Constants.PAGE] ?: ""
-        val items = findMovies(sortBy, 20, after)
+        val items = findMovies(sortByTest, 20, after)
 
         val response = MovieContainer(
             page = after,

@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.qartf.popularmovies
 
 import android.app.Application
@@ -34,7 +18,7 @@ import com.qartf.popularmovies.gridView.GridViewPagingAdapter
 import com.qartf.popularmovies.network.TheMovieDbApi
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
-import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_MOST_POPULAR
+import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_POPULARITY
 import com.qartf.popularmovies.utility.DefaultServiceLocator
 import com.qartf.popularmovies.utility.ServiceLocator
 import junit.framework.TestCase.assertEquals
@@ -51,9 +35,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
-/**
- * Simple sanity test to ensure data is displayed
- */
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
@@ -72,9 +53,10 @@ class MainActivityTest {
     @Before
     fun init() {
         val fakeApi = FakeTheMovieDbApi()
-        fakeApi.addPost(SORT_BY_MOST_POPULAR, movieFactory.createMovie())
-        fakeApi.addPost(SORT_BY_MOST_POPULAR, movieFactory.createMovie())
-        fakeApi.addPost(SORT_BY_MOST_POPULAR, movieFactory.createMovie())
+        fakeApi.sortByTest = SORT_BY_POPULARITY
+        fakeApi.addPost(SORT_BY_POPULARITY, movieFactory.createMovie())
+        fakeApi.addPost(SORT_BY_POPULARITY, movieFactory.createMovie())
+        fakeApi.addPost(SORT_BY_POPULARITY, movieFactory.createMovie())
 
         val application = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
         // use a controlled service locator w/ fake API
@@ -91,7 +73,7 @@ class MainActivityTest {
     @Test
     fun useAppContext() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        assertEquals("com.artf.popularmovies", appContext.packageName)
+        assertEquals("com.qartf.popularmovies", appContext.packageName)
     }
 
     @Test

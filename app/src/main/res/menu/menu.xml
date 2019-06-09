@@ -19,14 +19,29 @@
         android:id="@+id/action_sortBy"
         android:orderInCategory="100"
         android:title="@string/action_sortBy"
-        app:showAsAction="never" />
+        app:showAsAction="never">
+        <menu>
+            <item android:title="@string/favorite"
+                  android:id="@+id/favorite" />
+            <item android:title="@string/most_popular"
+                  android:id="@+id/popularity" />
+            <item android:title="@string/release_date"
+                  android:id="@+id/releaseDate" />
+            <item android:title="@string/revenue"
+                  android:id="@+id/revenue" />
+            <item android:title="@string/vote_average"
+                  android:id="@+id/voteAverage" />
+            <item android:title="@string/vote_count"
+                  android:id="@+id/voteCount" />
+        </menu>
+    </item>
 
     <item
         android:id="@+id/view"
         android:orderInCategory="100"
         android:title="@string/view"
         app:showAsAction="never">
-    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <menu>
         <item android:title="@string/one_column"
               android:id="@+id/one_column" />
         <item android:title="@string/two_columns"

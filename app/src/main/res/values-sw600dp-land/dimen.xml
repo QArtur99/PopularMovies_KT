@@ -6,6 +6,7 @@
     <dimen name="detailText">21sp</dimen>
     <dimen name="buttonTextSize">24sp</dimen>
     <dimen name="buttonPadding">32dp</dimen>
+    <dimen name="tabLayout">48dp</dimen>
     //Dialog
     <dimen name="dialogTitle">32sp</dimen>
     <dimen name="dialogAuthor">24sp</dimen>

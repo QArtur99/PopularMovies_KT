@@ -14,7 +14,7 @@ import java.util.concurrent.Executor
 
 class PageKeyedDataSource(
     private val theMovieDbApi: TheMovieDbApi,
-    private val sortBy: String,
+    private val args: HashMap<String, String>,
     private val retryExecutor: Executor
 ) : PageKeyedDataSource<String, Movie>() {
 
@@ -49,11 +49,8 @@ class PageKeyedDataSource(
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, Movie>) {
         networkState.postValue(NetworkState.LOADING)
 
-        val args = HashMap<String, String>()
-        args[Constants.API_KEY] = Constants.THE_MOVIE_DB_API_TOKEN
         args[Constants.PAGE] = params.key
-
-        theMovieDbApi.getMovies(sortBy, args).enqueue(
+        theMovieDbApi.getDiscoverMovie(args).enqueue(
             object : retrofit2.Callback<MovieContainer> {
                 override fun onFailure(call: Call<MovieContainer>, t: Throwable) {
                     retry = { loadAfter(params, callback) }
@@ -78,11 +75,8 @@ class PageKeyedDataSource(
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, Movie>) {
 
-        val args = HashMap<String, String>()
-        args[Constants.API_KEY] = Constants.THE_MOVIE_DB_API_TOKEN
         args[Constants.PAGE] = "1"
-
-        val request = theMovieDbApi.getMovies(sortBy, args)
+        val request = theMovieDbApi.getDiscoverMovie(args)
 
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)

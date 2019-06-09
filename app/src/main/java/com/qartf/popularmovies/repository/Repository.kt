@@ -16,7 +16,9 @@ import com.qartf.popularmovies.network.RetrofitModule
 import com.qartf.popularmovies.network.TheMovieDbApi
 import com.qartf.popularmovies.utility.Constants.Companion.API_KEY
 import com.qartf.popularmovies.utility.Constants.Companion.PAGE
+import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY
 import com.qartf.popularmovies.utility.Constants.Companion.THE_MOVIE_DB_API_TOKEN
+import com.qartf.popularmovies.utility.Constants.Companion.WITH_GENRES
 import com.qartf.popularmovies.utility.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -53,8 +55,14 @@ class Repository(
     }
 
     @MainThread
-    fun getMoviesPaging(sortBy: String, pageSize: Int): Listing<Movie> {
-        val sourceFactory = MovieDataSourceFactory(api!!, sortBy, networkExecutor)
+    fun getMoviesPaging(sortBy: String, genre: String): Listing<Movie> {
+        val args = HashMap<String, String>()
+        args[API_KEY] = THE_MOVIE_DB_API_TOKEN
+        args[SORT_BY] = sortBy
+        args[WITH_GENRES] = genre
+        args[PAGE] = "1"
+
+        val sourceFactory = MovieDataSourceFactory(api!!, args, networkExecutor)
 
         val config = PagedList.Config.Builder()
             .setPageSize(20)

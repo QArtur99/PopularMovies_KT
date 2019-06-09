@@ -10,10 +10,7 @@ import com.qartf.popularmovies.gridView.GridViewViewModel
 import com.qartf.popularmovies.network.TheMovieDbApi
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
-import com.qartf.popularmovies.utility.Constants
-import com.qartf.popularmovies.utility.DefaultServiceLocator
-import com.qartf.popularmovies.utility.ServiceLocator
-import com.qartf.popularmovies.utility.getValue
+import com.qartf.popularmovies.utility.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -34,9 +31,10 @@ class GridViewViewModelTest {
         movieDatabase = Room.inMemoryDatabaseBuilder(application, MovieDatabase::class.java).build()
 
         val fakeApi = FakeTheMovieDbApi()
-        fakeApi.addPost(Constants.SORT_BY_MOST_POPULAR, movieFactory.createMovie())
-        fakeApi.addPost(Constants.SORT_BY_MOST_POPULAR, movieFactory.createMovie())
-        fakeApi.addPost(Constants.SORT_BY_MOST_POPULAR, movieFactory.createMovie())
+        fakeApi.sortByTest = Constants.SORT_BY_POPULARITY
+        fakeApi.addPost(Constants.SORT_BY_POPULARITY, movieFactory.createMovie())
+        fakeApi.addPost(Constants.SORT_BY_POPULARITY, movieFactory.createMovie())
+        fakeApi.addPost(Constants.SORT_BY_POPULARITY, movieFactory.createMovie())
 
         // use a controlled service locator w/ fake API
         ServiceLocator.swap(
@@ -47,7 +45,8 @@ class GridViewViewModelTest {
         )
 
         val repository = ServiceLocator.instance(application).getRepository()
-        gridViewViewModel = GridViewViewModel(repository, 2, Constants.SORT_BY_MOST_POPULAR, "1")
+        val prefResult = Result(2,  Constants.SORT_BY_POPULARITY,  Constants.SORT_BY_GENRE_DEFAULT)
+        gridViewViewModel = GridViewViewModel(repository, prefResult)
         gridViewViewModel.onRecyclerItemClick(movieFactory.createMovie())
     }
 
@@ -60,7 +59,7 @@ class GridViewViewModelTest {
     @Throws(InterruptedException::class)
     fun testDefaultValues() {
         assertEquals(getValue(gridViewViewModel.columns), 2)
-        assertEquals(getValue(gridViewViewModel.sortBy), Constants.SORT_BY_MOST_POPULAR)
+        assertEquals(getValue(gridViewViewModel.sortBy).sortBy, Constants.SORT_BY_POPULARITY)
         assertNotNull(getValue(gridViewViewModel.listItem))
         assertTrue(getValue(gridViewViewModel.posts).size > 0)
     }

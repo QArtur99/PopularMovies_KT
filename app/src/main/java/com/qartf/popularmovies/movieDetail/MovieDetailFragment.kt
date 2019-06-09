@@ -50,10 +50,7 @@ class MovieDetailFragment : Fragment() {
                     val binding = DialogReviewBinding.inflate(LayoutInflater.from(activity))
                     binding.movieDetailViewModel = movieDetailViewModel
                     binding.recyclerView.addItemDecoration(
-                        DividerItemDecoration(
-                            activity,
-                            DividerItemDecoration.VERTICAL
-                        )
+                        DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
                     )
                     binding.recyclerView.adapter = ReviewAdapter(ReviewAdapter.OnClickListener { product ->
                         movieDetailViewModel.onReviewListItemClick(product)
@@ -70,10 +67,7 @@ class MovieDetailFragment : Fragment() {
                     val binding = DialogVideoBinding.inflate(LayoutInflater.from(activity))
                     binding.movieDetailViewModel = movieDetailViewModel
                     binding.recyclerView.addItemDecoration(
-                        DividerItemDecoration(
-                            activity,
-                            DividerItemDecoration.VERTICAL
-                        )
+                        DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
                     )
                     binding.recyclerView.adapter = VideoAdapter(VideoAdapter.OnClickListener { product ->
                         movieDetailViewModel.onVideoListItemClick(product)

@@ -9,8 +9,8 @@
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/abc_action_bar_default_height_material"
-                android:background="@drawable/gradient_tool_bar"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -24,10 +24,22 @@
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/colorWhite"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tabLayout"
+                app:tabBackground="@drawable/selector_tab"
+                app:tabGravity="fill"
+                app:tabIndicatorHeight="4dp"
+                app:tabMode="scrollable"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:tabSelectedTextColor="@color/colorWhite"
+                app:tabTextColor="@color/colorWhite"/>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

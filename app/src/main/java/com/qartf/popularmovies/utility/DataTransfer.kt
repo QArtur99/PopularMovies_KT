@@ -40,7 +40,7 @@ fun Movie.asDatabaseModel(): MovieItem {
         vote_average = vote_average,
         title = title,
         popularity = popularity,
-        poster_path = poster_path,
+        poster_path = poster_path ?: "",
         original_language = original_language,
         original_title = original_title,
         genre_ids = convertToString(genre_ids),

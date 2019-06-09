@@ -15,8 +15,8 @@
 
     //Detail activity
     <string name="overview">Overview</string>
-    <string name="release_date">Release date:</string>
-    <string name="vote_average">Vote average:</string>
+    <string name="release_date_detail">Release date:</string>
+    <string name="vote_average_detail">Vote average:</string>
     <string name="reviews">Reviews</string>
     <string name="trailers">Trailers</string>
 
@@ -26,13 +26,6 @@
     <string name="favorite">Favorite</string>
     <string name="most_popular">Most popular</string>
     <string name="highest_rated">Highest rated</string>
-
-    <string name="pref_number_of_columns_key" translatable="false">show_x_columns</string>
-    <string name="pref_sort_by_key" translatable="false">sort_by</string>
-    <string name="pref_sort_by_most_popular" translatable="false">popular</string>
-    <string name="pref_sort_by_highest_rated" translatable="false">top_rated</string>
-    <string name="pref_sort_by_favorite" translatable="false">favorite</string>
-
 
 
     //Settings menu
@@ -46,7 +39,6 @@
     <string name="four_columns">Four columns</string>
 
 
-
     //Add
     <string name="editor_insert_movie_successful">Movie added to favorite</string>
     <string name="editor_insert_movie_failed">Error with adding movie</string>
@@ -55,13 +47,12 @@
     <string name="editor_delete_product_failed">Error with removing movie</string>
 
 
-    //onSaveInstanceState
-    <string name="pref_pageNo" translatable="false">pref_pageNo</string>
-    <string name="pref_firstView" translatable="false">pref_firstView</string>
-    <string name="pref_lastClicked" translatable="false">pref_lastClicked</string>
-
     //Test
     <string name="middle">This is the middle!</string>
     <string name="retry">Retry</string>
+    <string name="release_date">Release date</string>
+    <string name="revenue">Revenue</string>
+    <string name="vote_average">Vote average</string>
+    <string name="vote_count">Vote count</string>
 
 </resources>

@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModel
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
+import com.qartf.popularmovies.utility.DiscoverMovie
+import com.qartf.popularmovies.utility.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 class GridViewViewModel(
     private val repository: Repository,
-    private val columnNo: Int,
-    private val sortByInit: String,
-    private val pageNo: String
+    private val prefResult: Result
 ) :
     ViewModel() {
 
@@ -30,12 +30,18 @@ class GridViewViewModel(
         _columns.value = requestId
     }
 
-    private val _sortBy = MutableLiveData<String>()
-    val sortBy: LiveData<String>
+    private val _sortBy = MutableLiveData<DiscoverMovie>()
+    val sortBy: LiveData<DiscoverMovie>
         get() = _sortBy
 
     fun onSortByChanged(requestId: String) {
-        _sortBy.value = requestId
+        _sortBy.value?.sortBy = requestId
+        _sortBy.value = _sortBy.value
+    }
+
+    fun onSortByGenreChanged(sortByGenre: String) {
+        _sortBy.value?.sortByGenre = sortByGenre
+        _sortBy.value = _sortBy.value
     }
 
     private val _listItem = MutableLiveData<Movie>()
@@ -47,8 +53,9 @@ class GridViewViewModel(
     }
 
     init {
-        onColumnChanged(columnNo)
-        onSortByChanged(sortByInit)
+        val (columns, sortBy, genre) = prefResult
+        onColumnChanged(columns)
+        _sortBy.value = DiscoverMovie(sortBy, genre)
     }
 
     override fun onCleared() {
@@ -57,13 +64,18 @@ class GridViewViewModel(
     }
 
 
+
+
+
     //Paging
     private val repoResult = Transformations.map(sortBy) {
-        when (it) {
-            SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it, 20)
-            else -> repository.getMoviesPaging(it, 20)
+        when (it.sortBy) {
+            SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it.sortBy, 20)
+            else -> repository.getMoviesPaging(it.sortBy, it.sortByGenre)
         }
     }
+
+    private val repoResult2 = Transformations.map(sortBy){sortBy }
 
     val posts = Transformations.switchMap(repoResult) { it.pagedList }!!
     val networkState = Transformations.switchMap(repoResult) { it.networkState }!!
@@ -77,6 +89,5 @@ class GridViewViewModel(
         val listing = repoResult?.value
         listing?.retry?.invoke()
     }
-
 
 }

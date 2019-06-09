@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.qartf.popularmovies.domain.*
 import com.qartf.popularmovies.repository.Repository
-import com.qartf.popularmovies.utility.asDatabaseModel
 import com.qartf.popularmovies.utility.Constants
+import com.qartf.popularmovies.utility.asDatabaseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,7 +30,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun setFirstListItem(listItem: Movie) {
-        if(_listItem.value == null) {
+        if (_listItem.value == null) {
             _listItem.value = listItem
             getMovieReviewsAsync()
             getMovieTrailersAsync()
@@ -68,6 +68,14 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
 
     fun onShowTrailers(show: Boolean) {
         _showTrailers.value = show
+    }
+
+    private val _showOverview = MutableLiveData<Boolean>()
+    val showOverview: LiveData<Boolean>
+        get() = _showOverview
+
+    fun onShowOverview(show: Boolean) {
+        _showOverview.value = !(_showOverview.value ?: false)
     }
 
     private val _reviewListItem = MutableLiveData<Review>()
@@ -128,7 +136,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
-    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "")}!!
+    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }!!
 
 
     private val _fabButton = MutableLiveData<Boolean>()
@@ -140,7 +148,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun onFabButtonClick(show: Boolean) {
-        if(favorite.value!= null) {
+        if (favorite.value != null) {
             if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
             setFabButton(true)
         }
