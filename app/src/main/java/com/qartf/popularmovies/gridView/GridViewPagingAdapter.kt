@@ -1,6 +1,7 @@
 package com.qartf.popularmovies.gridView
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import com.qartf.popularmovies.databinding.NetworkStateItemBinding
 import com.qartf.popularmovies.databinding.RowMovieItemBinding
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.repository.NetworkState
+import com.qartf.popularmovies.utility.ResultMovie
 
 class GridViewPagingAdapter(
     private val clickListener: OnClickListener,
@@ -85,8 +87,8 @@ class GridViewPagingAdapter(
         }
     }
 
-    class OnClickListener(val clickListener: (productId: Movie) -> Unit) {
-        fun onClick(product: Movie) = clickListener(product)
+    class OnClickListener(val clickListener: (resultMovie: ResultMovie) -> Unit) {
+        fun onClick(v: View, product: Movie) = clickListener(ResultMovie(v, product))
     }
 
     class OnSizeListener(val clickListener: () -> Boolean) {

@@ -5,7 +5,6 @@ import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -28,6 +27,7 @@ import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.movieDetail.ReviewAdapter
 import com.qartf.popularmovies.movieDetail.VideoAdapter
 import com.qartf.popularmovies.repository.NetworkState
+import com.qartf.popularmovies.utility.Constants.FabStatus
 
 
 @BindingAdapter("listData")
@@ -111,7 +111,7 @@ fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewMod
         })
         .apply(
             RequestOptions()
-                .placeholder(R.drawable.loading_animation)
+                //.placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image)
         )
         .into(imgView)
@@ -119,37 +119,40 @@ fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewMod
 }
 
 @BindingAdapter("loadBackground")
-fun loadBackground(linearLayout: LinearLayout, drawable: Drawable?) {
+fun loadBackground(view: View, drawable: Drawable?) {
     if (drawable != null) {
         val layers = arrayOfNulls<Drawable>(2)
-        layers[0] = drawable
-        layers[1] =
-            ContextCompat.getDrawable(linearLayout.context, R.drawable.background_transparent)
+        layers[0] = Utility.resize(view.width, view.height, drawable, view.context.resources)
+        layers[1] = ContextCompat.getDrawable(view.context, R.drawable.background_transparent)
         val layerDrawable = LayerDrawable(layers)
-        linearLayout.background = layerDrawable
+        view.background = layerDrawable
     }
 }
 
 @BindingAdapter("visibleIf")
-fun changeVisibility(view: View?, visible: Boolean) {
-    view?.visibility = if (visible) View.VISIBLE else View.GONE
+fun changeVisibility(view: View, visible: FabStatus?) {
+    when (visible) {
+        FabStatus.TOP -> view.visibility = if (view.id == R.id.fabTop) View.VISIBLE else View.GONE
+        FabStatus.BOTTOM -> view.visibility = if (view.id == R.id.fabBottom) View.VISIBLE else View.GONE
+        else -> view.visibility = View.GONE
+    }
 }
 
 @BindingAdapter("appBarLayoutOpen", "item")
-fun onAppBarLayoutOpen(collapsingToolbarLayout: CollapsingToolbarLayout?, appBarLayoutOpen: Boolean, item: Movie?) {
-    if (appBarLayoutOpen) {
-        collapsingToolbarLayout?.title = ""
-    } else {
-        collapsingToolbarLayout?.title = item?.original_title
+fun onAppBarLayoutOpen(collapsingToolbarLayout: CollapsingToolbarLayout, appBarLayoutOpen: FabStatus?, item: Movie?) {
+    when (appBarLayoutOpen) {
+        FabStatus.TOP -> collapsingToolbarLayout.title = ""
+        FabStatus.BOTTOM -> collapsingToolbarLayout.title = item?.original_title
+        else -> collapsingToolbarLayout.title = ""
     }
 }
 
 @BindingAdapter("fabIcon")
 fun setFabIcon(floatingActionButton: FloatingActionButton, isFavorite: Boolean) {
     if (isFavorite) {
-        floatingActionButton.setImageResource(com.qartf.popularmovies.R.drawable.ic_favorite)
+        floatingActionButton.setImageResource(R.drawable.ic_favorite)
     } else {
-        floatingActionButton.setImageResource(com.qartf.popularmovies.R.drawable.ic_favorite_border)
+        floatingActionButton.setImageResource(R.drawable.ic_favorite_border)
     }
 }
 
@@ -165,7 +168,7 @@ fun enableVideo(button: Button, reviewContainer: VideoContainer?) {
 
 @BindingAdapter("showOverview")
 fun showOverview(textView: TextView, showOverview: Boolean?) {
-    if(showOverview == true) textView.maxLines = Int.MAX_VALUE else textView.maxLines = 4
+    if (showOverview == true) textView.maxLines = Int.MAX_VALUE else textView.maxLines = 4
 }
 
 

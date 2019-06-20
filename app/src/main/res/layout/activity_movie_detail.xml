@@ -21,7 +21,6 @@
                 android:id="@+id/appBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-16dp"
                 android:background="@color/colorPrimaryDark"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -29,7 +28,6 @@
                     android:id="@+id/collapsingToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:appBarLayoutOpen="@{movieDetailViewModel.appBarLayoutOpen}"
@@ -60,7 +58,6 @@
                 <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="16dp"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -73,17 +70,16 @@
                 android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="-16dp"
-                android:fillViewport="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:clipToPadding="true"
+                app:loadBackground="@{movieDetailViewModel.poster}"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
             <FrameLayout
                     android:id="@+id/detailsViewFrame"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/colorPrimary"
-                    android:scaleType="centerInside">
+                    android:layout_gravity="top">
                 <fragment
                         android:id="@+id/nav_host_fragment"
                         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -107,7 +103,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/shape_fab"
-                app:elevation="0dp"
         >
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -134,15 +129,14 @@
                 app:layout_anchor="@id/nestedScrollView"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_fab"
-                app:elevation="0dp">
+                android:background="@drawable/shape_fab">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabBottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_favorite"
-                    app:visibleIf="@{!movieDetailViewModel.appBarLayoutOpen}"
+                    app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
                     app:fabSize="normal"
                     app:backgroundTint="#00000000"
                     app:elevation="0dp"

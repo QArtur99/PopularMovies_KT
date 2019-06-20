@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.*
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,7 +24,6 @@ import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.repository.NetworkState
 import com.qartf.popularmovies.repository.Status
-import com.qartf.popularmovies.utility.Constants
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_KEY
@@ -36,6 +37,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_RELEASE_DATE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
+import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.Result
 import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertToString
@@ -51,6 +53,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var sortBy: String = ""
     private var adapterItemCount: Int = 0
     private var savedInstanceState: Bundle? = null
+    private var activityWithOptions = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -95,13 +98,23 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         })
 
         gridViewViewModel.listItem.observe(viewLifecycleOwner, Observer {
-            it?.let { listItem ->
+            it?.let { (v, listItem) ->
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     movieDetailViewModel.setListItem(listItem)
                 } else {
                     val intent = Intent(activity, MovieDetailActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
-                    application.startActivity(intent)
+
+                    if(activityWithOptions) {
+                        val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this.activity!!,
+                            Pair<View, String>(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
+                        )
+                        activity!!.startActivity(intent, activityOptions.toBundle())
+                    }else{
+                        activity!!.startActivity(intent)
+                    }
                 }
                 //gridViewViewModel.onRecyclerItemClick(null)
             }
@@ -115,7 +128,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                     }
                 }
                 adapterItemCount = listItem.size
-                if (this.sortBy == Constants.SORT_BY_FAVORITE && adapterItemCount > 0) {
+                if (this.sortBy == SORT_BY_FAVORITE && adapterItemCount > 0) {
                     gridViewViewModel.refresh()
                 }
             }
@@ -269,6 +282,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             val listState: Parcelable? = savedInstanceState!!.getParcelable(RECYCLER_VIEW_STATE_ID)
             binding.recyclerView.layoutManager?.onRestoreInstanceState(listState)
         }
+        activityWithOptions = true
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -1,6 +1,7 @@
 package com.qartf.popularmovies
 
 import android.app.Application
+import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
@@ -47,7 +48,7 @@ class GridViewViewModelTest {
         val repository = ServiceLocator.instance(application).getRepository()
         val prefResult = Result(2,  Constants.SORT_BY_POPULARITY,  Constants.SORT_BY_GENRE_DEFAULT)
         gridViewViewModel = GridViewViewModel(repository, prefResult)
-        gridViewViewModel.onRecyclerItemClick(movieFactory.createMovie())
+        gridViewViewModel.onRecyclerItemClick(ResultMovie(View(application), movieFactory.createMovie()))
     }
 
     @After

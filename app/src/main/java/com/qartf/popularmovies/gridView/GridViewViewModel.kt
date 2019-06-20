@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
 import com.qartf.popularmovies.utility.DiscoverMovie
 import com.qartf.popularmovies.utility.Result
+import com.qartf.popularmovies.utility.ResultMovie
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -44,11 +44,11 @@ class GridViewViewModel(
         _sortBy.value = _sortBy.value
     }
 
-    private val _listItem = MutableLiveData<Movie>()
-    val listItem: LiveData<Movie>
+    private val _listItem = MutableLiveData<ResultMovie>()
+    val listItem: LiveData<ResultMovie>
         get() = _listItem
 
-    fun onRecyclerItemClick(listItem: Movie?) {
+    fun onRecyclerItemClick(listItem: ResultMovie?) {
         _listItem.value = listItem
     }
 

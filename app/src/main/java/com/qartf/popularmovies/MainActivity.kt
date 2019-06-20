@@ -6,16 +6,27 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import com.qartf.popularmovies.databinding.ActivityMainBinding
+import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
+import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.utility.Constants
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_KEY
+import com.qartf.popularmovies.utility.ServiceLocator
 import kotlinx.android.synthetic.main.tool_bar.*
 import kotlinx.android.synthetic.main.tool_bar.view.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val movieDetailViewModel: MovieDetailViewModel by lazy {
+        val application = requireNotNull(this).application
+        val repository = ServiceLocator.instance(application).getRepository()
+        val viewModelFactory = MovieDetailViewModelFactory(repository)
+        ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
+    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
@@ -24,6 +35,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        binding.movieDetailViewModel = movieDetailViewModel
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
         setSupportActionBar(binding.root.toolbar)

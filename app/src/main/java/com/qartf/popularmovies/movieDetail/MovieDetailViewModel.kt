@@ -7,7 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.qartf.popularmovies.domain.*
 import com.qartf.popularmovies.repository.Repository
-import com.qartf.popularmovies.utility.Constants
+import com.qartf.popularmovies.utility.Constants.ApiStatus
+import com.qartf.popularmovies.utility.Constants.FabStatus
 import com.qartf.popularmovies.utility.asDatabaseModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,11 +39,11 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     }
 
 
-    private val _appBarLayout = MutableLiveData<Boolean>()
-    val appBarLayoutOpen: LiveData<Boolean>
+    private val _appBarLayout = MutableLiveData<FabStatus>()
+    val appBarLayoutOpen: LiveData<FabStatus>
         get() = _appBarLayout
 
-    fun onAppBarLayoutOpen(open: Boolean) {
+    fun onAppBarLayoutOpen(open: FabStatus) {
         _appBarLayout.value = open
     }
 
@@ -94,8 +95,8 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         _videoListItem.value = listItem
     }
 
-    private val _status = MutableLiveData<Constants.ApiStatus>()
-    val status: LiveData<Constants.ApiStatus>
+    private val _status = MutableLiveData<ApiStatus>()
+    val status: LiveData<ApiStatus>
         get() = _status
 
     private val _reviews = MutableLiveData<ReviewContainer>()
@@ -110,12 +111,12 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     private fun getMovieReviewsAsync() {
         uiScope.launch {
             try {
-                _status.value = Constants.ApiStatus.LOADING
+                _status.value = ApiStatus.LOADING
                 val listResult = repository.getMovieReviewsAsync(listItem.value!!.id)
-                _status.value = Constants.ApiStatus.DONE
+                _status.value = ApiStatus.DONE
                 _reviews.value = listResult
             } catch (e: Exception) {
-                _status.value = Constants.ApiStatus.ERROR
+                _status.value = ApiStatus.ERROR
                 _reviews.value = null
             }
         }
@@ -124,12 +125,12 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     private fun getMovieTrailersAsync() {
         uiScope.launch {
             try {
-                _status.value = Constants.ApiStatus.LOADING
+                _status.value = ApiStatus.LOADING
                 val listResult = repository.getMovieTrailersAsync(listItem.value!!.id)
-                _status.value = Constants.ApiStatus.DONE
+                _status.value = ApiStatus.DONE
                 _videos.value = listResult
             } catch (e: Exception) {
-                _status.value = Constants.ApiStatus.ERROR
+                _status.value = ApiStatus.ERROR
                 _videos.value = null
             }
         }

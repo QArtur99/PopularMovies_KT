@@ -82,7 +82,10 @@ class Constants {
 
         const val THE_MOVIE_DB_API_TOKEN = BuildConfig.THE_MOVIE_DB_API_TOKEN
         const val THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3"
+
+        const val TOOLBAR_IMAGE = "toolbarImage"
     }
 
     enum class ApiStatus { LOADING, ERROR, DONE, CONNECTION_ERROR }
+    enum class FabStatus { TOP, BOTTOM, NONE }
 }

@@ -3,6 +3,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+                name="movieDetailViewModel"
+                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -48,7 +53,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.98"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/colorPrimary"
                     android:scaleType="centerInside">
                 <fragment
                         android:id="@+id/nav_host_poster"
@@ -70,7 +74,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/colorPrimary"
+                    app:loadBackground="@{movieDetailViewModel.poster}"
                     android:scaleType="centerInside">
                 <fragment
                         android:id="@+id/nav_host_detail"
