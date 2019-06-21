@@ -27,8 +27,8 @@ android {
         applicationId "com.qartf.popularmovies"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.03"
+        versionCode 5
+        versionName "1.04"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
