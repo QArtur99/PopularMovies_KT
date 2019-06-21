@@ -1,5 +1,5 @@
 # Popular Movies
-Popular Movies app inspired by the Udacity Android Developer Nanodegree. Rewritten in Kotlin and implements the new Jetpack libraries.
+Popular Movies app inspired by the Udacity Android Developer Nanodegree. Rewritten in Kotlin and implements the Jetpack libraries.
 The application fetches movie data using https://www.themoviedb.org (TMDB). 
 
 
@@ -20,9 +20,8 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 
 
 ### Screenshots
-![image](https://user-images.githubusercontent.com/25232443/59161517-ec68a100-8ae3-11e9-9414-b02f9bfb864a.png)
-![image](https://user-images.githubusercontent.com/25232443/59161526-fd191700-8ae3-11e9-8b2a-ee4438cfc5e4.png)
-
+![image](https://user-images.githubusercontent.com/25232443/59937609-342be880-9453-11e9-957c-d324107db543.png)
+![image](https://user-images.githubusercontent.com/25232443/59937627-3db55080-9453-11e9-9a2b-b62c49b23451.png)
 
 ### How to run the project in development mode
 * Clone or download repository as a zip file.
