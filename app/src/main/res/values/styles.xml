@@ -13,4 +13,10 @@
         <item name="android:windowSharedElementEnterTransition">@transition/grid_exit</item>
         <item name="android:windowSharedElementExitTransition">@transition/grid_exit</item>
     </style>
+
+    <style name="ChipTheme" parent="Theme.MaterialComponents">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorAccentDark">#303f9f</color>
-    <color name="otherDays">#e0e0e0</color>
+    <color name="bottomSheetSelected">#e0e0e0</color>
     <color name="textTransparent">#BB424242</color>
     <color name="whiteTransparent">#E0FFFFFF</color>
     <color name="detailMovieText">#212121</color>

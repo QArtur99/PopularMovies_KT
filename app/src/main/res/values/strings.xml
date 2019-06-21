@@ -54,5 +54,6 @@
     <string name="revenue">Revenue</string>
     <string name="vote_average">Vote average</string>
     <string name="vote_count">Vote count</string>
+    <string name="genres">Genres</string>
 
 </resources>

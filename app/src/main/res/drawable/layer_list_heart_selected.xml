@@ -3,7 +3,7 @@
 
     <item android:id="@+id/background">
         <shape android:shape="rectangle">
-            <solid android:color="@color/otherDays"/>
+            <solid android:color="@color/bottomSheetSelected"/>
         </shape>
     </item>
     <item

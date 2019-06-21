@@ -106,13 +106,13 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
 
-                    if(activityWithOptions) {
+                    if (activityWithOptions) {
                         val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             this.activity!!,
                             Pair<View, String>(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
                         )
                         activity!!.startActivity(intent, activityOptions.toBundle())
-                    }else{
+                    } else {
                         activity!!.startActivity(intent)
                     }
                 }
@@ -210,14 +210,14 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 )
             }
             SORT_BY_KEY -> {
-                val sortBy = sharedPreferences.getString(key, SORT_BY_POPULARITY)
+                val sortBy = sharedPreferences.getString(key, SORT_BY_POPULARITY)!!
                 when (sortBy) {
                     SORT_BY_FAVORITE -> gridViewViewModel.onSortByChanged(sortBy)
                     else -> gridViewViewModel.onSortByChanged(sortBy)
                 }
             }
             SORT_BY_GENRE_KEY -> {
-                val sortByGenre = sharedPreferences.getString(key, SORT_BY_GENRE_DEFAULT)
+                val sortByGenre = sharedPreferences.getString(key, SORT_BY_GENRE_DEFAULT)!!
                 gridViewViewModel.onSortByGenreChanged(sortByGenre)
             }
         }

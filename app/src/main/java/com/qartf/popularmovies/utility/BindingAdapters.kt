@@ -2,6 +2,7 @@ package com.qartf.popularmovies.utility
 
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -17,6 +18,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.domain.Movie
@@ -169,6 +172,28 @@ fun enableVideo(button: Button, reviewContainer: VideoContainer?) {
 @BindingAdapter("showOverview")
 fun showOverview(textView: TextView, showOverview: Boolean?) {
     if (showOverview == true) textView.maxLines = Int.MAX_VALUE else textView.maxLines = 4
+}
+
+@BindingAdapter("showGenres")
+fun setGenreChips(chipGroup: ChipGroup, movie: Movie?) {
+    movie?.let {
+        val inflater = LayoutInflater.from(chipGroup.context)
+        val children = mutableListOf<Chip>()
+        it.genre_ids.map { genreId ->
+            val genre = Constants.GENRE_MAP[genreId]
+            if (genre.isNullOrBlank().not()) {
+                val chip = inflater.inflate(R.layout.genre, chipGroup, false) as Chip
+                chip.text = genre
+                chip.tag = genreId
+                children.add(chip)
+            }
+        }
+
+        chipGroup.removeAllViews()
+        for (chip in children) {
+            chipGroup.addView(chip)
+        }
+    }
 }
 
 
