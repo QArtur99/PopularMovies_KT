@@ -7,6 +7,9 @@
     <dimen name="buttonTextSize">16sp</dimen>
     <dimen name="buttonPadding">32dp</dimen>
     <dimen name="tabLayout">40dp</dimen>
+    <dimen name="touch_raise">6dp</dimen>
+    <dimen name="z_app_bar">4dp</dimen>
+    <dimen name="z_card">2dp</dimen>
     //Dialog
     <dimen name="dialogTitle">22sp</dimen>
     <dimen name="dialogAuthor">18sp</dimen>
