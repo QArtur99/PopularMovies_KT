@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           package="com.qartf.popularmovies">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
             android:allowBackup="true"
@@ -22,7 +22,9 @@
         </activity>
         <activity android:name="com.qartf.popularmovies.MovieDetailActivity"
                   android:label="MovieDetailActivity"
-                  android:parentActivityName="com.qartf.popularmovies.MainActivity"/>
+                  android:parentActivityName="com.qartf.popularmovies.MainActivity"
+                  android:theme="@style/AppThemeTransparent"
+        />
     </application>
 
 </manifest>

@@ -71,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="true"
+                android:stateListAnimator="@animator/fade_in"
                 app:loadBackground="@{movieDetailViewModel.poster}"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >

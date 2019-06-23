@@ -85,8 +85,9 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
                 behavior.topAndBottomOffset = animation.animatedValue as Int
                 appBar.requestLayout()
             }
-            valueAnimator.setIntValues(0, 0, -600)
-            valueAnimator.duration = 1500
+            valueAnimator.setIntValues(0, -600)
+            valueAnimator.duration = 1200
+            valueAnimator.startDelay = 600
             valueAnimator.start()
 
             valueAnimator.doOnEnd {

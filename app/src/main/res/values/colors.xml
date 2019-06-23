@@ -16,5 +16,6 @@
     <color name="redFavorite">#e57373</color>
     <color name="lightGrey">#e0e0e0</color>
     <color name="disable">#CCCCCC</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
