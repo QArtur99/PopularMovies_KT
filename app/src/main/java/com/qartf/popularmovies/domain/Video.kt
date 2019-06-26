@@ -6,7 +6,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class VideoContainer(
     val id: String,
-    @Json(name = "results") val videos: List<Video>)
+    @Json(name = "results") val videos: List<Video>
+)
 
 @JsonClass(generateAdapter = true)
 data class Video(

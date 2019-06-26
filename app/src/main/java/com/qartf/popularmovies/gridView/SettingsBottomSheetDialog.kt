@@ -14,12 +14,10 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_KEY
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_POPULARITY
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 
-
 class SettingsBottomSheetDialog(activity: Activity) : BottomSheetDialog(activity) {
 
     lateinit var sharedPreferences: SharedPreferences
     lateinit var binding: DialogSettingsBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,5 +59,4 @@ class SettingsBottomSheetDialog(activity: Activity) : BottomSheetDialog(activity
         binding.mostPopular.isSelected = false
         binding.highestRated.isSelected = false
     }
-
 }

@@ -42,7 +42,6 @@ import com.qartf.popularmovies.utility.Result
 import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertToString
 
-
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var sharedPreferences: SharedPreferences
@@ -56,7 +55,9 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var activityWithOptions = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         this.savedInstanceState = savedInstanceState
         binding = DataBindingUtil.inflate(
@@ -77,7 +78,6 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
         binding.gridViewViewModel = gridViewViewModel
         binding.lifecycleOwner = this
-
 
         gridViewViewModel.columns.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
@@ -116,7 +116,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                         activity!!.startActivity(intent)
                     }
                 }
-                //gridViewViewModel.onRecyclerItemClick(null)
+                // gridViewViewModel.onRecyclerItemClick(null)
             }
         })
 
@@ -133,7 +133,6 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 }
             }
         })
-
 
         binding.recyclerView.adapter = GridViewPagingAdapter(
             GridViewPagingAdapter.OnClickListener { product -> gridViewViewModel.onRecyclerItemClick(product) },
@@ -158,7 +157,6 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         }
     }
 
-
     private fun setLayoutManager(columns: Int) {
         val manager = GridLayoutManager(application, columns)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -180,7 +178,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         when (item.itemId) {
             R.id.action_favorite -> movieDetailViewModel.onFabButtonClick(true)
             R.id.action_refresh -> gridViewViewModel.refresh()
-            //R.id.action_sortBy -> openBottomDialog()
+            // R.id.action_sortBy -> openBottomDialog()
             R.id.favorite -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_FAVORITE).apply()
             R.id.popularity -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_POPULARITY).apply()
             R.id.releaseDate -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_RELEASE_DATE).apply()
@@ -274,7 +272,6 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         val activeNetwork = cm.activeNetworkInfo
         return activeNetwork != null && activeNetwork.isConnected
     }
-
 
     override fun onResume() {
         super.onResume()

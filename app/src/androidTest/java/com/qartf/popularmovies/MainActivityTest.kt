@@ -23,7 +23,6 @@ import com.qartf.popularmovies.utility.DefaultServiceLocator
 import com.qartf.popularmovies.utility.ServiceLocator
 import junit.framework.TestCase.assertEquals
 
-
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -92,7 +91,6 @@ class MainActivityTest {
         )
         intended(hasComponent(MovieDetailActivity::class.java.name))
     }
-
 
     private fun waitForAdapterChange(recyclerView: RecyclerView) {
         val latch = CountDownLatch(1)

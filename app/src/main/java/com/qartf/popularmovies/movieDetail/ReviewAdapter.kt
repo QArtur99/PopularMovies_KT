@@ -11,7 +11,6 @@ import com.qartf.popularmovies.domain.Review
 class ReviewAdapter(private val clickListener: OnClickListener) : ListAdapter<Review,
         ReviewAdapter.ViewHolder>(GridViewDiffCallback) {
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = getItem(position)
         holder.bind(clickListener, product)

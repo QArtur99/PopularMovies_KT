@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.network.TheMovieDbApi
-import java.util.*
+import java.util.HashMap
 import java.util.concurrent.Executor
 
 class MovieDataSourceFactory(

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Result
 
-
 class GridViewViewModelFactory(
     private val repository: Repository,
     private val prefResult: Result

@@ -2,7 +2,6 @@ package com.qartf.popularmovies.movieDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.qartf.popularmovies.database.MovieDatabaseDao
 import com.qartf.popularmovies.repository.Repository
 
 class MovieDetailViewModelFactory(private val repository: Repository) :

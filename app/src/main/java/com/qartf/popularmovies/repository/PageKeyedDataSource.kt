@@ -9,7 +9,7 @@ import com.qartf.popularmovies.utility.Constants
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
-import java.util.*
+import java.util.HashMap
 import java.util.concurrent.Executor
 
 class PageKeyedDataSource(
@@ -62,7 +62,7 @@ class PageKeyedDataSource(
                         val data = response.body()
                         val items = data?.movies ?: emptyList()
                         retry = null
-                        callback.onResult(items, (data?.page?.toInt()?.plus(1) ).toString())
+                        callback.onResult(items, (data?.page?.toInt()?.plus(1)).toString())
                         networkState.postValue(NetworkState.LOADED)
                     } else {
                         retry = { loadAfter(params, callback) }
@@ -89,7 +89,7 @@ class PageKeyedDataSource(
             retry = null
             networkState.postValue(NetworkState.LOADED)
             initialLoad.postValue(NetworkState.LOADED)
-            callback.onResult(items, "", (data?.page?.toInt()?.plus(1) ).toString())
+            callback.onResult(items, "", (data?.page?.toInt()?.plus(1)).toString())
         } catch (ioException: IOException) {
             retry = { loadInitial(params, callback) }
             val error = NetworkState.error(ioException.message ?: "unknown error")

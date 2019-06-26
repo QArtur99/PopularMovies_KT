@@ -6,7 +6,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 fun List<MovieItem>.asDomainModel(): List<Movie> {
-    return map {it.asDomainModel()}
+    return map { it.asDomainModel() }
 }
 
 fun MovieItem.asDomainModel(): Movie {
@@ -29,7 +29,7 @@ fun MovieItem.asDomainModel(): Movie {
 }
 
 fun List<Movie>.asDatabaseModel(): List<MovieItem> {
-    return map {it.asDatabaseModel()}
+    return map { it.asDatabaseModel() }
 }
 
 fun Movie.asDatabaseModel(): MovieItem {

@@ -30,6 +30,4 @@ interface MovieDatabaseDao {
 
     @Query("SELECT * FROM movies ORDER BY indexInResponse ASC")
     fun getAllMoviesDS(): DataSource.Factory<Int, MovieItem>
-
 }
-

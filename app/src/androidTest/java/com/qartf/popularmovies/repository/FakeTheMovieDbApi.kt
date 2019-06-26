@@ -16,19 +16,19 @@ import java.io.IOException
  */
 class FakeTheMovieDbApi : TheMovieDbApi {
     override fun getMovies(sortBy: String, args: Map<String, String>): Call<MovieContainer> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getMovieTrailersAsync(movieId: String, args: Map<String, String>): Deferred<VideoContainer> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getMovieReviewsAsync(movieId: String, args: Map<String, String>): Deferred<ReviewContainer> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getMoviesAsync(sortBy: String, args: Map<String, String>): Deferred<MovieContainer> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     private val model = mutableMapOf<String, SortBy>()
@@ -89,6 +89,4 @@ class FakeTheMovieDbApi : TheMovieDbApi {
             return items.subList(startPos, Math.min(items.size, startPos + limit))
         }
     }
-
-
 }

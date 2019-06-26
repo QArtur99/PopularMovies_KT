@@ -63,11 +63,7 @@ class GridViewViewModel(
         viewModelJob.cancel()
     }
 
-
-
-
-
-    //Paging
+    // Paging
     private val repoResult = Transformations.map(sortBy) {
         when (it.sortBy) {
             SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it.sortBy, 20)
@@ -75,7 +71,7 @@ class GridViewViewModel(
         }
     }
 
-    private val repoResult2 = Transformations.map(sortBy){sortBy }
+    private val repoResult2 = Transformations.map(sortBy) { sortBy }
 
     val posts = Transformations.switchMap(repoResult) { it.pagedList }!!
     val networkState = Transformations.switchMap(repoResult) { it.networkState }!!
@@ -89,5 +85,4 @@ class GridViewViewModel(
         val listing = repoResult?.value
         listing?.retry?.invoke()
     }
-
 }

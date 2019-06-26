@@ -38,7 +38,6 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-
     private val _appBarLayout = MutableLiveData<FabStatus>()
     val appBarLayoutOpen: LiveData<FabStatus>
         get() = _appBarLayout
@@ -107,7 +106,6 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     val videos: LiveData<VideoContainer>
         get() = _videos
 
-
     private fun getMovieReviewsAsync() {
         uiScope.launch {
             try {
@@ -136,9 +134,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-
     val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }!!
-
 
     private val _fabButton = MutableLiveData<Boolean>()
     val fabButton: LiveData<Boolean>
@@ -183,5 +179,4 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
-
 }

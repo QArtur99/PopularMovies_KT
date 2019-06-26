@@ -46,7 +46,7 @@ class GridViewViewModelTest {
         )
 
         val repository = ServiceLocator.instance(application).getRepository()
-        val prefResult = Result(2,  Constants.SORT_BY_POPULARITY,  Constants.SORT_BY_GENRE_DEFAULT)
+        val prefResult = Result(2, Constants.SORT_BY_POPULARITY, Constants.SORT_BY_GENRE_DEFAULT)
         gridViewViewModel = GridViewViewModel(repository, prefResult)
         gridViewViewModel.onRecyclerItemClick(ResultMovie(View(application), movieFactory.createMovie()))
     }

@@ -40,5 +40,4 @@ interface TheMovieDbApi {
         @Path(value = "movieId", encoded = true) movieId: String,
         @QueryMap args: Map<String, String>
     ): Deferred<VideoContainer>
-
 }

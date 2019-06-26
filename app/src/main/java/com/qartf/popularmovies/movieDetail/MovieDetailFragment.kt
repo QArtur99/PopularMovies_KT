@@ -28,7 +28,9 @@ class MovieDetailFragment : Fragment() {
     private var onFabClickCounter: Int = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         binding = DataBindingUtil.inflate(
@@ -141,5 +143,4 @@ class MovieDetailFragment : Fragment() {
         dialog.show()
         dialog.setCanceledOnTouchOutside(true)
     }
-
 }

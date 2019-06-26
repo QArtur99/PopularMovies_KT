@@ -32,7 +32,6 @@ import com.qartf.popularmovies.movieDetail.VideoAdapter
 import com.qartf.popularmovies.repository.NetworkState
 import com.qartf.popularmovies.utility.Constants.FabStatus
 
-
 @BindingAdapter("listData")
 fun bindMoviesRecyclerView(recyclerView: RecyclerView, data: Any?) {
     when (data) {
@@ -79,7 +78,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
                 .error(R.drawable.ic_broken_image)
         )
         .into(imgView)
-
 }
 
 @BindingAdapter("imageUrlDetail", "liveData")
@@ -106,7 +104,11 @@ fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewMod
             }
 
             override fun onResourceReady(
-                p0: Drawable?, p1: Any?, p2: Target<Drawable>?, p3: DataSource?, p4: Boolean
+                p0: Drawable?,
+                p1: Any?,
+                p2: Target<Drawable>?,
+                p3: DataSource?,
+                p4: Boolean
             ): Boolean {
                 movieDetailViewModel.setPoster(p0!!)
                 return false
@@ -114,11 +116,10 @@ fun bindImageDetail(imgView: ImageView, movieDetailViewModel: MovieDetailViewMod
         })
         .apply(
             RequestOptions()
-                //.placeholder(R.drawable.loading_animation)
+                // .placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image)
         )
         .into(imgView)
-
 }
 
 @BindingAdapter("loadBackground")
@@ -195,5 +196,3 @@ fun setGenreChips(chipGroup: ChipGroup, movie: Movie?) {
         }
     }
 }
-
-

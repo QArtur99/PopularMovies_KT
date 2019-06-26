@@ -1,6 +1,5 @@
 package com.qartf.popularmovies
 
-
 import android.animation.ValueAnimator
 import android.content.res.Configuration
 import android.os.Bundle
@@ -23,7 +22,6 @@ import com.qartf.popularmovies.utility.Constants.FabStatus
 import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertFromString
 import kotlinx.android.synthetic.main.activity_movie_detail.*
-
 
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
@@ -97,9 +95,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
                 enterAnimationComleted = true
             }
         }
-
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

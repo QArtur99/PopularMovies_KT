@@ -80,5 +80,4 @@ class MovieDatabaseDaoTest {
         val movieList = getValue(movieDatabaseDao.getAllMovies())
         assertThat(movieList.size, Matchers.equalTo(0))
     }
-
 }

@@ -11,7 +11,6 @@ import com.qartf.popularmovies.domain.Video
 class VideoAdapter(private val clickListener: OnClickListener) : ListAdapter<Video,
         VideoAdapter.ViewHolder>(GridViewDiffCallback) {
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = getItem(position)
         holder.bind(clickListener, product)

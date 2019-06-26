@@ -18,7 +18,6 @@ import com.qartf.popularmovies.utility.ServiceLocator
 import kotlinx.android.synthetic.main.tool_bar.*
 import kotlinx.android.synthetic.main.tool_bar.view.*
 
-
 class MainActivity : AppCompatActivity() {
 
     private val movieDetailViewModel: MovieDetailViewModel by lazy {
@@ -74,7 +73,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
-
         })
     }
 }

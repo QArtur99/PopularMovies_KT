@@ -92,7 +92,7 @@ class GridViewPagingAdapter(
     }
 
     class OnSizeListener(val clickListener: () -> Boolean) {
-        fun onClick() : Boolean = clickListener()
+        fun onClick(): Boolean = clickListener()
     }
 
     class OnNetworkStateClickListener(val clickListener: () -> Unit) {

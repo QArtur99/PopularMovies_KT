@@ -16,7 +16,9 @@ import com.qartf.popularmovies.utility.ServiceLocator
 class PosterFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val binding: FragmentPosterBinding = DataBindingUtil.inflate(
@@ -33,6 +35,4 @@ class PosterFragment : Fragment() {
         binding.lifecycleOwner = this
         return binding.root
     }
-
-
 }
