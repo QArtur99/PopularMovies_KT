@@ -37,6 +37,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            multiDexEnabled = true
 
             buildTypes.each {
                 it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', keystoreProperties['MyTheMovieDBApiToken']

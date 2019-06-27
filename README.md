@@ -45,8 +45,20 @@ Something not working quite as expected? Do you need a feature that has not been
 
 
 ### Contribute
-Awesome! If you would like to contribute with a new feature or submit a bugfix, fork this repo and send a pull request. Please, make sure all the [unit tests](https://github.com/QArtur99/PopularMovies_KT/tree/master/app/src/test/java/com/qartf/popularmovies) & [integration tests](https://github.com/QArtur99/PopularMovies_KT/tree/master/app/src/androidTest/java/com/qartf/popularmovies) are passing before submitting and add new ones in case you introduced new features.
+Awesome! If you would like to contribute with a new feature or submit a bugfix, fork this repo and send a pull request. Please, make sure all the [unit tests](https://github.com/QArtur99/PopularMovies_KT/tree/master/app/src/test/java/com/qartf/popularmovies), [integration tests](https://github.com/QArtur99/PopularMovies_KT/tree/master/app/src/androidTest/java/com/qartf/popularmovies)  & `./gradlew spotlessApply` are passing before submitting and add new ones in case you introduced new features.
 
+#### Getting Started
+* If you don’t already have an account on TMDB, you will need to create one in order to request an API Key.
+* [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction)
+
+#### Android Studio IDE setup 
+Popular Movies uses [ktlint](https://ktlint.github.io/) to enforce Kotlin coding styles.
+Here's how to configure it for use with Android Studio (instructions adapted from the ktlint [README](https://github.com/shyiko/ktlint/blob/master/README.md)):
+* Close Android Studio if it's open
+* Download ktlint using these [installation instructions](https://github.com/shyiko/ktlint/blob/master/README.md#installation)    
+* Inside the project root directory run: `./ktlint --apply-to-idea-project --android`    
+* Remove ktlint if desired: `rm ktlint`
+* Start Android Studio
 
 ### License
     Copyright 2019 Artur Gniewowski

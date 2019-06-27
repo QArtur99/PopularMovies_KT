@@ -19,6 +19,7 @@ buildscript {
         version_moshi = "1.8.0"
         version_paging = "2.1.0"
         version_espresso = "3.3.0-alpha01"
+        version_ktlint = '0.33.0'
     }
     repositories {
         google()
@@ -26,11 +27,14 @@ buildscript {
         
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$version_gradle"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.23.1"
+        classpath "com.android.tools.build:gradle:${version_gradle}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
     }
 }
+
+apply plugin: "com.diffplug.gradle.spotless"
 
 allprojects {
     repositories {
@@ -40,6 +44,13 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+task cleanBuild(type: Delete) {
     delete rootProject.buildDir
+}
+
+spotless {
+    kotlin {
+        target "**/*.kt"
+        ktlint(version_ktlint)
+    }
 }
