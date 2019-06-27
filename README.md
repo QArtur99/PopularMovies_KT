@@ -2,7 +2,7 @@
 <a href='https://play.google.com/store/apps/details?id=com.qartf.popularmovies'>
 <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="auto" height="100"/></a>
 
-Popular Movies app inspired by the Udacity Android Developer Nanodegree. Rewritten in Kotlin and implements the Jetpack libraries.
+Popular Movies app inspired by the Udacity Android Developer Nanodegree. Written in Kotlin and implements the Jetpack libraries.
 The application fetches movie data using https://www.themoviedb.org (TMDB).
 
 
