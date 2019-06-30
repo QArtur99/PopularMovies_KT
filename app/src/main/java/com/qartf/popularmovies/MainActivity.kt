@@ -3,10 +3,11 @@ package com.qartf.popularmovies
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.preference.PreferenceManager
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.qartf.popularmovies.databinding.ActivityMainBinding
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel

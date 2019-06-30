@@ -78,6 +78,9 @@ dependencies {
     //Paging
     implementation "androidx.paging:paging-runtime:$version_paging"
 
+    //Preference
+    implementation "androidx.preference:preference:1.1.0-beta01"
+
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
