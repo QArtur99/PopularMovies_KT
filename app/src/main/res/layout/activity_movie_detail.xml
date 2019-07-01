@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:stateListAnimator="@animator/appbar_elevation"
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsingToolbar"
@@ -99,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:stateListAnimator="@animator/fab_elevation"
                 app:layout_anchorGravity="bottom|end"
                 app:layout_anchor="@id/appBar"
                 android:layout_marginEnd="16dp"
@@ -126,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:stateListAnimator="@animator/fab_elevation"
                 app:layout_anchorGravity="bottom|end"
                 app:layout_anchor="@id/nestedScrollView"
                 android:layout_marginEnd="16dp"
