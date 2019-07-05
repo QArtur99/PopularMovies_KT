@@ -10,8 +10,8 @@ buildscript {
         version_lifecycle_extensions = "2.0.0"
         version_navigation = '2.1.0-alpha05'
         version_room = '2.1.0'
-        version_appcompat = '1.1.0-beta01'
-        version_fragment = '1.1.0-beta01'
+        version_appcompat = '1.1.0-rc01'
+        version_fragment = '1.2.0-alpha01'
         version_material = '1.1.0-alpha07'
         version_glide = "4.9.0"
         version_retrofit = '2.6.0'
