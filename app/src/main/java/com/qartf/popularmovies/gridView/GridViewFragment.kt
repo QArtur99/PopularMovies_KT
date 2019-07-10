@@ -50,14 +50,26 @@ import com.qartf.popularmovies.utility.convertToString
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var gridViewViewModel: GridViewViewModel
-    private lateinit var movieDetailViewModel: MovieDetailViewModel
-    private lateinit var application: Application
     private lateinit var binding: FragmentGridViewBinding
     private var sortBy: String = ""
     private var adapterItemCount: Int = 0
     private var savedInstanceState: Bundle? = null
     private var activityWithOptions = false
+
+    private val gridViewViewModel: GridViewViewModel by lazy {
+        val application = requireNotNull(this.activity).application
+        val repository = ServiceLocator.instance(application).getRepository()
+        val prefResult = setSharedPreferences(application)
+        val viewModelFactory = GridViewViewModelFactory(repository, prefResult)
+        ViewModelProviders.of(this.activity!!, viewModelFactory).get(GridViewViewModel::class.java)
+    }
+
+    private val movieDetailViewModel: MovieDetailViewModel by lazy {
+        val application = requireNotNull(this.activity).application
+        val repository = ServiceLocator.instance(application).getRepository()
+        val viewModelFactory = MovieDetailViewModelFactory(repository)
+        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,22 +77,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         savedInstanceState: Bundle?
     ): View? {
         this.savedInstanceState = savedInstanceState
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_grid_view, container, false
-        )
-
-        application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
-        val prefResult = setSharedPreferences(application)
-
-        val movieDetailViewModelFactory = MovieDetailViewModelFactory(repository)
-        movieDetailViewModel =
-            ViewModelProviders.of(activity!!, movieDetailViewModelFactory).get(MovieDetailViewModel::class.java)
-
-        val gridViewViewModelFactory = GridViewViewModelFactory(repository, prefResult)
-        gridViewViewModel =
-            ViewModelProviders.of(this, gridViewViewModelFactory).get(GridViewViewModel::class.java)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_grid_view, container, false)
         binding.gridViewViewModel = gridViewViewModel
         binding.lifecycleOwner = this
 
@@ -163,7 +160,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private fun setLayoutManager(columns: Int) {
-        val manager = GridLayoutManager(application, columns)
+        val manager = GridLayoutManager(activity, columns)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int) = 1
         }
@@ -273,9 +270,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private fun checkConnection(): Boolean {
-        val cm = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = cm.activeNetworkInfo
-        return activeNetwork != null && activeNetwork.isConnected
+        val cm = requireNotNull(this.activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.isDefaultNetworkActive
     }
 
     override fun onResume() {

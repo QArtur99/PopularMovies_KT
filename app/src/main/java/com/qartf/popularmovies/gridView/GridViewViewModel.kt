@@ -9,18 +9,12 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
 import com.qartf.popularmovies.utility.DiscoverMovie
 import com.qartf.popularmovies.utility.Result
 import com.qartf.popularmovies.utility.ResultMovie
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 
 class GridViewViewModel(
     private val repository: Repository,
     private val prefResult: Result
 ) :
     ViewModel() {
-
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val _columns = MutableLiveData<Int>()
     val columns: LiveData<Int>
@@ -58,11 +52,6 @@ class GridViewViewModel(
         _sortBy.value = DiscoverMovie(sortBy, genre)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
     // Paging
     private val repoResult = Transformations.map(sortBy) {
         when (it.sortBy) {
@@ -70,8 +59,6 @@ class GridViewViewModel(
             else -> repository.getMoviesPaging(it.sortBy, it.sortByGenre)
         }
     }
-
-    private val repoResult2 = Transformations.map(sortBy) { sortBy }
 
     val posts = Transformations.switchMap(repoResult) { it.pagedList }!!
     val networkState = Transformations.switchMap(repoResult) { it.networkState }!!

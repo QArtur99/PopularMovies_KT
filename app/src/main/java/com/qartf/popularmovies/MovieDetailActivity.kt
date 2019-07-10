@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_movie_detail.*
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
     private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val application = requireNotNull(this).application
         val repository = ServiceLocator.instance(application).getRepository()
         val viewModelFactory = MovieDetailViewModelFactory(repository)
         ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
@@ -55,7 +54,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         binding.movieDetailViewModel = movieDetailViewModel
         binding.appBar.addOnOffsetChangedListener(this)
 
-        movieDetailViewModel.setListItem(convertFromString(intent.getStringExtra(INTENT_LIST_ITEM_ID)))
+        movieDetailViewModel.setListItem(convertFromString(intent.getStringExtra(INTENT_LIST_ITEM_ID)!!))
         movieDetailViewModel.onAppBarLayoutOpen(FabStatus.NONE)
 
         binding.toolbarImage.transitionName = TOOLBAR_IMAGE

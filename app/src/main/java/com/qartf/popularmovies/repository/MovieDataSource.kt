@@ -12,21 +12,14 @@ import java.io.IOException
 import java.util.HashMap
 import java.util.concurrent.Executor
 
-class PageKeyedDataSource(
+class MovieDataSource(
     private val theMovieDbApi: TheMovieDbApi,
     private val args: HashMap<String, String>,
     private val retryExecutor: Executor
 ) : PageKeyedDataSource<String, Movie>() {
 
-    // keep a function reference for the retry event
     private var retry: (() -> Any)? = null
-
-    /**
-     * There is no sync on the state because paging will always call loadInitial first then wait
-     * for it to return some success value before calling loadAfter.
-     */
     val networkState = MutableLiveData<NetworkState>()
-
     val initialLoad = MutableLiveData<NetworkState>()
 
     fun retryAllFailed() {
@@ -39,12 +32,7 @@ class PageKeyedDataSource(
         }
     }
 
-    override fun loadBefore(
-        params: LoadParams<String>,
-        callback: LoadCallback<String, Movie>
-    ) {
-        // ignored, since we only ever append to our initial load
-    }
+    override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, Movie>) {}
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, Movie>) {
         networkState.postValue(NetworkState.LOADING)
@@ -81,7 +69,6 @@ class PageKeyedDataSource(
         networkState.postValue(NetworkState.LOADING)
         initialLoad.postValue(NetworkState.LOADING)
 
-        // triggered by a refresh, we better execute sync
         try {
             val response = request.execute()
             val data = response.body()

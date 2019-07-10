@@ -13,10 +13,10 @@ class MovieDataSourceFactory(
     private val retryExecutor: Executor
 ) : DataSource.Factory<String, Movie>() {
 
-    val sourceLiveData = MutableLiveData<PageKeyedDataSource>()
+    val sourceLiveData = MutableLiveData<MovieDataSource>()
 
     override fun create(): DataSource<String, Movie> {
-        val source = PageKeyedDataSource(theMovieDbApi, args, retryExecutor)
+        val source = MovieDataSource(theMovieDbApi, args, retryExecutor)
         sourceLiveData.postValue(source)
         return source
     }

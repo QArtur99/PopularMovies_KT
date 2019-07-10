@@ -1,6 +1,5 @@
 package com.qartf.popularmovies.movieDetail
 
-import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,8 +22,14 @@ import com.qartf.popularmovies.utility.ServiceLocator
 
 class MovieDetailFragment : Fragment() {
 
+    private val movieDetailViewModel: MovieDetailViewModel by lazy {
+        val application = requireNotNull(this.activity).application
+        val repository = ServiceLocator.instance(application).getRepository()
+        val viewModelFactory = MovieDetailViewModelFactory(repository)
+        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
+    }
+
     private lateinit var binding: FragmentDetailBinding
-    private lateinit var application: Application
     private var onFabClickCounter: Int = 0
 
     override fun onCreateView(
@@ -32,17 +37,7 @@ class MovieDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_detail, container, false
-        )
-
-        application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        val movieDetailViewModel: MovieDetailViewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         binding.movieDetailViewModel = movieDetailViewModel
         binding.lifecycleOwner = this
 

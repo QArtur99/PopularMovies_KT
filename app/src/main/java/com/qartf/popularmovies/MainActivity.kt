@@ -22,14 +22,16 @@ import kotlinx.android.synthetic.main.tool_bar.view.*
 class MainActivity : AppCompatActivity() {
 
     private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val application = requireNotNull(this).application
         val repository = ServiceLocator.instance(application).getRepository()
         val viewModelFactory = MovieDetailViewModelFactory(repository)
         ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
     }
 
+    private val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(application)
+    }
+
     private lateinit var binding: ActivityMainBinding
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var selectedTab: TabLayout.Tab
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.movieDetailViewModel = movieDetailViewModel
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
         setSupportActionBar(binding.root.toolbar)
 
