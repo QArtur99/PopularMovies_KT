@@ -9,6 +9,7 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 ### Used Tech
 * [Kotlin](https://kotlinlang.org/)
 * [MVVM](https://developer.android.com/jetpack/docs/guide)
+* [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - Asynchronous programming 
 * [Data Binding](https://developer.android.com/topic/libraries/data-binding/) - Declaratively bind observable data to UI elements.
 * [Lifecycles](https://developer.android.com/topic/libraries/architecture/lifecycle) - Create a UI that automatically responds to lifecycle events.
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Build data objects that notify views when the underlying database changes.
