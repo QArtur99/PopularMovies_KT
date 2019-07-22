@@ -6,9 +6,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
-import com.qartf.popularmovies.utility.DiscoverMovie
-import com.qartf.popularmovies.utility.Result
-import com.qartf.popularmovies.utility.ResultMovie
+import com.qartf.popularmovies.model.DiscoverMovie
+import com.qartf.popularmovies.model.Result
+import com.qartf.popularmovies.model.ResultMovie
 
 class GridViewViewModel(
     private val repository: Repository,

@@ -1,6 +1,7 @@
 package com.qartf.popularmovies.utility
 
 import com.qartf.popularmovies.BuildConfig
+import com.qartf.popularmovies.model.Genre
 
 class Constants {
 

@@ -11,7 +11,7 @@ import com.qartf.popularmovies.databinding.NetworkStateItemBinding
 import com.qartf.popularmovies.databinding.RowMovieItemBinding
 import com.qartf.popularmovies.domain.Movie
 import com.qartf.popularmovies.repository.NetworkState
-import com.qartf.popularmovies.utility.ResultMovie
+import com.qartf.popularmovies.model.ResultMovie
 
 class GridViewPagingAdapter(
     private val clickListener: OnClickListener,

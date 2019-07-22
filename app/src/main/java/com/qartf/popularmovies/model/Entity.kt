@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.utility
+package com.qartf.popularmovies.model
 
 import android.view.View
 import com.qartf.popularmovies.domain.Movie

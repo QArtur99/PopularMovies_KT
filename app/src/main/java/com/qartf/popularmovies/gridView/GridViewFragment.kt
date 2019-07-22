@@ -43,7 +43,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
-import com.qartf.popularmovies.utility.Result
+import com.qartf.popularmovies.model.Result
 import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertToString
 

@@ -3,7 +3,7 @@ package com.qartf.popularmovies.gridView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.qartf.popularmovies.repository.Repository
-import com.qartf.popularmovies.utility.Result
+import com.qartf.popularmovies.model.Result
 
 class GridViewViewModelFactory(
     private val repository: Repository,
