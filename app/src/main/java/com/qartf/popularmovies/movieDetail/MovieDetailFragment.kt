@@ -19,6 +19,7 @@ import com.qartf.popularmovies.databinding.DialogReviewBinding
 import com.qartf.popularmovies.databinding.DialogVideoBinding
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
 import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.utility.Utility
 
 class MovieDetailFragment : Fragment() {
 
@@ -135,7 +136,7 @@ class MovieDetailFragment : Fragment() {
         val dialog = AlertDialog.Builder(activity!!)
             .setView(binding.root)
             .create()
+        Utility.onCreateDialog(activity!!, dialog, binding.root, 400, 400)
         dialog.show()
-        dialog.setCanceledOnTouchOutside(true)
     }
 }
