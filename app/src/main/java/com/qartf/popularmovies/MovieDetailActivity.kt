@@ -58,6 +58,10 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         movieDetailViewModel.onAppBarLayoutOpen(FabStatus.NONE)
 
         binding.toolbarImage.transitionName = TOOLBAR_IMAGE
+        binding.root.post {
+            nestedScrollView.isActivated = true
+            onEnterAnimationSlide()
+        }
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
@@ -71,8 +75,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         }
     }
 
-    override fun onEnterAnimationComplete() {
-        super.onEnterAnimationComplete()
+    private fun onEnterAnimationSlide() {
         val params = appBar.layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior as AppBarLayout.Behavior?
         if (behavior != null) {
@@ -83,7 +86,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
                 appBar.requestLayout()
             }
             valueAnimator.setIntValues(0, -600)
-            valueAnimator.duration = 1200
+            valueAnimator.duration = 800
             valueAnimator.startDelay = 600
             valueAnimator.start()
 
