@@ -5,83 +5,83 @@
 
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite"
-            android:orientation="vertical"
-            tools:context="com.qartf.popularmovies.activities.MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        tools:context="com.qartf.popularmovies.activities.MainActivity"
     >
         <include
-                layout="@layout/tool_bar"/>
+            layout="@layout/tool_bar"/>
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="com.qartf.popularmovies.activities.MainActivity">
+
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context="com.qartf.popularmovies.activities.MainActivity">
-
-            <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
                 <fragment
-                        android:id="@+id/nav_host_fragment"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:defaultNavHost="true"
-                        app:navGraph="@navigation/navigation"/>
+                    android:id="@+id/nav_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/navigation"/>
             </FrameLayout>
 
             <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.01"
-                    android:background="@android:color/darker_gray"/>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.01"
+                android:background="@android:color/darker_gray"/>
 
             <FrameLayout
-                    android:id="@+id/posterViewFrame"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.98"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerInside">
+                android:id="@+id/posterViewFrame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.98"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside">
                 <fragment
-                        android:id="@+id/nav_host_poster"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:navGraph="@navigation/navigation_poster"/>
+                    android:id="@+id/nav_host_poster"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:navGraph="@navigation/navigation_poster"/>
             </FrameLayout>
 
             <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.01"
-                    android:background="@android:color/darker_gray"/>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.01"
+                android:background="@android:color/darker_gray"/>
 
             <FrameLayout
-                    android:id="@+id/detailsViewFrame"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    app:loadBackground="@{movieDetailViewModel.poster}"
-                    android:scaleType="centerInside">
+                android:id="@+id/detailsViewFrame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                app:loadBackground="@{movieDetailViewModel.poster}"
+                android:scaleType="centerInside">
                 <fragment
-                        android:id="@+id/nav_host_detail"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:navGraph="@navigation/navigation_detail"/>
+                    android:id="@+id/nav_host_detail"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:navGraph="@navigation/navigation_detail"/>
             </FrameLayout>
 
         </LinearLayout>

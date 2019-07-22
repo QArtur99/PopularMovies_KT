@@ -5,56 +5,56 @@
 
     <data>
         <variable
-                name="movie"
-                type="com.qartf.popularmovies.domain.Movie"/>
+            name="movie"
+            type="com.qartf.popularmovies.domain.Movie"/>
 
         <variable
-                name="clickListener"
-                type="com.qartf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
+            name="clickListener"
+            type="com.qartf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/gridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{(v) -> clickListener.onClick(v, movie)}"
-            android:elevation="@dimen/z_card"
-            android:stateListAnimator="@animator/raise"
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> clickListener.onClick(v, movie)}"
+        android:elevation="@dimen/z_card"
+        android:stateListAnimator="@animator/raise"
     >
 
         <ImageView
-                android:id="@+id/itemImage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/ripple"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:transitionName="poster"
-                app:imageUrl="@{movie.poster_path}"
-                app:layout_constraintDimensionRatio="9:12"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/itemImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ripple"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:transitionName="poster"
+            app:imageUrl="@{movie.poster_path}"
+            app:layout_constraintDimensionRatio="9:12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-                android:id="@+id/movieTitle"
-                android:text="@{movie.original_title}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/itemImage"
-                android:layout_centerHorizontal="true"
-                android:background="@color/textTransparent"
-                android:textSize="@dimen/item_title"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="3"
-                android:padding="4dp"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/movieTitle"
+            android:text="@{movie.original_title}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/itemImage"
+            android:layout_centerHorizontal="true"
+            android:background="@color/textTransparent"
+            android:textSize="@dimen/item_title"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="3"
+            android:padding="4dp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

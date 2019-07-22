@@ -3,40 +3,40 @@
 
     <data>
         <variable
-                name="review"
-                type="com.qartf.popularmovies.domain.Review"/>
+            name="review"
+            type="com.qartf.popularmovies.domain.Review"/>
 
         <variable
-                name="clickListener"
-                type="com.qartf.popularmovies.movieDetail.ReviewAdapter.OnClickListener"/>
+            name="clickListener"
+            type="com.qartf.popularmovies.movieDetail.ReviewAdapter.OnClickListener"/>
 
     </data>
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_list_item"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:onClick="@{() -> clickListener.onClick(review)}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_list_item"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:onClick="@{() -> clickListener.onClick(review)}"
     >
 
         <TextView
-                android:id="@+id/detailAuthor"
-                android:text="@{review.author}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/dialogAuthor"
-                android:textStyle="bold"/>
+            android:id="@+id/detailAuthor"
+            android:text="@{review.author}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dialogAuthor"
+            android:textStyle="bold"/>
 
         <TextView
-                android:id="@+id/detailContent"
-                android:text="@{review.content}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dialogDetailContent"
-                android:ellipsize="end"
-                android:lines="1"/>
+            android:id="@+id/detailContent"
+            android:text="@{review.content}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialogDetailContent"
+            android:ellipsize="end"
+            android:lines="1"/>
 
     </LinearLayout>
 </layout>

@@ -2,45 +2,45 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stateListAnimator="@animator/appbar_elevation"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stateListAnimator="@animator/appbar_elevation"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
 
 
             <LinearLayout
-                    android:id="@+id/titleToolbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:id="@+id/titleToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <TextView
-                        android:id="@+id/toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tabLayout"
-                app:tabBackground="@drawable/selector_tab"
-                app:tabGravity="fill"
-                app:tabIndicatorHeight="4dp"
-                app:tabMode="scrollable"
-                app:tabIndicatorColor="@color/colorAccent"
-                app:tabSelectedTextColor="@color/colorWhite"
-                app:tabTextColor="@color/colorWhite"/>
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tabLayout"
+            app:tabBackground="@drawable/selector_tab"
+            app:tabGravity="fill"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="scrollable"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/colorWhite"/>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

@@ -5,6 +5,6 @@
             android:duration="1"
             android:propertyName="elevation"
             android:valueTo="@dimen/z_app_bar"
-            android:valueType="floatType" />
+            android:valueType="floatType"/>
     </item>
 </selector>

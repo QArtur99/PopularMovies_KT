@@ -5,146 +5,146 @@
 
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/coordinatorLayout"
-            android:fitsSystemWindows="true"
-            tools:context="com.qartf.popularmovies.MovieDetailActivity"
-            tools:ignore="MergeRootFrame">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/coordinatorLayout"
+        android:fitsSystemWindows="true"
+        tools:context="com.qartf.popularmovies.MovieDetailActivity"
+        tools:ignore="MergeRootFrame">
 
         <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                android:stateListAnimator="@animator/appbar_elevation"
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:stateListAnimator="@animator/appbar_elevation"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/collapsingToolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:contentScrim="?attr/colorPrimary"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:appBarLayoutOpen="@{movieDetailViewModel.appBarLayoutOpen}"
-                    app:item="@{movieDetailViewModel.listItem}"
+                android:id="@+id/collapsingToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:appBarLayoutOpen="@{movieDetailViewModel.appBarLayoutOpen}"
+                app:item="@{movieDetailViewModel.listItem}"
             >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/gridView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    android:id="@+id/gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                            android:id="@+id/toolbarImage"
-                            android:transitionName="poster"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:scaleType="fitXY"
-                            app:layout_collapseMode="parallax"
-                            app:imageUrlDetail="@{movieDetailViewModel}"
-                            app:liveData="@{movieDetailViewModel.listItem}"
-                            app:layout_constraintDimensionRatio="9:12"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:id="@+id/toolbarImage"
+                        android:transitionName="poster"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="fitXY"
+                        app:layout_collapseMode="parallax"
+                        app:imageUrlDetail="@{movieDetailViewModel}"
+                        app:liveData="@{movieDetailViewModel.listItem}"
+                        app:layout_constraintDimensionRatio="9:12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        app:layout_collapseMode="pin"
-                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.core.widget.NestedScrollView
-                android:id="@+id/nestedScrollView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="true"
-                android:stateListAnimator="@animator/fade_in"
-                app:loadBackground="@{movieDetailViewModel.poster}"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="true"
+            android:stateListAnimator="@animator/fade_in"
+            app:loadBackground="@{movieDetailViewModel.poster}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
             <FrameLayout
-                    android:id="@+id/detailsViewFrame"
+                android:id="@+id/detailsViewFrame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top">
+                <fragment
+                    android:id="@+id/nav_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="top">
-                <fragment
-                        android:id="@+id/nav_host_fragment"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:defaultNavHost="true"
-                        app:navGraph="@navigation/navigation_detail"/>
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/navigation_detail"/>
             </FrameLayout>
 
         </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
-                android:id="@+id/fabTopBackground"
-                android:onClick="@{() -> movieDetailViewModel.onFabButtonClick(true)}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:stateListAnimator="@animator/fab_elevation"
-                app:layout_anchorGravity="bottom|end"
-                app:layout_anchor="@id/appBar"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_fab"
+            android:id="@+id/fabTopBackground"
+            android:onClick="@{() -> movieDetailViewModel.onFabButtonClick(true)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:stateListAnimator="@animator/fab_elevation"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_anchor="@id/appBar"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_fab"
         >
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabTop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_favorite"
-                    app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
-                    app:fabSize="normal"
-                    app:backgroundTint="#00000000"
-                    app:elevation="0dp"
-                    app:fabIcon="@{movieDetailViewModel.favorite}"
+                android:id="@+id/fabTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite"
+                app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
+                app:fabSize="normal"
+                app:backgroundTint="#00000000"
+                app:elevation="0dp"
+                app:fabIcon="@{movieDetailViewModel.favorite}"
             />
         </LinearLayout>
 
         <LinearLayout
-                android:id="@+id/fabBottomBackground"
-                android:onClick="@{() -> movieDetailViewModel.onFabButtonClick(true)}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:stateListAnimator="@animator/fab_elevation"
-                app:layout_anchorGravity="bottom|end"
-                app:layout_anchor="@id/nestedScrollView"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/shape_fab">
+            android:id="@+id/fabBottomBackground"
+            android:onClick="@{() -> movieDetailViewModel.onFabButtonClick(true)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:stateListAnimator="@animator/fab_elevation"
+            app:layout_anchorGravity="bottom|end"
+            app:layout_anchor="@id/nestedScrollView"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_fab">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabBottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_favorite"
-                    app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
-                    app:fabSize="normal"
-                    app:backgroundTint="#00000000"
-                    app:elevation="0dp"
-                    app:fabIcon="@{movieDetailViewModel.favorite}"
+                android:id="@+id/fabBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite"
+                app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
+                app:fabSize="normal"
+                app:backgroundTint="#00000000"
+                app:elevation="0dp"
+                app:fabIcon="@{movieDetailViewModel.favorite}"
             />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

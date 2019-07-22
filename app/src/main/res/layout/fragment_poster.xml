@@ -3,21 +3,21 @@
 >
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
     <LinearLayout
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
-                android:id="@+id/posterView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                app:imageUrlDetail="@{movieDetailViewModel}"
-                app:liveData="@{movieDetailViewModel.listItem}"
+            android:id="@+id/posterView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:imageUrlDetail="@{movieDetailViewModel}"
+            app:liveData="@{movieDetailViewModel.listItem}"
         />
 
     </LinearLayout>

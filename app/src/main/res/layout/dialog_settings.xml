@@ -4,58 +4,58 @@
 
     <data>
         <variable
-                name="clickListener"
-                type="com.qartf.popularmovies.gridView.SettingsBottomSheetDialog"/>
+            name="clickListener"
+            type="com.qartf.popularmovies.gridView.SettingsBottomSheetDialog"/>
     </data>
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:clickable="true"
     >
 
         <TextView
-                android:id="@+id/favorite"
-                android:onClick="@{() -> clickListener.onClick(clickListener.binding.favorite)}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_favorite"
-                android:paddingBottom="16dp"
-                android:paddingEnd="64dp"
-                android:paddingStart="64dp"
-                android:paddingTop="16dp"
-                android:text="@string/favorite"
-                android:textColor="@drawable/selector_text"
-                android:textSize="16sp"/>
+            android:id="@+id/favorite"
+            android:onClick="@{() -> clickListener.onClick(clickListener.binding.favorite)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_favorite"
+            android:paddingBottom="16dp"
+            android:paddingEnd="64dp"
+            android:paddingStart="64dp"
+            android:paddingTop="16dp"
+            android:text="@string/favorite"
+            android:textColor="@drawable/selector_text"
+            android:textSize="16sp"/>
 
         <TextView
-                android:id="@+id/mostPopular"
-                android:onClick="@{() -> clickListener.onClick(clickListener.binding.mostPopular)}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_most_popular"
-                android:paddingBottom="16dp"
-                android:paddingEnd="64dp"
-                android:paddingStart="64dp"
-                android:paddingTop="16dp"
-                android:text="@string/most_popular"
-                android:textColor="@drawable/selector_text"
-                android:textSize="16sp"/>
+            android:id="@+id/mostPopular"
+            android:onClick="@{() -> clickListener.onClick(clickListener.binding.mostPopular)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_most_popular"
+            android:paddingBottom="16dp"
+            android:paddingEnd="64dp"
+            android:paddingStart="64dp"
+            android:paddingTop="16dp"
+            android:text="@string/most_popular"
+            android:textColor="@drawable/selector_text"
+            android:textSize="16sp"/>
 
         <TextView
-                android:id="@+id/highestRated"
-                android:onClick="@{() -> clickListener.onClick(clickListener.binding.highestRated)}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_highest_rated_chart"
-                android:paddingBottom="16dp"
-                android:paddingEnd="64dp"
-                android:paddingStart="64dp"
-                android:paddingTop="16dp"
-                android:text="@string/highest_rated"
-                android:textColor="@drawable/selector_text"
-                android:textSize="16sp"/>
+            android:id="@+id/highestRated"
+            android:onClick="@{() -> clickListener.onClick(clickListener.binding.highestRated)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_highest_rated_chart"
+            android:paddingBottom="16dp"
+            android:paddingEnd="64dp"
+            android:paddingStart="64dp"
+            android:paddingTop="16dp"
+            android:text="@string/highest_rated"
+            android:textColor="@drawable/selector_text"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 </layout>

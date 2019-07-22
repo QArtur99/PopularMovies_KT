@@ -4,30 +4,30 @@
 
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite"
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
     >
         <include
-                layout="@layout/tool_bar"/>
+            layout="@layout/tool_bar"/>
 
         <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <fragment
-                    android:id="@+id/nav_host_fragment"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:defaultNavHost="true"
-                    app:navGraph="@navigation/navigation"/>
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/navigation"/>
         </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

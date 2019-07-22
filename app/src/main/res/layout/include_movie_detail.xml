@@ -4,165 +4,165 @@
 
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
     <LinearLayout
-            android:id="@+id/detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
+        android:id="@+id/detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
     >
 
         <TextView
-                android:id="@+id/movieTitleDetail"
-                android:text="@{movieDetailViewModel.listItem.original_title}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="16dp"
-                android:textColor="@color/detailMovieText"
-                android:textSize="@dimen/movieTitleDetail"
-                android:textStyle="bold"
-                app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
+            android:id="@+id/movieTitleDetail"
+            android:text="@{movieDetailViewModel.listItem.original_title}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="16dp"
+            android:textColor="@color/detailMovieText"
+            android:textSize="@dimen/movieTitleDetail"
+            android:textStyle="bold"
+            app:visibleIf="@{movieDetailViewModel.appBarLayoutOpen}"
         />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:text="@string/overview"
-                android:textColor="@color/detailMovieText"
-                android:textSize="@dimen/detailText"
-                android:textStyle="bold"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:text="@string/overview"
+            android:textColor="@color/detailMovieText"
+            android:textSize="@dimen/detailText"
+            android:textStyle="bold"/>
 
         <TextView
-                android:id="@+id/overview"
-                android:text="@{movieDetailViewModel.listItem.overview}"
-                android:onClick="@{() -> movieDetailViewModel.onShowOverview(true)}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:maxLines="4"
-                android:textColor="@color/detailMovieText"
-                android:textSize="@dimen/detailText"
-                app:showOverview="@{movieDetailViewModel.showOverview}"
+            android:id="@+id/overview"
+            android:text="@{movieDetailViewModel.listItem.overview}"
+            android:onClick="@{() -> movieDetailViewModel.onShowOverview(true)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="4"
+            android:textColor="@color/detailMovieText"
+            android:textSize="@dimen/detailText"
+            app:showOverview="@{movieDetailViewModel.showOverview}"
 
         />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="start"
-                android:text="@string/genres"
-                android:textColor="@color/detailMovieText"
-                android:textSize="@dimen/detailText"
-                android:textStyle="bold"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:text="@string/genres"
+            android:textColor="@color/detailMovieText"
+            android:textSize="@dimen/detailText"
+            android:textStyle="bold"/>
 
         <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:showGenres="@{movieDetailViewModel.listItem}"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:showGenres="@{movieDetailViewModel.listItem}"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:columnCount="2">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_margin="5dp"
-                android:columnCount="2">
+                android:gravity="start"
+                android:paddingEnd="5dp"
+                android:text="@string/vote_average_detail"
+                android:textColor="@color/detailMovieText"
+                android:textSize="@dimen/detailText"
+                android:textStyle="bold"/>
 
             <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingEnd="5dp"
-                    android:text="@string/vote_average_detail"
-                    android:textColor="@color/detailMovieText"
-                    android:textSize="@dimen/detailText"
-                    android:textStyle="bold"/>
+                android:id="@+id/voteAverage"
+                android:text="@{movieDetailViewModel.listItem.vote_average}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/detailMovieText"
+                android:textSize="@dimen/detailText"/>
 
             <TextView
-                    android:id="@+id/voteAverage"
-                    android:text="@{movieDetailViewModel.listItem.vote_average}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textColor="@color/detailMovieText"
-                    android:textSize="@dimen/detailText"/>
+                android:textColor="@color/detailMovieText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingEnd="5dp"
+                android:text="@string/release_date_detail"
+                android:textSize="@dimen/detailText"
+                android:textStyle="bold"/>
 
             <TextView
-                    android:textColor="@color/detailMovieText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:paddingEnd="5dp"
-                    android:text="@string/release_date_detail"
-                    android:textSize="@dimen/detailText"
-                    android:textStyle="bold"/>
-
-            <TextView
-                    android:id="@+id/releaseDate"
-                    android:text="@{movieDetailViewModel.listItem.release_date}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textColor="@color/detailMovieText"
-                    android:textSize="@dimen/detailText"/>
+                android:id="@+id/releaseDate"
+                android:text="@{movieDetailViewModel.listItem.release_date}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/detailMovieText"
+                android:textSize="@dimen/detailText"/>
 
         </GridLayout>
 
         <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingEnd="@dimen/buttonPadding"
-                android:paddingStart="@dimen/buttonPadding">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingEnd="@dimen/buttonPadding"
+            android:paddingStart="@dimen/buttonPadding">
 
             <Button
-                    android:id="@+id/reviewsButton"
-                    android:onClick="@{() -> movieDetailViewModel.onShowReviews(true)}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/selector_detail_button"
-                    android:text="@string/reviews"
-                    android:textAllCaps="false"
-                    android:textColor="@color/shapeColor"
-                    android:textSize="@dimen/buttonTextSize"
-                    app:enableReview="@{movieDetailViewModel.reviews}"
+                android:id="@+id/reviewsButton"
+                android:onClick="@{() -> movieDetailViewModel.onShowReviews(true)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/selector_detail_button"
+                android:text="@string/reviews"
+                android:textAllCaps="false"
+                android:textColor="@color/shapeColor"
+                android:textSize="@dimen/buttonTextSize"
+                app:enableReview="@{movieDetailViewModel.reviews}"
             />
 
             <Button
-                    android:id="@+id/trailersButton"
-                    android:onClick="@{() -> movieDetailViewModel.onShowTrailers(true)}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/reviewsButton"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/selector_detail_button"
-                    android:text="@string/trailers"
-                    android:textAllCaps="false"
-                    android:textColor="@color/shapeColor"
-                    android:textSize="@dimen/buttonTextSize"
-                    app:enableVideo="@{movieDetailViewModel.videos}"
+                android:id="@+id/trailersButton"
+                android:onClick="@{() -> movieDetailViewModel.onShowTrailers(true)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reviewsButton"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/selector_detail_button"
+                android:text="@string/trailers"
+                android:textAllCaps="false"
+                android:textColor="@color/shapeColor"
+                android:textSize="@dimen/buttonTextSize"
+                app:enableVideo="@{movieDetailViewModel.videos}"
             />
         </RelativeLayout>
 

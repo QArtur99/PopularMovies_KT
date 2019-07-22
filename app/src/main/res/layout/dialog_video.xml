@@ -5,34 +5,33 @@
 
     <data>
         <variable
-                name="movieDetailViewModel"
-                type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            name="movieDetailViewModel"
+            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
     </data>
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:id="@+id/dialogVideo"
+        android:layout_width="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-                android:id="@+id/dialogTitlte"
-                android:text="@string/trailers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_dialog_title"
-                android:gravity="center"
-                android:padding="16dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/dialogTitle"
-                android:textStyle="bold"/>
+            android:id="@+id/dialogTitlte"
+            android:text="@string/trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_dialog_title"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogTitle"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:listData="@{movieDetailViewModel.videos}"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        >
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:listData="@{movieDetailViewModel.videos}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
     </LinearLayout>
 </layout>
