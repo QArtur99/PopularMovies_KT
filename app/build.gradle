@@ -4,22 +4,17 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
-
-def keystorePropertiesFile = file("C:\\Users\\USER\\AndroidStudioProjects\\.gradle\\gradle.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-def keystorePropertiesFileSigning = rootProject.file("keystore.properties")
-def keystorePropertiesSigning = new Properties()
-keystorePropertiesSigning.load(new FileInputStream(keystorePropertiesFileSigning))
+def keystorePropFileSigning = rootProject.file("keystore.properties")
+def keystorePropSigning = new Properties()
+keystorePropSigning.load(new FileInputStream(keystorePropFileSigning))
 
 android {
     signingConfigs {
         config {
-            keyAlias keystorePropertiesSigning['keyAlias']
-            keyPassword keystorePropertiesSigning['keyPassword']
-            storeFile file(keystorePropertiesSigning['storeFile'])
-            storePassword keystorePropertiesSigning['storePassword']
+            keyAlias keystorePropSigning['keyAlias']
+            keyPassword keystorePropSigning['keyPassword']
+            storeFile file(keystorePropSigning['storeFile'])
+            storePassword keystorePropSigning['storePassword']
         }
     }
     compileSdkVersion build_versions.target_sdk
@@ -27,8 +22,8 @@ android {
         applicationId "com.qartf.popularmovies"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 6
-        versionName "1.05"
+        versionCode 7
+        versionName "1.06"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -39,7 +34,7 @@ android {
             multiDexEnabled = true
 
             buildTypes.each {
-                it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', keystoreProperties['MyTheMovieDBApiToken']
+                it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', keystorePropSigning['MyTheMovieDBApiToken']
             }
         }
     }
@@ -47,8 +42,8 @@ android {
         enabled = true
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
