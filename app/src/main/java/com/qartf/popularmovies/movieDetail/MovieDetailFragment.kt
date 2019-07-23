@@ -10,13 +10,15 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
+import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_ADD
+import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_REMOVE
 import com.qartf.popularmovies.utility.extension.getVm
 
 class MovieDetailFragment : Fragment() {
 
     private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
     private lateinit var binding: FragmentDetailBinding
-    private var onFabClickCounter: Int = 0
+    private var onFabClicked: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,38 +45,31 @@ class MovieDetailFragment : Fragment() {
             }
         })
 
-        movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                movieDetailViewModel.setFavorite(true)
-                if (onFabClickCounter > 0) showSnackBar(1)
-            } else {
-                movieDetailViewModel.setFavorite(false)
-                if (onFabClickCounter > 0) showSnackBar(2)
-            }
+        movieDetailViewModel.favorite.observe(viewLifecycleOwner, Observer {
+            if (it && onFabClicked) showSnackBar(SNACKBAR_ADD)
+            else if (onFabClicked) showSnackBar(SNACKBAR_REMOVE)
         })
 
         movieDetailViewModel.listItem.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                onFabClickCounter = 0
-            }
+            it?.let { onFabClicked = false }
         })
 
         movieDetailViewModel.fabButton.observe(viewLifecycleOwner, Observer {
             it?.let { value ->
-                if (value) onFabClickCounter++
-                movieDetailViewModel.setFabButton(null)
+                if (value) onFabClicked = true
+                movieDetailViewModel.onFabButtonClick(null)
             }
         })
 
         return binding.root
     }
 
-    private fun showSnackBar(snackBarId: Int) {
+    private fun showSnackBar(snackBarId: String) {
         Snackbar.make(
             activity!!.findViewById(android.R.id.content),
             when (snackBarId) {
-                1 -> getString(R.string.editor_insert_movie_successful)
-                2 -> getString(R.string.editor_delete_product_successful)
+                SNACKBAR_ADD -> getString(R.string.editor_insert_movie_successful)
+                SNACKBAR_REMOVE -> getString(R.string.editor_delete_product_successful)
                 else -> getString(R.string.editor_delete_product_successful)
             },
             Snackbar.LENGTH_SHORT

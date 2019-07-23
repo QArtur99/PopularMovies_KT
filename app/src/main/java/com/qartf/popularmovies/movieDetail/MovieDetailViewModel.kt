@@ -138,32 +138,21 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }!!
+    private val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }!!
+    val favorite = Transformations.map(isFavorite) { it != null }!!
 
     private val _fabButton = MutableLiveData<Boolean>()
+
     val fabButton: LiveData<Boolean>
         get() = _fabButton
 
-    fun setFabButton(show: Boolean?) {
+    fun onFabButtonClick(show: Boolean?) {
+        if (show != null)
+            if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
         _fabButton.value = show
     }
 
-    fun onFabButtonClick(show: Boolean) {
-        if (favorite.value != null) {
-            if (favorite.value!!) onDeleteFavorite() else onAddFavorite()
-            setFabButton(true)
-        }
-    }
-
-    private val _favorite = MutableLiveData<Boolean>()
-    val favorite: LiveData<Boolean>
-        get() = _favorite
-
-    fun setFavorite(open: Boolean) {
-        _favorite.value = open
-    }
-
-    fun onAddFavorite() {
+    private fun onAddFavorite() {
         uiScope.launch {
             listItem.value?.let {
                 repository.insert(it.asDatabaseModel())
@@ -171,7 +160,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun onDeleteFavorite() {
+    private fun onDeleteFavorite() {
         uiScope.launch {
             listItem.value?.let {
                 repository.delete(it.asDatabaseModel().id)

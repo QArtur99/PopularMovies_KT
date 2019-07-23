@@ -74,6 +74,9 @@ class Constants {
             put("37", "Western")
         }
 
+        const val SNACKBAR_ADD = "snackbarAdd"
+        const val SNACKBAR_REMOVE = "snackbarRemove"
+
         const val RECYCLER_VIEW_STATE_ID = "recyclerViewStateId"
         const val INTENT_LIST_ITEM_ID = "listItem"
 
