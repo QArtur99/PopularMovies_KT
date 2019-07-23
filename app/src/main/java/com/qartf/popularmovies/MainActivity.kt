@@ -3,30 +3,22 @@ package com.qartf.popularmovies
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
 import com.qartf.popularmovies.databinding.ActivityMainBinding
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
-import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.utility.Constants
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_KEY
-import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.utility.extension.getVm
 import kotlinx.android.synthetic.main.tool_bar.*
 import kotlinx.android.synthetic.main.tool_bar.view.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
-    }
-
+    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
     private val sharedPreferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(application)
     }

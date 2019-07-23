@@ -11,28 +11,21 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnCancel
 import androidx.core.animation.doOnEnd
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.appbar.AppBarLayout
 import com.qartf.popularmovies.databinding.ActivityMovieDetailBinding
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
-import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.Constants.FabStatus
-import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertFromString
+import com.qartf.popularmovies.utility.extension.getVm
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
-    private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        ViewModelProviders.of(this, viewModelFactory).get(MovieDetailViewModel::class.java)
-    }
-
+    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
     private lateinit var binding: ActivityMovieDetailBinding
-    private var enterAnimationComleted = false
+    private var enterAnimationCompleted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +58,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-        if (enterAnimationComleted) {
+        if (enterAnimationCompleted) {
             val closePercentage = Math.abs(verticalOffset).toDouble() / collapsingToolbar.height
             if (closePercentage > 0.8) {
                 movieDetailViewModel.onAppBarLayoutOpen(FabStatus.BOTTOM)
@@ -91,10 +84,10 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
             valueAnimator.start()
 
             valueAnimator.doOnEnd {
-                enterAnimationComleted = true
+                enterAnimationCompleted = true
             }
             valueAnimator.doOnCancel {
-                enterAnimationComleted = true
+                enterAnimationCompleted = true
             }
         }
     }

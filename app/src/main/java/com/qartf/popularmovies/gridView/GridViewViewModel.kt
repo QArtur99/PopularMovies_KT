@@ -4,17 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.qartf.popularmovies.repository.Repository
-import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
 import com.qartf.popularmovies.model.DiscoverMovie
 import com.qartf.popularmovies.model.Result
 import com.qartf.popularmovies.model.ResultMovie
+import com.qartf.popularmovies.repository.Repository
+import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
 
 class GridViewViewModel(
     private val repository: Repository,
     private val prefResult: Result
-) :
-    ViewModel() {
+) : ViewModel() {
 
     private val _columns = MutableLiveData<Int>()
     val columns: LiveData<Int>

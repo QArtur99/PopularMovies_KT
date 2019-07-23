@@ -8,20 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.qartf.popularmovies.databinding.DialogVideoBinding
-import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.Utility
+import com.qartf.popularmovies.utility.extension.getVm
 
 class VideoDialog : DialogFragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
-    }
+    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DialogVideoBinding.inflate(LayoutInflater.from(activity))

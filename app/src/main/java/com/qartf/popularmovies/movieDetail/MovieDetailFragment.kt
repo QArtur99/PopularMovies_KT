@@ -7,21 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
-import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.utility.extension.getVm
 
 class MovieDetailFragment : Fragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
-    }
-
+    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
     private lateinit var binding: FragmentDetailBinding
     private var onFabClickCounter: Int = 0
 

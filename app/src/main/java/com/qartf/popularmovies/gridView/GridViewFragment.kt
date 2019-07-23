@@ -19,14 +19,13 @@ import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qartf.popularmovies.MovieDetailActivity
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentGridViewBinding
+import com.qartf.popularmovies.model.Result
 import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
-import com.qartf.popularmovies.movieDetail.MovieDetailViewModelFactory
 import com.qartf.popularmovies.repository.NetworkState
 import com.qartf.popularmovies.repository.Status
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
@@ -43,9 +42,8 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
-import com.qartf.popularmovies.model.Result
-import com.qartf.popularmovies.utility.ServiceLocator
 import com.qartf.popularmovies.utility.convertToString
+import com.qartf.popularmovies.utility.extension.getVm
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -56,20 +54,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var savedInstanceState: Bundle? = null
     private var activityWithOptions = false
 
-    private val gridViewViewModel: GridViewViewModel by lazy {
+    private val gridViewViewModel by lazy {
         val application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
         val prefResult = setSharedPreferences(application)
-        val viewModelFactory = GridViewViewModelFactory(repository, prefResult)
-        ViewModelProviders.of(this.activity!!, viewModelFactory).get(GridViewViewModel::class.java)
+        getVm<GridViewViewModel>(prefResult)
     }
-
-    private val movieDetailViewModel: MovieDetailViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        val repository = ServiceLocator.instance(application).getRepository()
-        val viewModelFactory = MovieDetailViewModelFactory(repository)
-        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MovieDetailViewModel::class.java)
-    }
+    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
