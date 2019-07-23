@@ -5,7 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.qartf.popularmovies.domain.*
+import com.qartf.popularmovies.domain.Movie
+import com.qartf.popularmovies.domain.Review
+import com.qartf.popularmovies.domain.ReviewContainer
+import com.qartf.popularmovies.domain.Video
+import com.qartf.popularmovies.domain.VideoContainer
 import com.qartf.popularmovies.repository.Repository
 import com.qartf.popularmovies.utility.Constants.ApiStatus
 import com.qartf.popularmovies.utility.Constants.FabStatus
@@ -58,7 +62,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     val showReviews: LiveData<Boolean>
         get() = _showReviews
 
-    fun onShowReviews(show: Boolean) {
+    fun onShowReviews(show: Boolean?) {
         _showReviews.value = show
     }
 
@@ -66,7 +70,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     val showTrailers: LiveData<Boolean>
         get() = _showTrailers
 
-    fun onShowTrailers(show: Boolean) {
+    fun onShowTrailers(show: Boolean?) {
         _showTrailers.value = show
     }
 

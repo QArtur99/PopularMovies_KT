@@ -1,25 +1,17 @@
 package com.qartf.popularmovies.movieDetail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.databinding.DialogReviewBinding
-import com.qartf.popularmovies.databinding.DialogVideoBinding
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
 import com.qartf.popularmovies.utility.ServiceLocator
-import com.qartf.popularmovies.utility.Utility
 
 class MovieDetailFragment : Fragment() {
 
@@ -43,36 +35,18 @@ class MovieDetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
         movieDetailViewModel.showReviews.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                if (properties) {
-                    val binding = DialogReviewBinding.inflate(LayoutInflater.from(activity))
-                    binding.movieDetailViewModel = movieDetailViewModel
-                    binding.recyclerView.addItemDecoration(
-                        DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-                    )
-                    binding.recyclerView.adapter = ReviewAdapter(ReviewAdapter.OnClickListener { product ->
-                        movieDetailViewModel.onReviewListItemClick(product)
-                    })
-                    setDetailDialog(binding)
-                    movieDetailViewModel.onShowReviews(false)
-                }
+            it?.let {
+                val reviewDialog = ReviewDialog()
+                reviewDialog.show(requireFragmentManager(), ReviewDialog::class.simpleName)
+                movieDetailViewModel.onShowReviews(null)
             }
         })
 
         movieDetailViewModel.showTrailers.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                if (properties) {
-                    val binding = DialogVideoBinding.inflate(LayoutInflater.from(activity))
-                    binding.movieDetailViewModel = movieDetailViewModel
-                    binding.recyclerView.addItemDecoration(
-                        DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-                    )
-                    binding.recyclerView.adapter = VideoAdapter(VideoAdapter.OnClickListener { product ->
-                        movieDetailViewModel.onVideoListItemClick(product)
-                    })
-                    setDetailDialog(binding)
-                    movieDetailViewModel.onShowTrailers(false)
-                }
+            it?.let {
+                val reviewDialog = VideoDialog()
+                reviewDialog.show(requireFragmentManager(), VideoDialog::class.simpleName)
+                movieDetailViewModel.onShowTrailers(null)
             }
         })
 
@@ -99,24 +73,6 @@ class MovieDetailFragment : Fragment() {
             }
         })
 
-        movieDetailViewModel.reviewListItem.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(properties.url))
-                if (intent.resolveActivity(activity!!.packageManager) != null) {
-                    startActivity(intent)
-                }
-            }
-        })
-
-        movieDetailViewModel.videoListItem.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                val youTubeBase = "https://www.youtube.com/watch?v="
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youTubeBase + properties.key))
-                if (intent.resolveActivity(activity!!.packageManager) != null) {
-                    startActivity(intent)
-                }
-            }
-        })
         return binding.root
     }
 
@@ -130,13 +86,5 @@ class MovieDetailFragment : Fragment() {
             },
             Snackbar.LENGTH_SHORT
         ).show()
-    }
-
-    private fun setDetailDialog(binding: ViewDataBinding) {
-        val dialog = AlertDialog.Builder(activity!!)
-            .setView(binding.root)
-            .create()
-        Utility.onCreateDialog(activity!!, dialog, binding.root, 400, 400)
-        dialog.show()
     }
 }
