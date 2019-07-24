@@ -77,7 +77,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
-        gridViewViewModel.sortBy.observe(viewLifecycleOwner, Observer {
+        gridViewViewModel.discoverMovie.observe(viewLifecycleOwner, Observer {
             it?.let { value ->
                 this.sortBy = value.sortBy
             }

@@ -1,6 +1,7 @@
 package com.qartf.popularmovies.gridView
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -16,31 +17,32 @@ class GridViewViewModel(
 ) : ViewModel() {
 
     private val _columns = MutableLiveData<Int>()
-    val columns: LiveData<Int>
-        get() = _columns
-
+    val columns: LiveData<Int> = _columns
     fun onColumnChanged(requestId: Int) {
         _columns.value = requestId
     }
 
-    private val _sortBy = MutableLiveData<DiscoverMovie>()
-    val sortBy: LiveData<DiscoverMovie>
-        get() = _sortBy
-
+    private val _sortBy = MutableLiveData<String>()
     fun onSortByChanged(requestId: String) {
-        _sortBy.value?.sortBy = requestId
-        _sortBy.value = _sortBy.value
+        _sortBy.value = requestId
     }
 
+    private val _sortByGenre = MutableLiveData<String>()
     fun onSortByGenreChanged(sortByGenre: String) {
-        _sortBy.value?.sortByGenre = sortByGenre
-        _sortBy.value = _sortBy.value
+        _sortByGenre.value = sortByGenre
+    }
+
+    val discoverMovie = MediatorLiveData<DiscoverMovie>().apply {
+        addSource(_sortBy) {
+            it?.let { sourceValue -> this.value?.sortBy = sourceValue }.also { this.value = this.value }
+        }
+        addSource(_sortByGenre) {
+            it?.let { sourceValue -> this.value?.sortByGenre = sourceValue }.also { this.value = this.value }
+        }
     }
 
     private val _listItem = MutableLiveData<ResultMovie>()
-    val listItem: LiveData<ResultMovie>
-        get() = _listItem
-
+    val listItem: LiveData<ResultMovie> = _listItem
     fun onRecyclerItemClick(listItem: ResultMovie?) {
         _listItem.value = listItem
     }
@@ -48,11 +50,11 @@ class GridViewViewModel(
     init {
         val (columns, sortBy, genre) = prefResult
         onColumnChanged(columns)
-        _sortBy.value = DiscoverMovie(sortBy, genre)
+        discoverMovie.value = DiscoverMovie(sortBy, genre)
     }
 
     // Paging
-    private val repoResult = Transformations.map(sortBy) {
+    private val repoResult = Transformations.map(discoverMovie) {
         when (it.sortBy) {
             SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it.sortBy, 20)
             else -> repository.getMoviesPaging(it.sortBy, it.sortByGenre)
