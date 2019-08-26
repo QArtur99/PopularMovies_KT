@@ -18,6 +18,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,7 +44,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.convertToString
-import com.qartf.popularmovies.utility.extension.getVm
+import com.qartf.popularmovies.utility.extension.getVmFactory
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -54,12 +55,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var savedInstanceState: Bundle? = null
     private var activityWithOptions = false
 
-    private val gridViewViewModel by lazy {
+    private val gridViewViewModel by activityViewModels<GridViewViewModel> {
         val application = requireNotNull(this.activity).application
         val prefResult = setSharedPreferences(application)
-        getVm<GridViewViewModel>(prefResult)
+        getVmFactory(prefResult)
     }
-    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
+    private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -127,7 +128,11 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         })
 
         binding.recyclerView.adapter = GridViewPagingAdapter(
-            GridViewPagingAdapter.OnClickListener { product -> gridViewViewModel.onRecyclerItemClick(product) },
+            GridViewPagingAdapter.OnClickListener { product ->
+                gridViewViewModel.onRecyclerItemClick(
+                    product
+                )
+            },
             GridViewPagingAdapter.OnSizeListener { adapterItemCount > 0 },
             GridViewPagingAdapter.OnNetworkStateClickListener { gridViewViewModel.retry() }
         )
@@ -171,12 +176,27 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             R.id.action_favorite -> movieDetailViewModel.onFabButtonClick(true)
             R.id.action_refresh -> gridViewViewModel.refresh()
             // R.id.action_sortBy -> openBottomDialog()
-            R.id.favorite -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_FAVORITE).apply()
-            R.id.popularity -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_POPULARITY).apply()
-            R.id.releaseDate -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_RELEASE_DATE).apply()
+            R.id.favorite -> sharedPreferences.edit().putString(
+                SORT_BY_KEY,
+                SORT_BY_FAVORITE
+            ).apply()
+            R.id.popularity -> sharedPreferences.edit().putString(
+                SORT_BY_KEY,
+                SORT_BY_POPULARITY
+            ).apply()
+            R.id.releaseDate -> sharedPreferences.edit().putString(
+                SORT_BY_KEY,
+                SORT_BY_RELEASE_DATE
+            ).apply()
             R.id.revenue -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_REVENUE).apply()
-            R.id.voteAverage -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_VOTE_AVERAGE).apply()
-            R.id.voteCount -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_VOTE_COUNT).apply()
+            R.id.voteAverage -> sharedPreferences.edit().putString(
+                SORT_BY_KEY,
+                SORT_BY_VOTE_AVERAGE
+            ).apply()
+            R.id.voteCount -> sharedPreferences.edit().putString(
+                SORT_BY_KEY,
+                SORT_BY_VOTE_COUNT
+            ).apply()
             R.id.one_column -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 1).apply()
             R.id.two_columns -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 2).apply()
             R.id.three_columns -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 3).apply()
@@ -260,7 +280,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private fun checkConnection(): Boolean {
-        val cm = requireNotNull(this.activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            requireNotNull(this.activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.isDefaultNetworkActive
     }
 

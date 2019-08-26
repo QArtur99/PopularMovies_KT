@@ -45,17 +45,22 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.kotlin.stdlib
+    implementation deps.kotlin.reflect
     implementation deps.support.app_compat
     implementation deps.support.core_ktx
     implementation deps.support.design
     implementation deps.support.fragment_runtime
     implementation deps.support.preference
-    implementation deps.constraint_layout
+    implementation deps.support.constraint_layout
+    implementation deps.support.swiperefreshlayout
 
     // Room
     implementation deps.room.runtime

@@ -119,8 +119,8 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }!!
-    val favorite = Transformations.map(isFavorite) { it != null }!!
+    private val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }
+    val favorite = Transformations.map(isFavorite) { it != null }
 
     private val _fabButton = MutableLiveData<Boolean>()
     val fabButton: LiveData<Boolean> = _fabButton

@@ -8,10 +8,12 @@ buildscript {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin.plugin
         classpath deps.navigation.safe_args_plugin
+        classpath deps.gradle_versions_plugin
     }
 }
 
 apply plugin: "com.diffplug.gradle.spotless"
+apply plugin: "com.github.ben-manes.versions"
 
 allprojects {
     addRepos(repositories)

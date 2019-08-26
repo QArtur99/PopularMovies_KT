@@ -18,7 +18,7 @@ object RetrofitModule {
             .build()
     }
 
-    val devbytes = provideRetrofit(BASE_URL).create(TheMovieDbApi::class.java)
+    val devbytes: TheMovieDbApi = provideRetrofit(BASE_URL).create(TheMovieDbApi::class.java)
 }
 
 private val moshi = Moshi.Builder()

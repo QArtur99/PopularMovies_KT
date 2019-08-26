@@ -67,7 +67,7 @@ class GridViewViewModelTest {
     @Throws(InterruptedException::class)
     fun testDefaultValues() {
         assertEquals(getValue(gridViewViewModel.columns), 2)
-        assertEquals(getValue(gridViewViewModel.sortBy).sortBy, Constants.SORT_BY_POPULARITY)
+        assertEquals(getValue(gridViewViewModel.discoverMovie).sortBy, Constants.SORT_BY_POPULARITY)
         assertNotNull(getValue(gridViewViewModel.listItem))
         assertTrue(getValue(gridViewViewModel.posts).size > 0)
     }

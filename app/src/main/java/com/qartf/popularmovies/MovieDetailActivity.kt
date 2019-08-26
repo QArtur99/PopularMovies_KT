@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnCancel
@@ -18,12 +19,12 @@ import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.Constants.FabStatus
 import com.qartf.popularmovies.utility.convertFromString
-import com.qartf.popularmovies.utility.extension.getVm
+import com.qartf.popularmovies.utility.extension.getVmFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
-    private val movieDetailViewModel by lazy { getVm<MovieDetailViewModel>() }
+    private val movieDetailViewModel by viewModels<MovieDetailViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMovieDetailBinding
     private var enterAnimationCompleted = false
 

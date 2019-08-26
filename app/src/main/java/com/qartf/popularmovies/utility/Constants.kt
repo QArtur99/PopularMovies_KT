@@ -52,7 +52,7 @@ class Constants {
             add(Genre("37", "Western"))
         }
 
-        val GENRE_MAP = HashMap<String, String>().apply {
+        val GENRE_MAP = mutableMapOf<String, String>().apply {
             put("28", "Action")
             put("12", "Adventure")
             put("16", "Animation")
