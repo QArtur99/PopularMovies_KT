@@ -14,16 +14,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="com.qartf.popularmovies.MainActivity">
+        <activity android:name="com.qartf.popularmovies.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.qartf.popularmovies.MovieDetailActivity"
+        <activity android:name="com.qartf.popularmovies.ui.MovieDetailActivity"
                   android:label="MovieDetailActivity"
-                  android:parentActivityName="com.qartf.popularmovies.MainActivity"
+                  android:parentActivityName="com.qartf.popularmovies.ui.MainActivity"
                   android:theme="@style/AppThemeTransparent"
         />
     </application>

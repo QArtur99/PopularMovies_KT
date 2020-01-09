@@ -5,10 +5,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.qartf.popularmovies.database.MovieDatabase
-import com.qartf.popularmovies.database.MovieDatabaseDao
+import com.qartf.popularmovies.data.database.MovieDatabase
+import com.qartf.popularmovies.data.database.MovieDatabaseDao
 import com.qartf.popularmovies.repository.MovieFactory
-import com.qartf.popularmovies.utility.asDatabaseModel
+import com.qartf.popularmovies.domain.asDatabaseModel
 import com.qartf.popularmovies.utility.getValue
 import org.hamcrest.Matchers
 import org.junit.After

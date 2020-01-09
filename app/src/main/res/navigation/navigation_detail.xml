@@ -6,7 +6,7 @@
 
     <fragment
             android:id="@+id/fragment_detail"
-            android:name="com.qartf.popularmovies.movieDetail.MovieDetailFragment"
+            android:name="com.qartf.popularmovies.ui.movieDetail.MovieDetailFragment"
             android:label="MovieDetailFragment"
     >
     </fragment>

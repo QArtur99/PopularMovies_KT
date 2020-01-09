@@ -5,7 +5,7 @@
     <data>
         <variable
             name="movieDetailViewModel"
-            type="com.qartf.popularmovies.movieDetail.MovieDetailViewModel"/>
+            type="com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

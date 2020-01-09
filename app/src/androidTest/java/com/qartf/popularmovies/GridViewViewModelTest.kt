@@ -5,17 +5,17 @@ import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import com.qartf.popularmovies.database.MovieDatabase
-import com.qartf.popularmovies.database.MovieDatabaseDao
-import com.qartf.popularmovies.gridView.GridViewViewModel
-import com.qartf.popularmovies.model.Result
-import com.qartf.popularmovies.model.ResultMovie
-import com.qartf.popularmovies.network.TheMovieDbApi
+import com.qartf.popularmovies.data.database.MovieDatabase
+import com.qartf.popularmovies.data.database.MovieDatabaseDao
+import com.qartf.popularmovies.ui.gridView.GridViewViewModel
+import com.qartf.popularmovies.data.model.Result
+import com.qartf.popularmovies.data.model.ResultMovie
+import com.qartf.popularmovies.data.network.TheMovieDbApi
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
 import com.qartf.popularmovies.utility.Constants
-import com.qartf.popularmovies.utility.DefaultServiceLocator
-import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.di.DefaultServiceLocator
+import com.qartf.popularmovies.di.ServiceLocator
 import com.qartf.popularmovies.utility.getValue
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -53,9 +53,20 @@ class GridViewViewModelTest {
         )
 
         val repository = ServiceLocator.instance(application).getRepository()
-        val prefResult = Result(2, Constants.SORT_BY_POPULARITY, Constants.SORT_BY_GENRE_DEFAULT)
-        gridViewViewModel = GridViewViewModel(repository, prefResult)
-        gridViewViewModel.onRecyclerItemClick(ResultMovie(View(application), movieFactory.createMovie()))
+        val prefResult = Result(
+            2,
+            Constants.SORT_BY_POPULARITY,
+            Constants.SORT_BY_GENRE_DEFAULT
+        )
+        gridViewViewModel =
+            GridViewViewModel(repository, prefResult)
+        gridViewViewModel.onRecyclerItemClick(
+            ResultMovie(
+                View(
+                    application
+                ), movieFactory.createMovie()
+            )
+        )
     }
 
     @After

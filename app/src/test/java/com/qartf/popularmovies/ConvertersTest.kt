@@ -16,12 +16,12 @@
 
 package com.qartf.popularmovies
 
-import com.qartf.popularmovies.database.MovieItem
-import com.qartf.popularmovies.domain.Movie
+import com.qartf.popularmovies.data.database.MovieItem
+import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.utility.MovieFactory
-import com.qartf.popularmovies.utility.asDatabaseModel
-import com.qartf.popularmovies.utility.convertFromString
-import com.qartf.popularmovies.utility.convertToString
+import com.qartf.popularmovies.domain.asDatabaseModel
+import com.qartf.popularmovies.domain.convertFromString
+import com.qartf.popularmovies.domain.convertToString
 import org.hamcrest.Matchers
 import org.junit.Assert.assertThat
 import org.junit.Test
@@ -34,13 +34,17 @@ class ConvertersTest {
 
     @Test
     fun moshiGenericConverterTestA() {
-        val testObjectA = convertFromString<Movie>(convertToString(movieA))
+        val testObjectA = convertFromString<Movie>(
+            convertToString(movieA)
+        )
         assertThat(testObjectA, Matchers.equalTo(movieA))
     }
 
     @Test
     fun moshiGenericConverterTestB() {
-        val testObjectB = convertFromString<MovieItem>(convertToString(movieB))
+        val testObjectB = convertFromString<MovieItem>(
+            convertToString(movieB)
+        )
         assertThat(testObjectB, Matchers.equalTo(movieB))
     }
 }

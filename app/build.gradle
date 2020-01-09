@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
-def keystorePropFileSigning = rootProject.file("keystore.properties")
+def keystorePropFileSigning = rootProject.file("local.properties")
 def keystorePropSigning = new Properties()
 keystorePropSigning.load(new FileInputStream(keystorePropFileSigning))
 

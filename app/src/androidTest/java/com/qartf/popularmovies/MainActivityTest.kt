@@ -14,13 +14,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.qartf.popularmovies.gridView.GridViewPagingAdapter
-import com.qartf.popularmovies.network.TheMovieDbApi
+import com.qartf.popularmovies.ui.gridView.GridViewPagingAdapter
+import com.qartf.popularmovies.data.network.TheMovieDbApi
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
+import com.qartf.popularmovies.ui.MainActivity
+import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_POPULARITY
-import com.qartf.popularmovies.utility.DefaultServiceLocator
-import com.qartf.popularmovies.utility.ServiceLocator
+import com.qartf.popularmovies.di.DefaultServiceLocator
+import com.qartf.popularmovies.di.ServiceLocator
 import junit.framework.TestCase.assertEquals
 
 import org.hamcrest.CoreMatchers.`is`

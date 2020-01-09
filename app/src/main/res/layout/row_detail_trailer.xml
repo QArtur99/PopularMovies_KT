@@ -4,11 +4,11 @@
     <data>
         <variable
             name="video"
-            type="com.qartf.popularmovies.domain.Video"/>
+            type="com.qartf.popularmovies.data.model.Video"/>
 
         <variable
             name="clickListener"
-            type="com.qartf.popularmovies.movieDetail.VideoAdapter.OnClickListener"/>
+            type="com.qartf.popularmovies.ui.movieDetail.VideoAdapter.OnClickListener"/>
 
     </data>
     <LinearLayout

@@ -22,14 +22,14 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.domain.Movie
-import com.qartf.popularmovies.domain.ReviewContainer
-import com.qartf.popularmovies.domain.VideoContainer
-import com.qartf.popularmovies.gridView.GridViewPagingAdapter
-import com.qartf.popularmovies.movieDetail.MovieDetailViewModel
-import com.qartf.popularmovies.movieDetail.ReviewAdapter
-import com.qartf.popularmovies.movieDetail.VideoAdapter
-import com.qartf.popularmovies.repository.NetworkState
+import com.qartf.popularmovies.data.model.Movie
+import com.qartf.popularmovies.data.model.ReviewContainer
+import com.qartf.popularmovies.data.model.VideoContainer
+import com.qartf.popularmovies.ui.gridView.GridViewPagingAdapter
+import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
+import com.qartf.popularmovies.ui.movieDetail.ReviewAdapter
+import com.qartf.popularmovies.ui.movieDetail.VideoAdapter
+import com.qartf.popularmovies.domain.NetworkState
 import com.qartf.popularmovies.utility.Constants.FabStatus
 
 @BindingAdapter("listData")

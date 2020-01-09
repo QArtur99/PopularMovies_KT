@@ -6,11 +6,11 @@
     <data>
         <variable
             name="movie"
-            type="com.qartf.popularmovies.domain.Movie"/>
+            type="com.qartf.popularmovies.data.model.Movie"/>
 
         <variable
             name="clickListener"
-            type="com.qartf.popularmovies.gridView.GridViewPagingAdapter.OnClickListener"/>
+            type="com.qartf.popularmovies.ui.gridView.GridViewPagingAdapter.OnClickListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

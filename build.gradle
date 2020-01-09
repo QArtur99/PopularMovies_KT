@@ -10,6 +10,9 @@ buildscript {
         classpath deps.navigation.safe_args_plugin
         classpath deps.gradle_versions_plugin
     }
+    repositories {
+        google()
+    }
 }
 
 apply plugin: "com.diffplug.gradle.spotless"

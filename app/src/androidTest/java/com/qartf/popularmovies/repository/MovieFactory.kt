@@ -1,6 +1,6 @@
 package com.qartf.popularmovies.repository
 
-import com.qartf.popularmovies.domain.Movie
+import com.qartf.popularmovies.data.model.Movie
 import java.util.concurrent.atomic.AtomicInteger
 
 class MovieFactory {

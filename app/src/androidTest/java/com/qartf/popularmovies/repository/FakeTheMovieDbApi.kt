@@ -1,10 +1,10 @@
 package com.qartf.popularmovies.repository
 
-import com.qartf.popularmovies.domain.Movie
-import com.qartf.popularmovies.domain.MovieContainer
-import com.qartf.popularmovies.domain.ReviewContainer
-import com.qartf.popularmovies.domain.VideoContainer
-import com.qartf.popularmovies.network.TheMovieDbApi
+import com.qartf.popularmovies.data.model.Movie
+import com.qartf.popularmovies.data.model.MovieContainer
+import com.qartf.popularmovies.data.model.ReviewContainer
+import com.qartf.popularmovies.data.model.VideoContainer
+import com.qartf.popularmovies.data.network.TheMovieDbApi
 import com.qartf.popularmovies.utility.Constants
 import kotlinx.coroutines.Deferred
 import retrofit2.Call

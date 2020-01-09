@@ -6,7 +6,7 @@
     <data>
         <variable
             name="gridViewViewModel"
-            type="com.qartf.popularmovies.gridView.GridViewViewModel"/>
+            type="com.qartf.popularmovies.ui.gridView.GridViewViewModel"/>
     </data>
 
     <RelativeLayout
