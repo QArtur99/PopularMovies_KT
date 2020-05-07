@@ -49,14 +49,9 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         binding.lifecycleOwner = this
         binding.movieDetailViewModel = movieDetailViewModel
         binding.appBar.addOnOffsetChangedListener(this)
-
-        movieDetailViewModel.setListItem(
-            convertFromString(
-                intent.getStringExtra(
-                    INTENT_LIST_ITEM_ID
-                )!!
-            )
-        )
+        intent.getStringExtra(INTENT_LIST_ITEM_ID)?.let {
+            movieDetailViewModel.setListItem(convertFromString(it))
+        }
         movieDetailViewModel.onAppBarLayoutOpen(FabStatus.NONE)
 
         binding.toolbarImage.transitionName = TOOLBAR_IMAGE

@@ -22,13 +22,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
-import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.R
-import com.qartf.popularmovies.databinding.FragmentGridViewBinding
 import com.qartf.popularmovies.data.model.Result
-import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
+import com.qartf.popularmovies.databinding.FragmentGridViewBinding
 import com.qartf.popularmovies.domain.NetworkState
 import com.qartf.popularmovies.domain.Status
+import com.qartf.popularmovies.domain.convertToString
+import com.qartf.popularmovies.ui.MovieDetailActivity
+import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_KEY
@@ -43,7 +44,6 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
-import com.qartf.popularmovies.domain.convertToString
 import com.qartf.popularmovies.utility.extension.getVmFactory
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -73,21 +73,15 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         binding.lifecycleOwner = this
 
         gridViewViewModel.columns.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                setLayoutManager(properties)
-            }
+            it?.let { setLayoutManager(it) }
         })
 
         gridViewViewModel.discoverMovie.observe(viewLifecycleOwner, Observer {
-            it?.let { value ->
-                this.sortBy = value.sortBy
-            }
+            it?.let { this.sortBy = it.sortBy }
         })
 
         gridViewViewModel.networkState.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                bindNetworkState(properties)
-            }
+            it?.let { bindNetworkState(it) }
         })
 
         gridViewViewModel.listItem.observe(viewLifecycleOwner, Observer {
@@ -97,14 +91,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 } else {
                     val intent = Intent(activity, MovieDetailActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.putExtra(INTENT_LIST_ITEM_ID,
-                        convertToString(listItem)
-                    )
+                    intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
 
                     if (activityWithOptions) {
                         val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             this.activity!!,
-                            Pair<View, String>(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
+                            Pair(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
                         )
                         activity!!.startActivity(intent, activityOptions.toBundle())
                     } else {
@@ -130,11 +122,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         })
 
         binding.recyclerView.adapter = GridViewPagingAdapter(
-            GridViewPagingAdapter.OnClickListener { product ->
-                gridViewViewModel.onRecyclerItemClick(
-                    product
-                )
-            },
+            GridViewPagingAdapter.OnClickListener { gridViewViewModel.onRecyclerItemClick(it) },
             GridViewPagingAdapter.OnSizeListener { adapterItemCount > 0 },
             GridViewPagingAdapter.OnNetworkStateClickListener { gridViewViewModel.retry() }
         )
@@ -178,34 +166,27 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             R.id.action_favorite -> movieDetailViewModel.onFabButtonClick(true)
             R.id.action_refresh -> gridViewViewModel.refresh()
             // R.id.action_sortBy -> openBottomDialog()
-            R.id.favorite -> sharedPreferences.edit().putString(
-                SORT_BY_KEY,
-                SORT_BY_FAVORITE
-            ).apply()
-            R.id.popularity -> sharedPreferences.edit().putString(
-                SORT_BY_KEY,
-                SORT_BY_POPULARITY
-            ).apply()
-            R.id.releaseDate -> sharedPreferences.edit().putString(
-                SORT_BY_KEY,
-                SORT_BY_RELEASE_DATE
-            ).apply()
-            R.id.revenue -> sharedPreferences.edit().putString(SORT_BY_KEY, SORT_BY_REVENUE).apply()
-            R.id.voteAverage -> sharedPreferences.edit().putString(
-                SORT_BY_KEY,
-                SORT_BY_VOTE_AVERAGE
-            ).apply()
-            R.id.voteCount -> sharedPreferences.edit().putString(
-                SORT_BY_KEY,
-                SORT_BY_VOTE_COUNT
-            ).apply()
-            R.id.one_column -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 1).apply()
-            R.id.two_columns -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 2).apply()
-            R.id.three_columns -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 3).apply()
-            R.id.four_columns -> sharedPreferences.edit().putInt(NUMBER_OF_COLUMNS_KEY, 4).apply()
+            R.id.favorite -> spPutString(SORT_BY_KEY, SORT_BY_FAVORITE)
+            R.id.popularity -> spPutString(SORT_BY_KEY, SORT_BY_POPULARITY)
+            R.id.releaseDate -> spPutString(SORT_BY_KEY, SORT_BY_RELEASE_DATE)
+            R.id.revenue -> spPutString(SORT_BY_KEY, SORT_BY_REVENUE)
+            R.id.voteAverage -> spPutString(SORT_BY_KEY, SORT_BY_VOTE_AVERAGE)
+            R.id.voteCount -> spPutString(SORT_BY_KEY, SORT_BY_VOTE_COUNT)
+            R.id.one_column -> spPutInt(NUMBER_OF_COLUMNS_KEY, 1)
+            R.id.two_columns -> spPutInt(NUMBER_OF_COLUMNS_KEY, 2)
+            R.id.three_columns -> spPutInt(NUMBER_OF_COLUMNS_KEY, 3)
+            R.id.four_columns -> spPutInt(NUMBER_OF_COLUMNS_KEY, 4)
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun spPutString(key: String, value: String) {
+        sharedPreferences.edit().putString(key, value).apply()
+    }
+
+    private fun spPutInt(key: String, value: Int) {
+        sharedPreferences.edit().putInt(key, value).apply()
     }
 
     private fun openBottomDialog() {
@@ -222,8 +203,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                 )
             }
             SORT_BY_KEY -> {
-                val sortBy = sharedPreferences.getString(key, SORT_BY_POPULARITY)!!
-                when (sortBy) {
+                when (val sortBy = sharedPreferences.getString(key, SORT_BY_POPULARITY)!!) {
                     SORT_BY_FAVORITE -> gridViewViewModel.onSortByChanged(sortBy)
                     else -> gridViewViewModel.onSortByChanged(sortBy)
                 }
@@ -251,9 +231,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
 
     private fun bindNetworkState(networkState: NetworkState) {
         when (networkState.status) {
-            Status.RUNNING -> {
-                binding.emptyView.visibility = View.GONE
-            }
+            Status.RUNNING -> binding.emptyView.visibility = View.GONE
             Status.FAILED -> {
                 if (1 > adapterItemCount) {
                     binding.emptyView.visibility = View.VISIBLE
@@ -266,9 +244,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
                     }
                 }
             }
-            Status.SUCCESS -> {
-                binding.emptyView.visibility = View.GONE
-            }
+            Status.SUCCESS -> binding.emptyView.visibility = View.GONE
             Status.DB_EMPTY -> {
                 if (1 > adapterItemCount) {
                     binding.emptyView.visibility = View.VISIBLE
