@@ -1,11 +1,9 @@
 package com.qartf.popularmovies.ui.gridView
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -23,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qartf.popularmovies.R
+import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.databinding.FragmentGridViewBinding
 import com.qartf.popularmovies.domain.NetworkState
@@ -30,6 +29,7 @@ import com.qartf.popularmovies.domain.Status
 import com.qartf.popularmovies.domain.convertToString
 import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
+import com.qartf.popularmovies.utility.ConnectionUtils.isConnectedToInternet
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.NUMBER_OF_COLUMNS_KEY
@@ -85,39 +85,27 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         })
 
         gridViewViewModel.listItem.observe(viewLifecycleOwner, Observer {
-            it?.let { (v, listItem) ->
-                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    movieDetailViewModel.setListItem(listItem)
-                } else {
-                    val intent = Intent(activity, MovieDetailActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
-
-                    if (activityWithOptions) {
-                        val activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            this.activity!!,
-                            Pair(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
-                        )
-                        activity!!.startActivity(intent, activityOptions.toBundle())
-                    } else {
-                        activity!!.startActivity(intent)
-                    }
-                }
-                // gridViewViewModel.onRecyclerItemClick(null)
+            it ?: return@Observer
+            val (v, listItem) = it
+            if (isLandscape()) {
+                movieDetailViewModel.setListItem(listItem)
+                return@Observer
+            }
+            if (activityWithOptions) {
+                requireActivity().startActivity(getDetailIntent(listItem), getOptions(v))
+            } else {
+                requireActivity().startActivity(getDetailIntent(listItem))
             }
         })
 
         gridViewViewModel.posts.observe(viewLifecycleOwner, Observer {
-            it?.let { listItem ->
-                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    if (listItem.isNotEmpty()) {
-                        movieDetailViewModel.setFirstListItem(listItem.first())
-                    }
-                }
-                adapterItemCount = listItem.size
-                if (this.sortBy == SORT_BY_FAVORITE && adapterItemCount > 0) {
-                    gridViewViewModel.refresh()
-                }
+            it ?: return@Observer
+            if (isLandscape() && it.isNotEmpty()) {
+                movieDetailViewModel.setFirstListItem(it.first())
+            }
+            adapterItemCount = it.size
+            if (this.sortBy == SORT_BY_FAVORITE && adapterItemCount > 0) {
+                gridViewViewModel.refresh()
             }
         })
 
@@ -132,16 +120,25 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         return binding.root
     }
 
+    private fun getDetailIntent(listItem: Movie): Intent {
+        val intent = Intent(activity, MovieDetailActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra(INTENT_LIST_ITEM_ID, convertToString(listItem))
+        return intent
+    }
+
+    private fun getOptions(v: View): Bundle? {
+        return ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(),
+            Pair(v.findViewById(R.id.itemImage), TOOLBAR_IMAGE)
+        ).toBundle()
+    }
+
     private fun initSwipeToRefresh() {
         gridViewViewModel.refreshState.observe(viewLifecycleOwner, Observer {
-            it?.let { properties ->
-                binding.swipeRefresh.isRefreshing = properties == NetworkState.LOADING
-            }
+            it?.let { binding.swipeRefresh.isRefreshing = it == NetworkState.LOADING }
         })
-
-        binding.swipeRefresh.setOnRefreshListener {
-            gridViewViewModel.refresh()
-        }
+        binding.swipeRefresh.setOnRefreshListener { gridViewViewModel.refresh() }
     }
 
     private fun setLayoutManager(columns: Int) {
@@ -156,9 +153,12 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
         inflater.inflate(R.menu.menu, menu)
-        menu.findItem(R.id.action_favorite).isVisible =
-            resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        menu.findItem(R.id.action_favorite).isVisible = isLandscape()
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun isLandscape(): Boolean {
+        return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -190,7 +190,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private fun openBottomDialog() {
-        val dialog = SettingsBottomSheetDialog(activity!!)
+        val dialog = SettingsBottomSheetDialog(requireActivity())
         dialog.create()
         dialog.show()
     }
@@ -215,7 +215,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         }
     }
 
-    fun setSharedPreferences(application: Application): Result {
+    private fun setSharedPreferences(application: Application): Result {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
         val columns = sharedPreferences.getInt(NUMBER_OF_COLUMNS_KEY, NUMBER_OF_COLUMNS_DEFAULT)
@@ -235,7 +235,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             Status.FAILED -> {
                 if (1 > adapterItemCount) {
                     binding.emptyView.visibility = View.VISIBLE
-                    if (checkConnection()) {
+                    if (isConnectedToInternet(requireActivity())) {
                         binding.emptyTitleText.text = getString(R.string.server_problem)
                         binding.emptySubtitleText.text = getString(R.string.server_problem_sub_text)
                     } else {
@@ -257,16 +257,10 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         }
     }
 
-    private fun checkConnection(): Boolean {
-        val cm =
-            requireNotNull(this.activity).getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.isDefaultNetworkActive
-    }
-
     override fun onResume() {
         super.onResume()
         if (savedInstanceState != null) {
-            val listState: Parcelable? = savedInstanceState!!.getParcelable(RECYCLER_VIEW_STATE_ID)
+            val listState: Parcelable? = savedInstanceState?.getParcelable(RECYCLER_VIEW_STATE_ID)
             binding.recyclerView.layoutManager?.onRestoreInstanceState(listState)
         }
         activityWithOptions = true

@@ -7,11 +7,11 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.qartf.popularmovies.R
+import com.qartf.popularmovies.data.model.Movie
+import com.qartf.popularmovies.data.model.ResultMovie
 import com.qartf.popularmovies.databinding.NetworkStateItemBinding
 import com.qartf.popularmovies.databinding.RowMovieItemBinding
-import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.domain.NetworkState
-import com.qartf.popularmovies.data.model.ResultMovie
 
 class GridViewPagingAdapter(
     private val clickListener: OnClickListener,
@@ -31,17 +31,11 @@ class GridViewPagingAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.row_movie_item ->
-                MovieViewHolder(
-                    RowMovieItemBinding.inflate(LayoutInflater.from(parent.context))
-                )
+            R.layout.row_movie_item -> MovieViewHolder(RowMovieItemBinding.inflate(layoutInflater))
             R.layout.network_state_item ->
-                NetworkStateViewHolder(
-                    NetworkStateItemBinding.inflate(
-                        LayoutInflater.from(parent.context)
-                    )
-                )
+                NetworkStateViewHolder(NetworkStateItemBinding.inflate(layoutInflater))
             else -> throw IllegalArgumentException("unknown view type $viewType")
         }
     }
@@ -94,12 +88,7 @@ class GridViewPagingAdapter(
     }
 
     class OnClickListener(val clickListener: (resultMovie: ResultMovie) -> Unit) {
-        fun onClick(v: View, product: Movie) = clickListener(
-            ResultMovie(
-                v,
-                product
-            )
-        )
+        fun onClick(v: View, product: Movie) = clickListener(ResultMovie(v, product))
     }
 
     class OnSizeListener(val clickListener: () -> Boolean) {

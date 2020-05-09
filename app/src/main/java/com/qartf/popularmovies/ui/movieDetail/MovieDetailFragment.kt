@@ -56,8 +56,8 @@ class MovieDetailFragment : Fragment() {
         })
 
         movieDetailViewModel.fabButton.observe(viewLifecycleOwner, Observer {
-            it?.let { value ->
-                if (value) onFabClicked = true
+            it?.let {
+                if (it) onFabClicked = true
                 movieDetailViewModel.onFabButtonClick(null)
             }
         })
@@ -67,7 +67,7 @@ class MovieDetailFragment : Fragment() {
 
     private fun showSnackBar(snackBarId: String) {
         Snackbar.make(
-            activity!!.findViewById(android.R.id.content),
+            requireActivity().findViewById(android.R.id.content),
             when (snackBarId) {
                 SNACKBAR_ADD -> getString(R.string.editor_insert_movie_successful)
                 SNACKBAR_REMOVE -> getString(R.string.editor_delete_product_successful)

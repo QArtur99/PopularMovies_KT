@@ -18,25 +18,32 @@ class ReviewDialog : DialogFragment() {
 
     private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = DialogReviewBinding.inflate(LayoutInflater.from(activity))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding = DialogReviewBinding.inflate(LayoutInflater.from(requireActivity()))
         binding.movieDetailViewModel = movieDetailViewModel
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        binding.recyclerView.adapter =
-            ReviewAdapter(ReviewAdapter.OnClickListener { product ->
-                movieDetailViewModel.onReviewListItemClick(product)
-            })
+        binding.recyclerView.addItemDecoration(getDivider())
+        binding.recyclerView.adapter = ReviewAdapter(ReviewAdapter.OnClickListener { product ->
+            movieDetailViewModel.onReviewListItemClick(product)
+        })
 
         movieDetailViewModel.reviewListItem.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(properties.url))
-                if (intent.resolveActivity(activity!!.packageManager) != null) {
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
                     startActivity(intent)
                 }
             }
         })
 
-        Utility.onCreateDialog(activity!!, dialog!!, binding.root, 400, 400)
+        Utility.onCreateDialog(requireActivity(), dialog!!, binding.root, 400, 400)
         return binding.root
+    }
+
+    private fun getDivider(): DividerItemDecoration {
+        return DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL)
     }
 }

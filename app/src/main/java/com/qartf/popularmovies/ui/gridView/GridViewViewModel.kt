@@ -20,20 +20,16 @@ class GridViewViewModel(
     val columns: LiveData<Int> = _columns
 
     private val _sortBy = MutableLiveData<String>()
+
     private val _sortByGenre = MutableLiveData<String>()
-    val discoverMovie = MediatorLiveData<DiscoverMovie>().apply {
-        addSource(_sortBy) {
-            it?.let { sourceValue -> this.value?.sortBy = sourceValue }
-                .also { this.value = this.value }
-        }
-        addSource(_sortByGenre) {
-            it?.let { sourceValue -> this.value?.sortByGenre = sourceValue }
-                .also { this.value = this.value }
-        }
-    }
 
     private val _listItem = MutableLiveData<ResultMovie>()
     val listItem: LiveData<ResultMovie> = _listItem
+
+    val discoverMovie = MediatorLiveData<DiscoverMovie>().apply {
+        addSource(_sortBy) { it?.let { this.value?.sortBy = it; value = value } }
+        addSource(_sortByGenre) { it?.let { this.value?.sortByGenre = it; value = value } }
+    }
 
     fun onColumnChanged(requestId: Int) {
         _columns.value = requestId

@@ -18,14 +18,17 @@ class VideoDialog : DialogFragment() {
 
     private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = DialogVideoBinding.inflate(LayoutInflater.from(activity))
         binding.movieDetailViewModel = movieDetailViewModel
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        binding.recyclerView.adapter =
-            VideoAdapter(VideoAdapter.OnClickListener { product ->
-                movieDetailViewModel.onVideoListItemClick(product)
-            })
+        binding.recyclerView.addItemDecoration(getDivider())
+        binding.recyclerView.adapter = VideoAdapter(VideoAdapter.OnClickListener { product ->
+            movieDetailViewModel.onVideoListItemClick(product)
+        })
 
         movieDetailViewModel.videoListItem.observe(viewLifecycleOwner, Observer {
             it?.let { properties ->
@@ -39,5 +42,12 @@ class VideoDialog : DialogFragment() {
 
         Utility.onCreateDialog(activity!!, dialog!!, binding.root, 400, 400)
         return binding.root
+    }
+
+    private fun getDivider(): DividerItemDecoration {
+        return DividerItemDecoration(
+            activity,
+            DividerItemDecoration.VERTICAL
+        )
     }
 }
