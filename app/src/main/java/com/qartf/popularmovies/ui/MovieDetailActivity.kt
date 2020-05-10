@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.animation.doOnCancel
@@ -15,18 +14,18 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.appbar.AppBarLayout
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.ActivityMovieDetailBinding
+import com.qartf.popularmovies.domain.convertFromString
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.Constants.FabStatus
-import com.qartf.popularmovies.domain.convertFromString
-import com.qartf.popularmovies.utility.extension.getVmFactory
 import kotlinx.android.synthetic.main.activity_movie_detail.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
-    private val movieDetailViewModel by viewModels<MovieDetailViewModel> { getVmFactory() }
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
     private lateinit var binding: ActivityMovieDetailBinding
     private var enterAnimationCompleted = false
 

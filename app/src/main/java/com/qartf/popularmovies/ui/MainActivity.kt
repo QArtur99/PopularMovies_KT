@@ -3,7 +3,6 @@ package com.qartf.popularmovies.ui
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.preference.PreferenceManager
@@ -14,13 +13,13 @@ import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_KEY
-import com.qartf.popularmovies.utility.extension.getVmFactory
 import kotlinx.android.synthetic.main.tool_bar.*
 import kotlinx.android.synthetic.main.tool_bar.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val movieDetailViewModel by viewModels<MovieDetailViewModel> { getVmFactory() }
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(application)
     }

@@ -102,7 +102,7 @@ class Constants {
         const val REVIEWS = "reviews"
 
         const val THE_MOVIE_DB_API_TOKEN = BuildConfig.THE_MOVIE_DB_API_TOKEN
-        const val THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3"
+        const val THE_MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3"
 
         const val TOOLBAR_IMAGE = "toolbarImage"
     }

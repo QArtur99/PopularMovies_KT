@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentPosterBinding
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
-import com.qartf.popularmovies.utility.extension.getVmFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PosterFragment : Fragment() {
 
-    private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

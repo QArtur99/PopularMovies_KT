@@ -16,7 +16,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,7 +43,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
-import com.qartf.popularmovies.utility.extension.getVmFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,18 +54,15 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var savedInstanceState: Bundle? = null
     private var activityWithOptions = false
 
-    private val gridViewViewModel by activityViewModels<GridViewViewModel> {
-        val application = requireNotNull(this.activity).application
-        val prefResult = setSharedPreferences(application)
-        getVmFactory(prefResult)
-    }
-    private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
+    private val gridViewViewModel: GridViewViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setSharedPreferences(requireActivity().application)
         this.savedInstanceState = savedInstanceState
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_grid_view, container, false)
         binding.gridViewViewModel = gridViewViewModel

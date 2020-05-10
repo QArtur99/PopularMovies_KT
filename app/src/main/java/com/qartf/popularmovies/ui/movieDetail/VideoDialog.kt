@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.qartf.popularmovies.databinding.DialogVideoBinding
 import com.qartf.popularmovies.utility.Utility
-import com.qartf.popularmovies.utility.extension.getVmFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class VideoDialog : DialogFragment() {
 
-    private val movieDetailViewModel by activityViewModels<MovieDetailViewModel> { getVmFactory() }
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

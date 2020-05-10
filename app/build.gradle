@@ -24,7 +24,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 7
         versionName "1.06"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.qartf.popularmovies.utility.CustomTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -92,6 +92,12 @@ dependencies {
     // Glide
     implementation deps.glide.runtime
     kapt deps.glide.compiler
+
+    //Koin
+    implementation "org.koin:koin-android:$versions.koin"
+    implementation "org.koin:koin-androidx-scope:$versions.koin"
+    implementation "org.koin:koin-androidx-viewmodel:$versions.koin"
+    androidTestImplementation "org.koin:koin-test:$versions.koin"
 
     //Test
     testImplementation deps.atsl.runner
