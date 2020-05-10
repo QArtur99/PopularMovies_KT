@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.domain.repository
+package com.qartf.popularmovies.data.repository
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData

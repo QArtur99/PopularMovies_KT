@@ -11,7 +11,7 @@ import com.qartf.popularmovies.data.model.Review
 import com.qartf.popularmovies.data.model.ReviewContainer
 import com.qartf.popularmovies.data.model.Video
 import com.qartf.popularmovies.data.model.VideoContainer
-import com.qartf.popularmovies.domain.repository.Repository
+import com.qartf.popularmovies.data.repository.Repository
 import com.qartf.popularmovies.utility.Constants.ApiStatus
 import com.qartf.popularmovies.utility.Constants.FabStatus
 import com.qartf.popularmovies.domain.asDatabaseModel

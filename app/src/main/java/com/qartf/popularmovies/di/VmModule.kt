@@ -6,7 +6,7 @@ import com.qartf.popularmovies.data.database.MovieDatabaseDao
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.data.network.RetrofitModule
 import com.qartf.popularmovies.data.network.TheMovieDbApi
-import com.qartf.popularmovies.domain.repository.Repository
+import com.qartf.popularmovies.data.repository.Repository
 import com.qartf.popularmovies.ui.gridView.GridViewViewModel
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants

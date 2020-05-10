@@ -10,7 +10,7 @@ import com.qartf.popularmovies.data.model.ResultMovie
 import com.qartf.popularmovies.data.network.TheMovieDbApi
 import com.qartf.popularmovies.di.createNetworkExecutor
 import com.qartf.popularmovies.di.createRepository
-import com.qartf.popularmovies.domain.repository.Repository
+import com.qartf.popularmovies.data.repository.Repository
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
 import com.qartf.popularmovies.ui.gridView.GridViewViewModel

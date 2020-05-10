@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.domain.repository
+package com.qartf.popularmovies.data.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
