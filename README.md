@@ -17,6 +17,7 @@ The application fetches movie data using https://www.themoviedb.org (TMDB).
 * [Paging](https://developer.android.com/topic/libraries/architecture/paging/) - Load and display small chunks of data at a time.
 * [Room](https://developer.android.com/topic/libraries/architecture/room) - Access your app's SQLite database with in-app objects and compile-time checks.
 * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - Store UI-related data that isn't destroyed on app rotations. Easily schedule asynchronous tasks.
+* [Koin](https://insert-koin.io) - Runtime framework for dependency injection.
 * [Retrofit 2](https://github.com/square/retrofit) - Handle REST api communication.
 * [Moshi](https://github.com/square/moshi) - Serialize Kotlin objects and deserialize JSON objects.
 * [Glide](https://github.com/bumptech/glide) - Load and cache images by URL.
