@@ -18,14 +18,13 @@ import com.qartf.popularmovies.data.database.MovieDatabase
 import com.qartf.popularmovies.data.network.TheMovieDbApi
 import com.qartf.popularmovies.di.createNetworkExecutor
 import com.qartf.popularmovies.di.createRepository
-import com.qartf.popularmovies.di.createResult
+import com.qartf.popularmovies.di.domainModule
+import com.qartf.popularmovies.di.uiModule
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
 import com.qartf.popularmovies.ui.MainActivity
 import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.ui.gridView.GridViewPagingAdapter
-import com.qartf.popularmovies.ui.gridView.GridViewViewModel
-import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_POPULARITY
 import junit.framework.TestCase.assertEquals
 import org.hamcrest.CoreMatchers.`is`
@@ -36,7 +35,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import java.util.concurrent.CountDownLatch
@@ -57,7 +55,6 @@ class MainActivityTest : KoinTest {
 
     @Before
     fun init() {
-
         val fakeApi = FakeTheMovieDbApi()
         fakeApi.sortByTest = SORT_BY_POPULARITY
         fakeApi.addPost(SORT_BY_POPULARITY, movieFactory.createMovie())
@@ -66,14 +63,11 @@ class MainActivityTest : KoinTest {
 
         application = getInstrumentation().targetContext.applicationContext as TestApp
         movieDatabase = Room.inMemoryDatabaseBuilder(application, MovieDatabase::class.java).build()
-        application.injectModule(module {
+        application.injectModule(domainModule, uiModule, module {
             single { fakeApi as TheMovieDbApi }
             single { movieDatabase.movieDatabaseDao() }
             single { createRepository(get(), get(), get(), get()) }
             single { createNetworkExecutor() }
-            single { createResult() }
-            viewModel { MovieDetailViewModel(get()) }
-            viewModel { GridViewViewModel(get(), get()) }
         })
         val intent = Intent(application, MainActivity::class.java)
         activityTestRule.launchActivity(intent)

@@ -23,9 +23,9 @@ import com.qartf.popularmovies.R
 import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.databinding.FragmentGridViewBinding
-import com.qartf.popularmovies.domain.NetworkState
-import com.qartf.popularmovies.domain.Status
-import com.qartf.popularmovies.domain.convertToString
+import com.qartf.popularmovies.domain.state.NetworkState
+import com.qartf.popularmovies.domain.state.Status
+import com.qartf.popularmovies.domain.mapper.convertToString
 import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.ConnectionUtils.isConnectedToInternet

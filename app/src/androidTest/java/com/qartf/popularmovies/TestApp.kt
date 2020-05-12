@@ -24,9 +24,11 @@ class TestApp : Application() {
         }
     }
 
-    internal fun injectModule(module: Module) {
+    internal fun injectModule(vararg modules: Module) {
         try {
-            loadKoinModules(module)
+            for (module in modules) {
+                loadKoinModules(module)
+            }
         } catch (e: Exception) {
         }
     }

@@ -2,7 +2,7 @@ package com.qartf.popularmovies.data.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.qartf.popularmovies.domain.NetworkState
+import com.qartf.popularmovies.domain.state.NetworkState
 import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.data.model.MovieContainer
 import com.qartf.popularmovies.data.network.TheMovieDbApi

@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.appbar.AppBarLayout
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.ActivityMovieDetailBinding
-import com.qartf.popularmovies.domain.convertFromString
+import com.qartf.popularmovies.domain.mapper.convertFromString
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
@@ -49,7 +49,11 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         binding.movieDetailViewModel = movieDetailViewModel
         binding.appBar.addOnOffsetChangedListener(this)
         intent.getStringExtra(INTENT_LIST_ITEM_ID)?.let {
-            movieDetailViewModel.setListItem(convertFromString(it))
+            movieDetailViewModel.setListItem(
+                convertFromString(
+                    it
+                )
+            )
         }
         movieDetailViewModel.onAppBarLayoutOpen(FabStatus.NONE)
 

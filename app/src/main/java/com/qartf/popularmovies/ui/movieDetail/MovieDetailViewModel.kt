@@ -3,21 +3,32 @@ package com.qartf.popularmovies.ui.movieDetail
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.data.model.Review
 import com.qartf.popularmovies.data.model.ReviewContainer
 import com.qartf.popularmovies.data.model.Video
 import com.qartf.popularmovies.data.model.VideoContainer
-import com.qartf.popularmovies.data.repository.Repository
+import com.qartf.popularmovies.domain.DeleteMovieUseCase
+import com.qartf.popularmovies.domain.GetMovieReviewUseCase
+import com.qartf.popularmovies.domain.GetMovieTrailersUseCase
+import com.qartf.popularmovies.domain.GetMovieWithIdUseCase
+import com.qartf.popularmovies.domain.InsertMovieUseCase
+import com.qartf.popularmovies.domain.mapper.asDatabaseModel
 import com.qartf.popularmovies.utility.Constants.ApiStatus
 import com.qartf.popularmovies.utility.Constants.FabStatus
-import com.qartf.popularmovies.domain.asDatabaseModel
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
+class MovieDetailViewModel(
+    private val deleteMovieUseCase: DeleteMovieUseCase,
+    private val getMovieReviewUseCase: GetMovieReviewUseCase,
+    private val getMovieTrailersUseCase: GetMovieTrailersUseCase,
+    private val getMovieWithIdUseCase: GetMovieWithIdUseCase,
+    private val insertMovieUseCase: InsertMovieUseCase
+) : ViewModel() {
 
     private val _listItem = MutableLiveData<Movie>()
     val listItem: LiveData<Movie> = _listItem
@@ -101,7 +112,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 _status.value = ApiStatus.LOADING
-                val listResult = repository.getMovieReviewsAsync(listItem.value!!.id)
+                val listResult = getMovieReviewUseCase(listItem.value!!.id)
                 _status.value = ApiStatus.DONE
                 _reviews.value = listResult
             } catch (e: Exception) {
@@ -115,7 +126,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 _status.value = ApiStatus.LOADING
-                val listResult = repository.getMovieTrailersAsync(listItem.value!!.id)
+                val listResult = getMovieTrailersUseCase(listItem.value!!.id)
                 _status.value = ApiStatus.DONE
                 _videos.value = listResult
             } catch (e: Exception) {
@@ -125,8 +136,8 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private val isFavorite = Transformations.switchMap(listItem) { repository.getMovieWithId(it?.id ?: "") }
-    val favorite = Transformations.map(isFavorite) { it != null }
+    private val isFavorite = listItem.switchMap { getMovieWithIdUseCase(it.id) }
+    val favorite = isFavorite.map { it != null }
 
     fun onFabButtonClick(show: Boolean?) {
         if (show != null)
@@ -137,7 +148,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     private fun onAddFavorite() {
         viewModelScope.launch {
             listItem.value?.let {
-                repository.insert(it.asDatabaseModel())
+                insertMovieUseCase(it.asDatabaseModel())
             }
         }
     }
@@ -145,7 +156,7 @@ class MovieDetailViewModel(private val repository: Repository) : ViewModel() {
     private fun onDeleteFavorite() {
         viewModelScope.launch {
             listItem.value?.let {
-                repository.delete(it.asDatabaseModel().id)
+                deleteMovieUseCase(it.asDatabaseModel().id)
             }
         }
     }

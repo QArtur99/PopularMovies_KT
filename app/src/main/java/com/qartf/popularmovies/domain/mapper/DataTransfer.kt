@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.domain
+package com.qartf.popularmovies.domain.mapper
 
 import com.qartf.popularmovies.data.database.MovieItem
 import com.qartf.popularmovies.data.model.Movie
@@ -20,7 +20,9 @@ fun MovieItem.asDomainModel(): Movie {
         poster_path = poster_path,
         original_language = original_language,
         original_title = original_title,
-        genre_ids = convertFromString(genre_ids),
+        genre_ids = convertFromString(
+            genre_ids
+        ),
         backdrop_path = backdrop_path,
         adult = adult,
         overview = overview,
@@ -43,7 +45,9 @@ fun Movie.asDatabaseModel(): MovieItem {
         poster_path = poster_path ?: "",
         original_language = original_language,
         original_title = original_title,
-        genre_ids = convertToString(genre_ids),
+        genre_ids = convertToString(
+            genre_ids
+        ),
         backdrop_path = backdrop_path ?: "",
         adult = adult,
         overview = overview,

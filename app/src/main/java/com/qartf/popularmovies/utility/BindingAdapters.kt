@@ -29,7 +29,7 @@ import com.qartf.popularmovies.ui.gridView.GridViewPagingAdapter
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.ui.movieDetail.ReviewAdapter
 import com.qartf.popularmovies.ui.movieDetail.VideoAdapter
-import com.qartf.popularmovies.domain.NetworkState
+import com.qartf.popularmovies.domain.state.NetworkState
 import com.qartf.popularmovies.utility.Constants.FabStatus
 
 @BindingAdapter("listData")

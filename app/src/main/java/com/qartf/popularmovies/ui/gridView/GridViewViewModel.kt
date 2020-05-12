@@ -8,11 +8,10 @@ import androidx.lifecycle.ViewModel
 import com.qartf.popularmovies.data.model.DiscoverMovie
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.data.model.ResultMovie
-import com.qartf.popularmovies.data.repository.Repository
-import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_FAVORITE
+import com.qartf.popularmovies.domain.GetMoviesPagingUseCase
 
 class GridViewViewModel(
-    private val repository: Repository,
+    private val getMoviesPagingUseCase: GetMoviesPagingUseCase,
     private val prefResult: Result
 ) : ViewModel() {
 
@@ -54,13 +53,7 @@ class GridViewViewModel(
     }
 
     // Paging
-    private val repoResult = Transformations.map(discoverMovie) {
-        when (it.sortBy) {
-            SORT_BY_FAVORITE -> repository.getMoviesPagingDB(it.sortBy, 20)
-            else -> repository.getMoviesPaging(it.sortBy, it.sortByGenre)
-        }
-    }
-
+    private val repoResult = getMoviesPagingUseCase(discoverMovie)
     val posts = Transformations.switchMap(repoResult) { it.pagedList }
     val networkState = Transformations.switchMap(repoResult) { it.networkState }
     val refreshState = Transformations.switchMap(repoResult) { it.refreshState }

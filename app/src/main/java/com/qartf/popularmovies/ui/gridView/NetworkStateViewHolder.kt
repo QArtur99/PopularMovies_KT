@@ -3,8 +3,8 @@ package com.qartf.popularmovies.ui.gridView
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.qartf.popularmovies.databinding.NetworkStateItemBinding
-import com.qartf.popularmovies.domain.NetworkState
-import com.qartf.popularmovies.domain.Status
+import com.qartf.popularmovies.domain.state.NetworkState
+import com.qartf.popularmovies.domain.state.Status
 
 class NetworkStateViewHolder constructor(val binding: NetworkStateItemBinding) :
     RecyclerView.ViewHolder(binding.root) {

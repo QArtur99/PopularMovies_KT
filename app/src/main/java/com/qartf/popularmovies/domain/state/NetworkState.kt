@@ -1,4 +1,4 @@
-package com.qartf.popularmovies.domain
+package com.qartf.popularmovies.domain.state
 
 enum class Status {
     RUNNING,

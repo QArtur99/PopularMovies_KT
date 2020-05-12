@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.qartf.popularmovies.data.database.MovieDatabase
 import com.qartf.popularmovies.data.database.MovieDatabaseDao
 import com.qartf.popularmovies.repository.MovieFactory
-import com.qartf.popularmovies.domain.asDatabaseModel
+import com.qartf.popularmovies.domain.mapper.asDatabaseModel
 import com.qartf.popularmovies.utility.getValue
 import org.hamcrest.Matchers
 import org.junit.After

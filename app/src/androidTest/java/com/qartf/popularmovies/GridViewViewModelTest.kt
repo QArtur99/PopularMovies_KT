@@ -8,9 +8,10 @@ import com.qartf.popularmovies.data.database.MovieDatabase
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.data.model.ResultMovie
 import com.qartf.popularmovies.data.network.TheMovieDbApi
+import com.qartf.popularmovies.di.createGetMoviesPagingUseCase
 import com.qartf.popularmovies.di.createNetworkExecutor
 import com.qartf.popularmovies.di.createRepository
-import com.qartf.popularmovies.data.repository.Repository
+import com.qartf.popularmovies.domain.GetMoviesPagingUseCase
 import com.qartf.popularmovies.repository.FakeTheMovieDbApi
 import com.qartf.popularmovies.repository.MovieFactory
 import com.qartf.popularmovies.ui.gridView.GridViewViewModel
@@ -29,7 +30,7 @@ import org.koin.test.inject
 
 class GridViewViewModelTest : KoinTest {
 
-    private val repository: Repository by inject()
+    private val getMoviesPagingUseCase: GetMoviesPagingUseCase by inject()
     private lateinit var movieDatabase: MovieDatabase
     private lateinit var gridViewViewModel: GridViewViewModel
 
@@ -49,9 +50,11 @@ class GridViewViewModelTest : KoinTest {
         fakeApi.addPost(Constants.SORT_BY_POPULARITY, movieFactory.createMovie())
         fakeApi.addPost(Constants.SORT_BY_POPULARITY, movieFactory.createMovie())
         application.injectModule(module {
+            single { createGetMoviesPagingUseCase(get()) }
             single { movieDatabase.movieDatabaseDao() }
             single { fakeApi as TheMovieDbApi }
             single { createRepository(get(), get(), get(), get()) }
+            single { createNetworkExecutor() }
             single { createNetworkExecutor() }
         })
 
@@ -60,7 +63,7 @@ class GridViewViewModelTest : KoinTest {
             Constants.SORT_BY_POPULARITY,
             Constants.SORT_BY_GENRE_DEFAULT
         )
-        gridViewViewModel = GridViewViewModel(repository, prefResult)
+        gridViewViewModel = GridViewViewModel(getMoviesPagingUseCase, prefResult)
         gridViewViewModel.onRecyclerItemClick(
             ResultMovie(View(application), movieFactory.createMovie())
         )
