@@ -27,12 +27,12 @@ class MovieDetailFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         binding.movieDetailViewModel = movieDetailViewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         movieDetailViewModel.showReviews.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val reviewDialog = ReviewDialog()
-                reviewDialog.show(requireFragmentManager(), ReviewDialog::class.simpleName)
+                reviewDialog.show(parentFragmentManager, ReviewDialog::class.simpleName)
                 movieDetailViewModel.onShowReviews(null)
             }
         })
@@ -40,7 +40,7 @@ class MovieDetailFragment : Fragment() {
         movieDetailViewModel.showTrailers.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val reviewDialog = VideoDialog()
-                reviewDialog.show(requireFragmentManager(), VideoDialog::class.simpleName)
+                reviewDialog.show(parentFragmentManager, VideoDialog::class.simpleName)
                 movieDetailViewModel.onShowTrailers(null)
             }
         })

@@ -9,8 +9,8 @@ import org.koin.dsl.module
 
 val uiModule = module {
     single { createResult() }
-    viewModel { GridViewViewModel(get(), get()) }
-    viewModel { MovieDetailViewModel(get(), get(), get(), get(), get()) }
+    single { GridViewViewModel(get(), get()) }
+    single { MovieDetailViewModel(get(), get(), get(), get(), get()) }
 }
 
 fun createResult() = Result(
