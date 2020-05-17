@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
 import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_ADD
 import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_REMOVE
+import com.qartf.popularmovies.utility.extension.ObserverNN
 import org.koin.android.ext.android.inject
 
 class MovieDetailFragment : Fragment() {
@@ -29,36 +29,30 @@ class MovieDetailFragment : Fragment() {
         binding.movieDetailViewModel = movieDetailViewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        movieDetailViewModel.showReviews.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                val reviewDialog = ReviewDialog()
-                reviewDialog.show(parentFragmentManager, ReviewDialog::class.simpleName)
-                movieDetailViewModel.onShowReviews(null)
-            }
+        movieDetailViewModel.showReviews.observe(viewLifecycleOwner, ObserverNN {
+            val reviewDialog = ReviewDialog()
+            reviewDialog.show(parentFragmentManager, ReviewDialog::class.simpleName)
+            movieDetailViewModel.onShowReviews(null)
         })
 
-        movieDetailViewModel.showTrailers.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                val reviewDialog = VideoDialog()
-                reviewDialog.show(parentFragmentManager, VideoDialog::class.simpleName)
-                movieDetailViewModel.onShowTrailers(null)
-            }
+        movieDetailViewModel.showTrailers.observe(viewLifecycleOwner, ObserverNN {
+            val reviewDialog = VideoDialog()
+            reviewDialog.show(parentFragmentManager, VideoDialog::class.simpleName)
+            movieDetailViewModel.onShowTrailers(null)
         })
 
-        movieDetailViewModel.favorite.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.favorite.observe(viewLifecycleOwner, ObserverNN {
             if (it && onFabClicked) showSnackBar(SNACKBAR_ADD)
             else if (onFabClicked) showSnackBar(SNACKBAR_REMOVE)
         })
 
-        movieDetailViewModel.listItem.observe(viewLifecycleOwner, Observer {
-            it?.let { onFabClicked = false }
+        movieDetailViewModel.listItem.observe(viewLifecycleOwner, ObserverNN {
+            onFabClicked = false
         })
 
-        movieDetailViewModel.fabButton.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it) onFabClicked = true
-                movieDetailViewModel.onFabButtonClick(null)
-            }
+        movieDetailViewModel.fabButton.observe(viewLifecycleOwner, ObserverNN {
+            if (it) onFabClicked = true
+            movieDetailViewModel.onFabButtonClick(null)
         })
 
         return binding.root

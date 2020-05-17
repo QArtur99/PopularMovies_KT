@@ -16,16 +16,15 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.qartf.popularmovies.R
 import com.qartf.popularmovies.data.model.Movie
 import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.databinding.FragmentGridViewBinding
+import com.qartf.popularmovies.domain.mapper.convertToString
 import com.qartf.popularmovies.domain.state.NetworkState
 import com.qartf.popularmovies.domain.state.Status
-import com.qartf.popularmovies.domain.mapper.convertToString
 import com.qartf.popularmovies.ui.MovieDetailActivity
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.ConnectionUtils.isConnectedToInternet
@@ -43,6 +42,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
+import com.qartf.popularmovies.utility.extension.ObserverNN
 import org.koin.android.ext.android.inject
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -68,24 +68,23 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
         binding.gridViewViewModel = gridViewViewModel
         binding.lifecycleOwner = this
 
-        gridViewViewModel.columns.observe(viewLifecycleOwner, Observer {
-            it?.let { setLayoutManager(it) }
+        gridViewViewModel.columns.observe(viewLifecycleOwner, ObserverNN {
+            setLayoutManager(it)
         })
 
-        gridViewViewModel.discoverMovie.observe(viewLifecycleOwner, Observer {
-            it?.let { this.sortBy = it.sortBy }
+        gridViewViewModel.discoverMovie.observe(viewLifecycleOwner, ObserverNN {
+            this.sortBy = it.sortBy
         })
 
-        gridViewViewModel.networkState.observe(viewLifecycleOwner, Observer {
-            it?.let { bindNetworkState(it) }
+        gridViewViewModel.networkState.observe(viewLifecycleOwner, ObserverNN {
+            bindNetworkState(it)
         })
 
-        gridViewViewModel.listItem.observe(viewLifecycleOwner, Observer {
-            it ?: return@Observer
+        gridViewViewModel.listItem.observe(viewLifecycleOwner, ObserverNN {
             val (v, listItem) = it
             if (isLandscape()) {
                 movieDetailViewModel.setListItem(listItem)
-                return@Observer
+                return@ObserverNN
             }
             if (activityWithOptions) {
                 requireActivity().startActivity(getDetailIntent(listItem), getOptions(v))
@@ -94,8 +93,7 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
             }
         })
 
-        gridViewViewModel.posts.observe(viewLifecycleOwner, Observer {
-            it ?: return@Observer
+        gridViewViewModel.posts.observe(viewLifecycleOwner, ObserverNN {
             if (isLandscape() && it.isNotEmpty()) {
                 movieDetailViewModel.setFirstListItem(it.first())
             }
@@ -131,8 +129,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private fun initSwipeToRefresh() {
-        gridViewViewModel.refreshState.observe(viewLifecycleOwner, Observer {
-            it?.let { binding.swipeRefresh.isRefreshing = it == NetworkState.LOADING }
+        gridViewViewModel.refreshState.observe(viewLifecycleOwner, ObserverNN {
+            binding.swipeRefresh.isRefreshing = it == NetworkState.LOADING
         })
         binding.swipeRefresh.setOnRefreshListener { gridViewViewModel.refresh() }
     }
