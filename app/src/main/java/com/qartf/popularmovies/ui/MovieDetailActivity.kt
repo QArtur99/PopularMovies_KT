@@ -20,12 +20,12 @@ import com.qartf.popularmovies.utility.Constants.Companion.INTENT_LIST_ITEM_ID
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
 import com.qartf.popularmovies.utility.Constants.FabStatus
 import kotlinx.android.synthetic.main.activity_movie_detail.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 import kotlin.math.abs
 
 class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedListener {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
     private lateinit var binding: ActivityMovieDetailBinding
     private var enterAnimationCompleted = false
 
@@ -49,11 +49,7 @@ class MovieDetailActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLis
         binding.movieDetailViewModel = movieDetailViewModel
         binding.appBar.addOnOffsetChangedListener(this)
         intent.getStringExtra(INTENT_LIST_ITEM_ID)?.let {
-            movieDetailViewModel.setListItem(
-                convertFromString(
-                    it
-                )
-            )
+            movieDetailViewModel.setListItem(convertFromString(it))
         }
         movieDetailViewModel.onAppBarLayoutOpen(FabStatus.NONE)
 

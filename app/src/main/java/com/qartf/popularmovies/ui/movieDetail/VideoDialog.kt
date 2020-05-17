@@ -11,11 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.qartf.popularmovies.databinding.DialogVideoBinding
 import com.qartf.popularmovies.utility.Utility
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class VideoDialog : DialogFragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,13 +33,13 @@ class VideoDialog : DialogFragment() {
             it?.let { properties ->
                 val youTubeBase = "https://www.youtube.com/watch?v="
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youTubeBase + properties.key))
-                if (intent.resolveActivity(activity!!.packageManager) != null) {
+                if (intent.resolveActivity(requireActivity().packageManager) != null) {
                     startActivity(intent)
                 }
             }
         })
 
-        Utility.onCreateDialog(activity!!, dialog!!, binding.root, 400, 400)
+        Utility.onCreateDialog(requireActivity(), dialog!!, binding.root, 400, 400)
         return binding.root
     }
 

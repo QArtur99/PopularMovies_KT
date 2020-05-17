@@ -15,11 +15,11 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_DEFAULT
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_GENRE_KEY
 import kotlinx.android.synthetic.main.tool_bar.*
 import kotlinx.android.synthetic.main.tool_bar.view.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
     private val sharedPreferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(application)
     }

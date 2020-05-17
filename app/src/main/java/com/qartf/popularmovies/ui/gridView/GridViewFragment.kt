@@ -43,7 +43,7 @@ import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_REVENUE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_AVERAGE
 import com.qartf.popularmovies.utility.Constants.Companion.SORT_BY_VOTE_COUNT
 import com.qartf.popularmovies.utility.Constants.Companion.TOOLBAR_IMAGE
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -54,8 +54,8 @@ class GridViewFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeL
     private var savedInstanceState: Bundle? = null
     private var activityWithOptions = false
 
-    private val gridViewViewModel: GridViewViewModel by viewModel()
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val gridViewViewModel: GridViewViewModel by inject()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

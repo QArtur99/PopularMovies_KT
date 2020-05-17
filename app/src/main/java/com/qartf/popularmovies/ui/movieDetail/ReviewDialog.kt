@@ -11,11 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.qartf.popularmovies.databinding.DialogReviewBinding
 import com.qartf.popularmovies.utility.Utility
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class ReviewDialog : DialogFragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

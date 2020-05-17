@@ -12,11 +12,11 @@ import com.qartf.popularmovies.R
 import com.qartf.popularmovies.databinding.FragmentDetailBinding
 import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_ADD
 import com.qartf.popularmovies.utility.Constants.Companion.SNACKBAR_REMOVE
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
 
 class MovieDetailFragment : Fragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by inject()
     private lateinit var binding: FragmentDetailBinding
     private var onFabClicked: Boolean = false
 

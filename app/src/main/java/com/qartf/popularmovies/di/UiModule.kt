@@ -4,7 +4,6 @@ import com.qartf.popularmovies.data.model.Result
 import com.qartf.popularmovies.ui.gridView.GridViewViewModel
 import com.qartf.popularmovies.ui.movieDetail.MovieDetailViewModel
 import com.qartf.popularmovies.utility.Constants
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiModule = module {
